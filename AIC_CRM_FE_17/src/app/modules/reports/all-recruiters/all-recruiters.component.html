@@ -1,0 +1,166 @@
+<style>
+    ::ng-deep p-calendar .p-inputtext {
+        padding: 0 10px;
+    }
+
+    ::ng-deep p-calendar span {
+        width: 100% !important;
+    }
+
+    table td {
+        line-height: 1;
+        vertical-align: middle;
+    }
+</style>
+
+<div>
+    <div class="header">
+        <h1>All Recruiters Report</h1>
+    </div>
+
+    <div class="company-info-box mx-2 mb-3">
+        <div class="form-content py-0">
+
+            <div class="row py-2">
+
+                <div class="col-md-2">
+                    <label class="form-label">From Date</label>
+                    <div class="flex justify-content-center">
+                        <p-calendar [(ngModel)]="input.fromDate" [iconDisplay]="'input'" [showIcon]="true" />
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <label class="form-label">To Date</label>
+                    <div class="flex justify-content-center">
+                        <p-calendar [(ngModel)]="input.toDate" [iconDisplay]="'input'" [showIcon]="true" />
+                    </div>
+                </div>
+
+                <div class="col-md-1">
+                    <label> </label>
+                    <div class="d-flex justify-content-start">
+                        <div class="mt-1">
+                            <button class="btn btn-primary py-0 px-2" (click)="showRpt();">
+                                Show
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-7">
+
+                    <label> </label>
+                    <div class="d-flex justify-content-start">
+                        <label class="form-label">Quick Tabs</label>
+
+                        <div class="ms-2">
+                            <button type="button" class="btn btn-primary py-0" (click)="setToday()">Today</button>
+                        </div>
+
+                        <div class="ms-2">
+                            <button type="button" class="btn btn-warning py-0" (click)="setThisWeek()">This
+                                Week</button>
+                        </div>
+
+                        <div class="ms-2">
+                            <button type="button" class="btn btn-danger py-0" (click)="setThisMonth()">This
+                                Month</button>
+                        </div>
+
+                        <div class="ms-2">
+                            <button type="button" class="btn btn-secondary py-0"
+                                (click)="setYesterday()">Yesterday</button>
+                        </div>
+
+                        <div class="ms-2">
+                            <button type="button" class="btn btn-info py-0" (click)="setLastWeek()">Last Week</button>
+                        </div>
+
+                        <div class="ms-2">
+                            <button type="button" class="btn btn-success py-0" (click)="setLastMonth()">Last
+                                Month</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="company-info-box mx-2 mb-3">
+        <div class="section-header fw-normal p-1">
+            All Recruiters Report
+        </div>
+
+        <div class="form-content py-0">
+
+            <div class="row mt-2">
+
+                <div class="col-6">
+
+
+                    <table class="table">
+
+                        <thead>
+                            <tr>
+                                <th class="w-100">Recruiter</th>
+                                <th>Submittals for Today/Week/Month</th>
+                                <th>Interviews for Today/Week/Month</th>
+                                <th>Starts for Today/Week/Month</th>
+                                <th>Consultants Added Today/Week/Month</th>
+                                <th>Call Logs Added Today/Week/Month</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <tr *ngFor="let date of recruiterReport">
+                                <td>{{date.recruiter}}</td>
+                                <td>{{date.submittals}}</td>
+                                <td>{{date.interviews}}</td>
+                                <td>{{date.starts}}</td>
+                                <td>{{date.consultantsAdded}}</td>
+                                <td>{{date.callLogsAdded}}</td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </div>
+
+            <div class="row my-2">
+
+                <div class="col-6">
+                    <h2 class="border text-center fw-bolder fs-16">
+                        RECRUITER REPORT
+                    </h2>
+
+
+                    <div *ngFor="let recruiterGroup of recruiterReqReportGrouped" class="mb-3">
+                        <div class="d-flex align-items-center border">
+                            <div class="w-25">
+                                <h6 class="p-2">Priority 1 Reqs</h6>
+                            </div>
+
+                            <div class="border-start w-100">
+                                <h3 class="p-1 mb-0">Recruiter: {{ recruiterGroup.recruiter }}</h3>
+
+                                <div *ngFor="let req of recruiterGroup.requisitionsDetails"
+                                    class="p-1 text-white fw-bolder m-1" style="background: #007E33; font-size: 14px;">
+                                    {{ req }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                 
+                </div>
+            </div>
+        </div>
+    </div>

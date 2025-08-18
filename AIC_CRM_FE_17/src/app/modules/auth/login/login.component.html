@@ -1,0 +1,40 @@
+<div class="d-flex justify-content-center align-items-center vh-100"
+  style="background: url('/assets/images/bg.png') repeat;">
+  <div class="card shadow login-form" style="min-width: 350px;">
+    <div class="card-body p-0">
+      <h5 class="card-title text-center py-4 fw-bold">Please Sign In</h5>
+
+      <div class="p-4 pt-0" (keydown.enter)="login()">
+
+        <div class="mb-4 input-wrapper">
+          <div class="company-icon"></div>
+          <input type="text" class="form-control content-input" placeholder="Company id"
+            [(ngModel)]="loginModel.companyId" />
+        </div>
+        <div class="mb-4 input-wrapper">
+          <div class="user-icon"></div>
+          <input type="text" class="form-control content-input" placeholder="User name" [(ngModel)]="loginModel.email">
+        </div>
+        <div class="mb-4 input-wrapper">
+          <div class="pass-icon"></div>
+          <input type="password" class="form-control content-input" placeholder="Password"
+            [(ngModel)]="loginModel.password">
+        </div>
+        <div class="form-check mb-3">
+          <input type="checkbox" class="form-check-input remmber-check-box" [(ngModel)]="loginModel.remember">
+          <label class="form-check-label" for="rememberMe">Remember Me</label>
+        </div>
+      </div>
+
+      <div class="d-grid footer">
+        <div class="d-flex justify-content-between">
+          <a routerLink="/forgot-password" class="small forgot-password">Forgot Password?</a>
+          <a routerLink="/company-register" class="small new-user">New User? SignUp!</a>
+        </div>
+
+        <button class="btn btn-info text-white fw-bold lgoin-btn" (click)="login();">Login</button>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,651 @@
+<style>
+    ::ng-deep p-calendar .p-inputtext {
+        padding: 0;
+        padding-left: 10px;
+        width: 920px;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-2 mt-4">
+        <app-left-manager-search-nav [fildteredManagersIds]="fildteredManagersIds"
+            *ngIf="!fromClientDashboard"></app-left-manager-search-nav>
+        <app-left-client-search-nav *ngIf="fromClientDashboard"></app-left-client-search-nav>
+    </div>
+    <div class="col-md-8 ps-0">
+        <div class="row">
+
+            <div class="col-md-4">
+                <div class="header border-0">
+                    <h1> <span class="cursor-pointer text-danger fw-bold" (click)="goToClientDashboard();">
+                            {{clientData.clientName}}
+                        </span></h1>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-lg-8">
+                <div class="mt-2">
+                    <app-client-top-nav [managerData]="managerData" [clientData]="clientData"></app-client-top-nav>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-12 ps-4">
+
+                <div class="header border-top py-0">
+
+                    <div class="text-center">
+                        <img [src]="managerData.linkedInImageUrl || 'assets/images/dummy-profile-img.jpg'"
+                            style="width: 75px ; height: 75px;" class="rounded">
+                    </div>
+
+                    <h2 style="color: #777;">
+                        {{managerData.firstName}} {{managerData.lastName}}
+
+                        <span class="" *ngIf="managerData.linkedInUrl">
+                            <a [href]="managerData.linkedInUrl" target="_blank" class="clientNameLink">
+                                <i class="fa-brands fa-linkedin mt-3" style="color: #00aff0; font-size: 30px;"></i>
+                            </a>
+                        </span>
+                    </h2>
+
+                </div>
+                <div>{{managerData.title}}</div>
+
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+
+                <div class="company-info-box mx-2 mb-3">
+                    <div class="section-header fw-normal p-1">
+                        General Details
+                    </div>
+
+                    <div class="form-content py-0">
+
+                        <div>
+
+                            <div class="row">
+
+                                <div class="col-md-9 fw-bold">
+                                    <span>Address</span>
+                                </div>
+                                <div class="col-md-3 fw-bold">
+                                    <span> Contact</span>
+                                </div>
+                            </div>
+
+
+                            <hr class="my-1">
+
+                            <div class="row">
+
+                                <div class="col-md-9">
+                                    <!-- <span [innerHTML]="managerData.address1"></span> -->
+                                    <span>{{managerData.completeAddress}}</span>
+                                </div>
+                                <div class="col-md-3">
+                                    <span class="fw-bold"> (o): </span> <span> {{managerData.officePhone | phoneFormat}}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+
+
+                            </div>
+                            <div class="row mt-2">
+
+                                <div class="col-lg-3">
+                                    <table class="table table-bordered">
+                                        <tbody>
+                                            <tr ng-if="data.Phone1">
+                                                <td>
+                                                    <strong>(w) email: </strong>{{managerData.personalEmail}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- <div class="col-lg-3">
+                                    <table class="table table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <div>
+                                                            <label class="fw-bold">Is Manager?: </label>
+                                                        </div>
+                                                        <div class="form-check form-switch ms-3 d-flex">
+                                                            <input class="form-check-input fs-6"
+                                                                [checked]="managerData.isManager" type="checkbox">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div> -->
+
+                                <div class="col-lg-3">
+                                    <table class="table table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <div>
+                                                            <label class="fw-bold">Still With Company?: </label>
+                                                        </div>
+                                                        <div class="form-check form-switch ms-3 d-flex">
+                                                            <input class="form-check-input fs-6"
+                                                                [checked]="managerData.stillWithCompany"
+                                                                type="checkbox">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="col-lg-12" *ngIf="managerData.notes">
+                                    <table class="table table-bordered mb-1">
+                                        <tbody>
+                                            <tr>
+                                                <td><strong>Notes :</strong> {{managerData.notes}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="d-flex mb-1">
+                                <button type="button" class=" me-1 btn btn-success">History</button>
+                                <button type="button" class=" me-1 btn btn-success">Reqs</button>
+                                <button type="button" class=" me-1 btn btn-success">Calendar</button>
+                                <button type="button" class=" me-1 btn btn-success">Email</button>
+                                <button type="button" class=" me-1 btn btn-success"
+                                    (click)="editManager(managerData);">Edit</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="company-info-box mx-2 mb-3">
+            <div class="section-header fw-normal p-1">
+                Call Record
+            </div>
+
+            <div class="form-content py-0">
+                <div class="row mb-2">
+
+                    <div class="col-md-6">
+                        <div>
+                            <label class="form-label">Date/Time</label>
+                            <span class="required-label" *ngIf="!callLogsInput.date">REQUIRED</span>
+                        </div>
+                        <div class="flex justify-content-center">
+                            <p-calendar [(ngModel)]="callLogsInput.date" [iconDisplay]="'input'" [showIcon]="true" />
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+                        <div>
+                            <label class="form-label">Type</label>
+                            <span class="required-label" *ngIf="!callLogsInput.typeId">REQUIRED</span>
+                        </div>
+
+                        <div class="card flex justify-content-center">
+                            <p-dropdown [showClear]="true" [options]="callTypeList" [(ngModel)]="callLogsInput.typeId"
+                                optionValue="id" optionLabel="name" placeholder="--Type--" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label class="form-label">Call Record</label>
+                        <ckeditor #editor [editor]="Editor" [config]="config" data="callLogsInput.record"
+                            [(ngModel)]="callLogsInput.record"></ckeditor>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <div class="d-flex">
+                            <label class="form-label mt-1">Remind Status?</label>
+
+                            <div class="form-check form-switch ms-3">
+                                <input class="form-check-input mt-2 fs-6" [checked]="callLogsInput.remindStatus"
+                                    type="checkbox">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Reminder Date/Time</label>
+                        <div class="flex justify-content-center">
+                            <p-calendar [iconDisplay]="'input'" [(ngModel)]="callLogsInput.reminderDate"
+                                [showIcon]="true" [disabled]="true" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label class="form-label"></label>
+
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn-success py-0 px-2 mx-1 fs-16px" (click)="saveCallRecord();">
+                                Save
+                            </button>
+                            <button class="btn btn btn-danger py-0 px-2 fs-16px"
+                                (click)="clearCallRecord();">Cancel</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="company-info-box mx-2 mb-3">
+            <div class="section-header fw-normal p-1">
+                Call Logs
+            </div>
+
+            <div class="form-content py-0">
+
+                <div class="row mb-2">
+                    <p-table #dtCall [value]="callLogsList" [rows]="10"
+                        [globalFilterFields]="['date', 'creatorUserName', 'record']" [rowHover]="true"
+                        scrollHeight="300px" [style]="{ width: '100%'}" [resizableColumns]="true">
+                        <ng-template pTemplate="colgroup">
+                            <colgroup>
+                                <col style="width: 10%" />
+                                <col style="width: 10%" />
+                                <col style="width: 70%" />
+                                <col style="width: 10%" />
+                            </colgroup>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+
+                            <tr>
+                                <th colspan="4">
+                                    <input type="text" pInputText size="50" placeholder="Global Search..."
+                                        (input)="dtCall.filterGlobal($any($event.target).value, 'contains')"
+                                        style="width: 100%" />
+                                </th>
+                            </tr>
+                            <tr>
+
+                                <th pResizableColumn>Date/Time</th>
+                                <th pResizableColumn>Spoke With</th>
+                                <th pResizableColumn>Call Record</th>
+                                <th pResizableColumn>Action</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData>
+                            <tr>
+                                <td>{{ rowData.date | date: 'medium' }}</td>
+                                <td>{{ rowData.creatorUserName }}</td>
+                                <td [innerHTML]="rowData.record"></td>
+
+                                <td>
+                                    <div class="d-flex justify-content-start pt-1">
+                                        <div class="p-0 pe-3">
+                                            <span class="cursor-pointer">
+                                                <i class="far fa-edit" (click)="editCallRecord(rowData);"></i>
+                                            </span>
+                                        </div>
+                                        <div class="p-0 pe-3">
+                                            <span class="cursor-pointer">
+                                                <i class="fas fa-trash" (click)="deleteCallRecord(rowData.id)"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+
+        <div class="company-info-box mx-2 mb-3">
+            <div class="section-header fw-normal p-1">Leads</div>
+
+            <div class="card p-2">
+
+                <p-table #dt [value]="leadsList" [rows]="10" [rowHover]="true" scrollHeight="550px"
+                    [style]="{ width: '100%' }" columnResizeMode="expand" [globalFilterFields]="searchLeads"
+                    [resizableColumns]="true">
+                    <ng-template pTemplate="colgroup">
+                        <colgroup>
+                            <col style="width: 10%" />
+                            <col style="width: 20%" />
+                            <col style="width: 10%" />
+                            <col style="width: 10%" />
+                            <col style="width: 10%" />
+                            <col style="width: 10%" />
+                            <col style="width: 10%" />
+                            <col style="width: 10%" />
+                            <col style="width: 10%" />
+                        </colgroup>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+
+                        <tr>
+                            <th colspan="9">
+                                <input type="text" pInputText size="50" placeholder="Global Search"
+                                    (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                                    style="width: 100%" />
+                            </th>
+                        </tr>
+                        <tr>
+                            <th pResizableColumn>Lead#</th>
+                            <th pResizableColumn>Date Call Record Entered</th>
+                            <th pResizableColumn>Manager</th>
+                            <th pResizableColumn>Manager Title</th>
+                            <th pResizableColumn>Lead Type</th>
+                            <th pResizableColumn>Assigned To</th>
+                            <th pResizableColumn>Generated By</th>
+                            <th pResizableColumn>Called</th>
+                            <th pResizableColumn>Action</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData>
+                        <tr>
+                            <td>Lead# {{ rowData.id }}</td>
+                            <td>{{ rowData.reminderDateTime | date }}</td>
+                            <td>{{ rowData.managerName }}</td>
+                            <td>{{ rowData.managerTitle }}</td>
+                            <td>{{ rowData.leadType }}</td>
+                            <td>{{ rowData.assignedTo }}</td>
+                            <td>{{ rowData.generatedBy }}</td>
+                            <td>
+                                <div class="form-check form-switch ms-3">
+                                    <input class="form-check-input mt-2 fs-6" [checked]="rowData.called"
+                                        type="checkbox">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex justify-content-start pt-1">
+                                    <div class="p-0 pe-3">
+                                        <span class="cursor-pointer" (click)="editLead(rowData);"><i
+                                                class="far fa-edit"></i></span>
+                                    </div>
+
+                                    <div class="p-0 pe-3">
+                                        <span class="cursor-pointer" (click)="deleteLead(rowData.id);"><i
+                                                class="fas fa-trash"></i></span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+
+        <div class="company-info-box mx-2 mb-3">
+            <div class="section-header fw-normal p-1">Requisition Details</div>
+
+            <div class="card p-2">
+
+                <p-table #dt [value]="clientsList" [rows]="10" [globalFilterFields]="['clientName']" [rowHover]="true"
+                    scrollHeight="550px" [style]="{ width: '100%' }" columnResizeMode="expand"
+                    [resizableColumns]="true">
+                    <ng-template pTemplate="colgroup">
+                        <colgroup>
+                            <col style="width: 10%" />
+                            <col style="width: 10%" />
+                            <col style="width: 10%" />
+                            <col style="width: 10%" />
+                            <col style="width: 10%" />
+                            <col style="width: 10%" />
+                            <col style="width: 10%" />
+                            <col style="width: 10%" />
+                        </colgroup>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+
+                            <th pResizableColumn>Requisition</th>
+                            <th pResizableColumn>Status</th>
+                            <th pResizableColumn>Manager</th>
+                            <th pResizableColumn>Buzzwords</th>
+                            <th pResizableColumn>Duration</th>
+                            <th pResizableColumn>BillRate</th>
+                            <th pResizableColumn>Date</th>
+                            <th pResizableColumn>Action</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData>
+                        <tr>
+                            <td>{{ rowData.name }}</td>
+                            <td>{{ rowData.status }}</td>
+                            <td>{{ rowData.status }}</td>
+                            <td>{{ rowData.status }}</td>
+                            <td>{{ rowData.name }}</td>
+                            <td>{{ rowData.status }}</td>
+                            <td>{{ rowData.status }}</td>
+                            <!-- <td>
+                            <div class="form-check form-switch ms-3">
+                                <input class="form-check-input mt-2 fs-6" type="checkbox">
+                            </div>
+                        </td> -->
+                            <td>
+                                <div class="d-flex justify-content-start pt-1">
+                                    <div class="p-0 pe-3">
+                                        <span class="cursor-pointer"><i class="far fa-edit"></i></span>
+                                    </div>
+
+                                    <div class="p-0 pe-3">
+                                        <span class="cursor-pointer"><i class="fas fa-trash"></i></span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+
+        <div class="company-info-box mx-2 mb-3">
+            <div class="section-header fw-normal p-1">Clients Requests</div>
+
+            <div class="card p-2">
+
+                <p-table #dt [value]="clientsList" [rows]="10" [globalFilterFields]="['clientName']" [rowHover]="true"
+                    scrollHeight="550px" [style]="{ width: '100%' }" columnResizeMode="expand"
+                    [resizableColumns]="true">
+                    <ng-template pTemplate="colgroup">
+                        <colgroup>
+                            <col style="width: 10%" />
+                            <col style="width: 10%" />
+                            <col style="width: 10%" />
+                            <col style="width: 10%" />
+                            <col style="width: 10%" />
+                            <col style="width: 10%" />
+                            <col style="width: 10%" />
+                            <col style="width: 10%" />
+                            <col style="width: 10%" />
+                        </colgroup>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+
+                        <tr>
+                            <th colspan="10">
+                                <input type="text" pInputText size="50" placeholder="Global Search"
+                                    (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                                    style="width: 100%" />
+                            </th>
+                        </tr>
+                        <tr>
+
+                            <th pResizableColumn>Client Request</th>
+                            <th pResizableColumn>Request Type</th>
+                            <th pResizableColumn>Category</th>
+                            <th pResizableColumn>Posting Title</th>
+                            <th pResizableColumn>Project No</th>
+                            <th pResizableColumn>Client Manager</th>
+                            <th pResizableColumn>Sales Rep</th>
+                            <th pResizableColumn>Bill Rate</th>
+                            <th pResizableColumn>Margin Target</th>
+                            <th pResizableColumn>Action</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData>
+                        <tr>
+                            <td>{{ rowData.name }}</td>
+                            <td>{{ rowData.status }}</td>
+                            <td>{{ rowData.status }}</td>
+                            <td>{{ rowData.status }}</td>
+                            <td>{{ rowData.name }}</td>
+                            <td>{{ rowData.status }}</td>
+                            <td>{{ rowData.status }}</td>
+                            <td>{{ rowData.status }}</td>
+                            <td>{{ rowData.status }}</td>
+                            <!-- <td>
+                            <div class="form-check form-switch ms-3">
+                                <input class="form-check-input mt-2 fs-6" type="checkbox">
+                            </div>
+                        </td> -->
+                            <td>
+                                <div class="d-flex justify-content-start pt-1">
+                                    <div class="p-0 pe-3">
+                                        <span class="cursor-pointer"><i class="far fa-edit"></i></span>
+                                    </div>
+
+                                    <div class="p-0 pe-3">
+                                        <span class="cursor-pointer"><i class="fas fa-trash"></i></span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+
+
+        <div class="company-info-box mx-2 mb-3">
+            <div class="section-header fw-normal p-1">
+                Manager Documents
+            </div>
+
+            <div class="form-content py-0">
+
+                <div class="row mb-2">
+
+                    <div class="col-md-3">
+                        <div>
+                            <label class="form-label">Document Type</label>
+                            <span class="required-label" *ngIf="!documentUploadInput.documentTypeId">REQUIRED</span>
+                        </div>
+
+                        <div class="card flex justify-content-center">
+                            <p-dropdown [showClear]="true" [options]="documentTypes"
+                                [(ngModel)]="documentUploadInput.documentTypeId" optionValue="id"
+                                optionLabel="documentTypeName" placeholder="--Select--" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Document Name</label>
+                        <input type="text" class="form-control" placeholder="Document Name"
+                            [(ngModel)]="documentUploadInput.documentName">
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Upload Documents</label>
+                        <!-- <div>
+                        <span class="required-label">
+                            Except (PDF, DOC, DOCX, TXT, RTF)
+                        </span>
+                    </div> -->
+                        <input type="file" class="form-control" accept=".doc,.docx,.pdf,.txt,.rtf"
+                            (change)="onFileSelected($event)">
+
+                    </div>
+
+                    <div class="col-md-3">
+                        <label></label>
+                        <div>
+                            <button class="btn btn-success py-0 px-2 mx-1 fs-16px" (click)="UploadDocument()">
+                                Save
+                            </button>
+                            <button class="btn btn btn-danger py-0 px-2 fs-16px"
+                                (click)="clearDocument()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-content">
+                <p-table #dt [value]="documentUploadList" [rows]="10" [globalFilterFields]="['clientName']"
+                    [rowHover]="true" scrollHeight="550px" [style]="{ width: '100%' }" columnResizeMode="expand"
+                    [resizableColumns]="true">
+                    <ng-template pTemplate="colgroup">
+                        <colgroup>
+                            <col style="width: 30%" />
+                            <col style="width: 30%" />
+                            <col style="width: 30%" />
+                        </colgroup>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+
+                            <th pResizableColumn>Document Type</th>
+                            <th pResizableColumn>Document Name</th>
+                            <th pResizableColumn>Download</th>
+                            <th pResizableColumn></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData>
+                        <tr>
+                            <td>{{rowData.documentTypeName}}</td>
+                            <td>{{rowData.documentName}}</td>
+                            <td>
+                                <div class="p-0 pe-5">
+                                    <span class="cursor-pointer">
+                                        <i class="far fa-circle-down"
+                                            (click)="downloadFile(rowData.documentFileName);"></i>
+                                    </span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex justify-content-start pt-1">
+                                    <!-- <div class="p-0 pe-3">
+                                        <span class="cursor-pointer"><i class="far fa-edit"></i></span>
+                                    </div> -->
+
+                                    <div class="p-0 pe-3">
+                                        <span class="cursor-pointer" (click)="deleteDocument(rowData.id);">
+                                            <i class="fas fa-trash"></i></span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-2 ms-0 mt-5">
+        <app-right-manager-search-nav [fromClientDashboard]="fromClientDashboard"
+            [clientManagers]="clientManagersList"></app-right-manager-search-nav>
+    </div>
+</div>

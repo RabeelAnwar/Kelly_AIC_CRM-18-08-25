@@ -1,0 +1,77 @@
+<div class="row">
+  <div class="col-md-4 mx-auto">
+    <div class="header">
+      <h1>Call Type Master</h1>
+    </div>
+
+    <div class="form-content p-0">
+      <div class="row my-3">
+        <div class="col-md-12">
+          <div>
+            <label class="form-label">Call Type Name</label>
+            <span class="required-label" *ngIf="!callTypeModel.name || callTypeModel.name.trim() === ''">REQUIRED</span>
+          </div>
+          <input type="text" class="form-control" placeholder="Call Type Name" [(ngModel)]="callTypeModel.name">
+        </div>
+
+        <div class="col-md-8">
+          <div class="mt-1">
+            <label class="form-label">IsActive</label>
+            <input type="checkbox" class="ms-2" [(ngModel)]="callTypeModel.isActive">
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="d-flex justify-content-end">
+            <div class="mt-1">
+              <button class="btn btn-success py-0 px-2 mx-1" (click)="saveCallType();">
+                {{ callTypeModel.id ? 'Update' : 'Save' }}
+              </button>
+              <button class="btn btn-warning py-0 px-2" (click)="clearInput();">Clear</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="company-info-box mx-2">
+        <div class="section-header fw-normal p-1">
+          Call Types
+        </div>
+
+        <div class="form-content p-0">
+          <div class="card-body p-0">
+            <p-table [value]="callTypeList">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th class="w-100">Name</th>
+                  <th>Action</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-item>
+                <tr>
+                  <td>{{ item.name }}</td>
+                  <td>
+                    <div class="d-flex justify-content-start pt-1">
+                      <div class="p-0 pe-3">
+                        <span class="cursor-pointer" (click)="editCallType(item);">
+                          <i class="far fa-edit"></i>
+                        </span>
+                      </div>
+                      <div class="p-0 pe-3">
+                        <span class="cursor-pointer" (click)="deleteCallType(item.id);">
+                          <i class="fas fa-trash"></i>
+                        </span>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

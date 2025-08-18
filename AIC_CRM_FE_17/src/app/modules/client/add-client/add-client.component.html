@@ -1,0 +1,228 @@
+<style>
+    ::ng-deep .ng-placeholder {
+        font-size: 16px;
+    }
+</style>
+
+
+
+<div class="row">
+    <div class="col-md-2 mt-4">
+        <app-left-client-search-nav></app-left-client-search-nav>
+    </div>
+    <div class="col-md-10 ps-0">
+
+        <div>
+            <div class="header">
+                <h1>Client Master</h1>
+                <div>
+                    <button class="btn btn-success py-0 px-2 mx-1" (click)="saveClient();">
+                        {{ clientInput.id ? 'Update' : 'Save' }}
+                    </button>
+                    <button class="btn btn-danger py-0 px-2" (click)="onCancel();">Close</button>
+                </div>
+            </div>
+
+            <div class="company-info-box mx-2 mb-3">
+                <div class="section-header fw-normal p-1">
+                    Client Information
+                </div>
+
+                <div class="form-content py-0">
+
+                    <div class="row mb-2">
+                        <div class="col-md-6">
+                            <div>
+                                <label class="form-label">Client Name</label>
+                                <span *ngIf="!clientInput.clientName || clientInput.clientName.trim() === ''"
+                                    class="required-label">REQUIRED</span>
+                            </div>
+                            <input type="text" class="form-control" [(ngModel)]="clientInput.clientName">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Parent Client</label>
+                            <div class="card flex justify-content-center">
+                                <p-dropdown [showClear]="true"
+                                [editable]="true"
+                                [options]="client" [(ngModel)]="clientInput.parentClientId"
+                                optionValue="id"
+                                optionLabel="name"
+                                placeholder="-- Select Parent Client --" />
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    <div class="row mb-2">
+
+                        <div class="col-md-6">
+                            <label class="form-label">Address 1</label>
+                            <ckeditor [editor]="Editor" [config]="config" data="clientInput.address1" [(ngModel)]="clientInput.address1"></ckeditor>
+                        </div>
+
+                         <div class="col-md-6">
+                            <label class="form-label">Address 2</label>
+                            <ckeditor [editor]="Editor" [config]="config" data="clientInput.address2" [(ngModel)]="clientInput.address2"></ckeditor>
+                        </div>
+
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-md-3">
+                            <label class="form-label">Country</label>
+                            <div class="card flex justify-content-center">
+                                <p-dropdown [showClear]="true"
+                                [options]="countries" [(ngModel)]="clientInput.country"
+                                (onChange)="onCountryChange(clientInput.country)" 
+                                optionValue="name"
+                                optionLabel="name"
+                                (onClear)="clientInput.state = undefined; clientInput.city = undefined; cities = []; states = []; clearStateDropdown();"
+                                placeholder="--Select Country--" />
+                            </div>
+
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">State</label>
+                            <div class="card flex justify-content-center">
+                                <p-dropdown [showClear]="true" #dropdownState
+                                [options]="states" [(ngModel)]="clientInput.state"
+                                (onChange)="getCities(clientInput.state)" 
+                                optionValue="name"
+                                optionLabel="name"
+                                (onClear)="clientInput.city = undefined; cities = []; clearCityDropdown();"
+                                placeholder="--Select State--" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">City</label>
+                               <div class="card flex justify-content-center">
+                                <p-dropdown [showClear]="true" #dropdownCity
+                                [options]="cities" [(ngModel)]="clientInput.city"
+                                optionValue="name"
+                                optionLabel="name"
+                                placeholder="--Select city--" />
+                                </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">ZipCode</label>
+                            <input type="text" class="form-control" [(ngModel)]="clientInput.zipCode"
+                                placeholder="zipcode">
+                        </div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-md-3">
+                            <label class="form-label">Office</label>
+                            <div class="input-group">
+                                <span class="input-group-text height-26px">
+                                    <i class="fa fa-phone" style="color: #555;"></i>
+                                </span>
+                                <input type="text" class="form-control" [(ngModel)]="clientInput.officeContact"
+                                    mask="(000) 000-0000" phoneValid style="width: 50%;" placeholder="Phone Number"
+                                    maxlength="15" minlength="10">
+                                <input type="text" class="form-control" [(ngModel)]="clientInput.officeContactExt"
+                                    placeholder="EXT" maxlength="15">
+                            </div>
+                            <p *ngIf="!(clientInput.officeContact | phoneValid)" class="text-danger">
+                                Must be at least 10 and max 15 digits.
+                            </p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">Division</label>
+                            <input type="text" class="form-control" [(ngModel)]="clientInput.division"
+                                placeholder="division">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">Website</label>
+                            <input type="text" class="form-control" [(ngModel)]="clientInput.website"
+                                placeholder="www.xyz.com">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">Purchase Contact Name</label>
+                            <input type="text" class="form-control" [(ngModel)]="clientInput.purchaseContactName"
+                                placeholder="name">
+                        </div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-md-3">
+                            <label class="form-label">Purchase Contact No</label>
+                            <div class="input-group">
+                                <span class="input-group-text height-26px">
+                                    <i class="fa fa-phone" style="color: #555;"></i>
+                                </span>
+                                <input type="text" class="form-control" [(ngModel)]="clientInput.purchaseContact"
+                                    style="width: 50%;" placeholder="Purchase Contact Number" mask="(000) 000-0000"
+                                    phoneValid maxlength="15" minlength="10">
+                                <input type="text" class="form-control" [(ngModel)]="clientInput.purchaseContactExt"
+                                    placeholder="EXT" maxlength="15">
+                            </div>
+                            <p *ngIf="!(clientInput.purchaseContact | phoneValid)" class="text-danger">
+                                Must be at least 10 and max 15 digits.
+                            </p>
+                        </div>
+
+                        <!-- <div class="col-md-3">
+                    <label class="form-label">Diversity Contact Name</label>
+                    <input type="text" class="form-control" [(ngModel)]="clientInput.diversityContactName"
+                         placeholder="name">
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label">Diversity Contact No</label>
+                    <div class="input-group">
+                        <span class="input-group-text height-26px">
+                            <i class="fa fa-phone" style="color: #555;"></i>
+                        </span>
+                        <input type="text" class="form-control" [(ngModel)]="clientInput.diversityContact"
+                             style="width: 50%;" placeholder="Phone Number" maxlength="15"
+                            minlength="10">
+                        <input type="text" class="form-control" [(ngModel)]="clientInput.diversityContactExt"
+                             placeholder="EXT" maxlength="15">
+                    </div>
+                </div> -->
+
+
+
+
+                        <div class="col-md-3">
+                            <label class="form-label">Registration Portal</label>
+                            <input type="text" class="form-control" [(ngModel)]="clientInput.registrationPortal"
+                                placeholder="www.xyz.com">
+                        </div>
+
+
+                        <div class="col-md-3">
+                            <label class="form-label">Company Size</label>
+                            <input type="text" class="form-control" [(ngModel)]="clientInput.companySize"
+                                placeholder="0">
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="d-flex mt-4">
+                                    <label class="form-label mt-1">Registered?</label>
+                                
+                                    <div class="form-check form-switch ms-3">
+                                        <input class="form-check-input mt-2 fs-6" [checked]="clientInput.registered"
+                                        type="checkbox">
+                                    </div>
+                                </div>
+                        </div>
+
+
+                        <div class="col-md-12">
+                            <label class="form-label">Notes</label>
+                            <textarea class="form-control" [(ngModel)]="clientInput.notes"
+                                placeholder="Client Detail..." style="height: 70px;"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

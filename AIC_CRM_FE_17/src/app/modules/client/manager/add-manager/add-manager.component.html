@@ -1,0 +1,291 @@
+<style>
+    ::ng-deep .ng-placeholder {
+        font-size: 16px;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-2 mt-4">
+        <app-left-client-search-nav></app-left-client-search-nav>
+    </div>
+    <div class="col-md-10 ps-0">
+        <div class="header">
+            <h1>Client Manager ({{clientData.clientName}})</h1>
+            <div>
+                <button class="btn btn-success py-0 px-2 mx-1" (click)="saveClientManager();">
+                    {{ managerInput.id ? 'Update' : 'Save' }}
+                </button>
+                <button class="btn btn-danger py-0 px-2" (click)="goToDashboard()">Close</button>
+            </div>
+        </div>
+
+        <div class="company-info-box mx-2 mb-3">
+            <div class="section-header fw-normal p-1">
+                Client Manager
+            </div>
+
+            <div class="form-content py-0">
+
+                <div class="row mb-2">
+                    <div class="col-md-5">
+                        <div>
+                            <label class="form-label">First Name</label>
+                            <span *ngIf="!managerInput.firstName || managerInput.firstName.trim() === ''"
+                                class="required-label">REQUIRED</span>
+                        </div>
+                        <input type="text" [(ngModel)]="managerInput.firstName" class="form-control"
+                            placeholder="First Name">
+                    </div>
+
+                    <div class="col-md-2">
+                        <label class="form-label">Middle Name</label>
+                        <input type="text" [(ngModel)]="managerInput.middleName" class="form-control"
+                            placeholder="Middle Name">
+                    </div>
+
+                    <div class="col-md-5">
+                        <div>
+                            <label class="form-label">Last Name</label>
+                            <span *ngIf="!managerInput.lastName || managerInput.lastName.trim() === ''"
+                                class="required-label">REQUIRED</span>
+                        </div>
+                        <input type="text" [(ngModel)]="managerInput.lastName" class="form-control"
+                            placeholder="Last Name">
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Title</label>
+                        <input type="text" [(ngModel)]="managerInput.title" class="form-control" placeholder="Title">
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Department</label>
+
+                        <div class="card flex justify-content-center">
+                                <p-dropdown [showClear]="true"
+                                [options]="departmentList" [(ngModel)]="managerInput.departmentId"
+                                optionValue="id"
+                                optionLabel="name"
+                                placeholder="--Select Department--" />
+                            </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Works Under</label>
+                        <div class="card flex justify-content-center">
+                                <p-dropdown [showClear]="true"
+                                [options]="managerListDD" [(ngModel)]="managerInput.worksUnderId"
+                                optionValue="id"
+                                optionLabel="name"
+                                placeholder="--Works Under--" />
+                            </div>
+                    </div>
+
+
+                    <div class="col-md-3">
+                        <label class="form-label">Is Assigned To</label>
+                            <div class="card flex justify-content-center">
+                                <p-dropdown [showClear]="true"
+                                [options]="usersList" [(ngModel)]="managerInput.isAssignedToId"
+                                optionValue="id"
+                                optionLabel="userName"
+                                placeholder="--Is Assigned To--" />
+                            </div>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        <label class="form-label">Address 1</label>
+                        <ckeditor [editor]="Editor" [config]="config" data="managerInput.address1" [(ngModel)]="managerInput.address1"></ckeditor>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Address 2</label>
+                        <ckeditor [editor]="Editor" [config]="config" data="managerInput.address2" [(ngModel)]="managerInput.address2"></ckeditor>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+
+                    <div class="col-md-3">
+                        <label class="form-label">Country</label>
+                         <div class="card flex justify-content-center">
+                                <p-dropdown [showClear]="true"
+                                [options]="countries" [(ngModel)]="managerInput.country"
+                                (onChange)="onCountryChange(managerInput.country)" 
+                                optionValue="name"
+                                optionLabel="name"
+                                (onClear)="managerInput.state = undefined; managerInput.city = undefined; cities = []; states = [];"
+                                placeholder="--Select Country--" />
+                            </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">State</label>
+                        <div class="card flex justify-content-center">
+                                <p-dropdown [showClear]="true"
+                                [options]="states" [(ngModel)]="managerInput.state"
+                                (onChange)="getCities(managerInput.state)" 
+                                optionValue="name"
+                                optionLabel="name"
+                                (onClear)="managerInput.city = undefined; cities = [];"
+                                placeholder="--Select State--" />
+                            </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">City</label>
+                        <div class="card flex justify-content-center">
+                                <p-dropdown [showClear]="true"
+                                [options]="cities" [(ngModel)]="managerInput.city"
+                                optionValue="name"
+                                optionLabel="name"
+                                placeholder="--Select city--" />
+                                </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">ZipCode</label>
+                        <input type="text" [(ngModel)]="managerInput.zipCode" class="form-control"
+                            placeholder="ZipCode">
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-md-3">
+                            <label class="form-label">Office</label>
+                            <div class="input-group">
+                                <span class="input-group-text height-26px">
+                                    <i class="fa fa-phone" style="color: #555;"></i>
+                                </span>
+                                <input type="text" [(ngModel)]="managerInput.officePhone" class="form-control"
+                                    style="width: 50%;" mask="(000) 000-0000" phoneValid placeholder="Phone Number"
+                                    maxlength="15" minlength="10">
+                                <input type="text" class="form-control" [(ngModel)]="managerInput.officePhoneExt"
+                                    placeholder="EXT" maxlength="15">
+                            </div>
+                            <p *ngIf="!(managerInput.officePhone | phoneValid)" class="text-danger">
+                                Must be at least 10 and max 15 digits.
+                            </p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">Cell</label>
+                            <div class="input-group">
+                                <span class="input-group-text height-26px">
+                                    <i class="fa fa-phone" style="color: #555;"></i>
+                                </span>
+                                <input type="text" [(ngModel)]="managerInput.cellPhone" class="form-control"
+                                    style="width: 50%;" mask="(000) 000-0000" phoneValid placeholder="Phone Number"
+                                    maxlength="15" minlength="10">
+                                <input type="text" [(ngModel)]="managerInput.cellPhoneExt" class="form-control"
+                                    placeholder="EXT" maxlength="15">
+                            </div>
+
+                            <p *ngIf="!(managerInput.cellPhone | phoneValid)" class="text-danger">
+                                Must be at least 10 and max 15 digits.
+                            </p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">Home</label>
+                            <div class="input-group">
+                                <span class="input-group-text height-26px">
+                                    <i class="fa fa-phone" style="color: #555;"></i>
+                                </span>
+                                <input type="text" [(ngModel)]="managerInput.homePhone" class="form-control"
+                                    style="width: 50%;" mask="(000) 000-0000" phoneValid
+                                    placeholder="Alternate Phone No" maxlength="15" minlength="10">
+                                <input type="text" [(ngModel)]="managerInput.homePhoneExt" class="form-control"
+                                    placeholder="EXT" maxlength="15">
+                            </div>
+                            <p *ngIf="!(managerInput.homePhone | phoneValid)" class="text-danger">
+                                Must be at least 10 and max 15 digits.
+                            </p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">Work Email-Id</label>
+                            <div class="input-group">
+                                <span class="input-group-text height-26px"> <i class="fa fa-envelope"
+                                        style="color: #555;"></i></span>
+                                <input type="email" [(ngModel)]="managerInput.workEmail" class="form-control"
+                                    placeholder="Work Email Address">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">Personal Email-Id</label>
+                            <div class="input-group">
+                                <span class="input-group-text height-26px"> <i class="fa fa-envelope"
+                                        style="color: #555;"></i></span>
+                                <input type="email" [(ngModel)]="managerInput.personalEmail" class="form-control"
+                                    placeholder="Email">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">LinkedIn-url</label>
+                            <div class="input-group">
+                                <span class="input-group-text height-26px">
+                                    <i class="fa-brands fa-linkedin" style="color: #00aff0;"></i></span>
+                                <input type="url" class="form-control" [(ngModel)]="managerInput.linkedInUrl"
+                                    placeholder="LinkedIn URL">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">LinkedIn-Image-link</label>
+                            <div class="input-group">
+                                <span class="input-group-text height-26px">
+                                    <i class="fa-brands fa-linkedin" style="color: #00aff0;"></i></span>
+                                <input type="url" class="form-control" [(ngModel)]="managerInput.linkedInImageUrl"
+                                    placeholder="Please paste Linkedin image link here">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">Skill Needed</label>
+                            <input type="text" [(ngModel)]="managerInput.skillNeeded" class="form-control"
+                                placeholder="Skill Needed">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Notes</label>
+                            <textarea class="form-control" [(ngModel)]="managerInput.notes" placeholder="Details.."
+                                style="height: 70px;"></textarea>
+                        </div>
+
+                        <!-- <div class="col-md-2">
+                            <label class="form-label">is Manager?</label>
+                            <div>
+                                <input type="checkbox" [(ngModel)]="managerInput.isManager">
+                            </div>
+                        </div> -->
+
+                        <div class="col-md-2">
+                        <div class="d-flex mt-4">
+                            <label class="form-label mt-1">Still With Company?</label>
+                        
+                            <div class="form-check form-switch ms-3">
+                                <input class="form-check-input mt-2 fs-6" [checked]="managerInput.stillWithCompany"
+                                type="checkbox">
+                            </div>
+                       </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="d-flex mt-4">
+                                <label class="form-label mt-1">Is-Active?</label>
+                            
+                                <div class="form-check form-switch ms-3">
+                                    <input class="form-check-input mt-2 fs-6" [checked]="managerInput.isActive"
+                                    type="checkbox">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

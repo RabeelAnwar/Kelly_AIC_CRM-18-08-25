@@ -1,0 +1,242 @@
+<style>
+    ::ng-deep p-calendar .p-inputtext {
+        padding: 0;
+        padding-left: 10px;
+        width: 770px;
+
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-2 mt-4">
+        <app-left-client-search-nav></app-left-client-search-nav>
+    </div>
+    <div class="col-md-10 ps-0">
+        <div class="header">
+            <h1>My Lead ({{clientData.clientName}})</h1>
+            <div>
+                <button class="btn btn-success py-0 px-2 mx-1" (click)="saveLead()">
+                    {{ leadModelInput.id ? 'Update' : 'Save' }}
+                </button>
+                <button class="btn btn-danger py-0 px-2" (click)="onCancel()">Cancel</button>
+            </div>
+        </div>
+
+        <div class="company-info-box mx-2 mb-3">
+            <div class="section-header fw-normal p-1">
+                Client Lead
+            </div>
+
+            <div class="form-content py-0">
+                <div class="row mb-2">
+
+                    <!-- Category -->
+                    <div class="col-md-6 mb-2">
+                        <div>
+                            <label class="form-label">Category</label>
+                            <span class="required-label"
+                                *ngIf="!leadModelInput.category || leadModelInput.category.trim() === ''">REQUIRED</span>
+                        </div>
+                        <div class="card flex justify-content-center">
+                                <p-dropdown [showClear]="true"
+                                [options]="categories" [(ngModel)]="leadModelInput.category"
+                                optionValue="name"
+                                optionLabel="name"
+                                placeholder="--Select Category--" />
+                            </div>
+                    </div>
+
+
+                    <!-- Referred By -->
+                    <div class="col-md-6 mb-2">
+                        <label class="form-label">Referred By</label>
+                        <input type="text" [(ngModel)]="leadModelInput.referredBy" class="form-control"
+                            placeholder="Referred By" />
+                    </div>
+
+
+                    <!-- Lead Types -->
+                    <div class="col-md-6 mb-2">
+                        <div>
+                            <label class="form-label">Lead Types</label>
+                            <span class="required-label"
+                                *ngIf="!leadModelInput.leadType || leadModelInput.leadType.trim() === ''">REQUIRED</span>
+                        </div>
+                            <div class="card flex justify-content-center">
+                                <p-dropdown [showClear]="true"
+                                [options]="leadTypes" [(ngModel)]="leadModelInput.leadType"
+                                optionValue="name"
+                                optionLabel="name"
+                                placeholder="--Select Lead Type--" />
+                            </div>
+                    </div>
+
+                    <!-- Approximate Amount -->
+                    <div class="col-md-6 mb-2">
+                        <label class="form-label">Approximate Amount</label>
+                        <input type="number" [(ngModel)]="leadModelInput.approximateAmount" class="form-control"
+                            placeholder="Approximate Amount" />
+                    </div>
+
+                    <!-- Status of Lead -->
+                    <div class="col-md-6 mb-2">
+                        <div>
+                            <label class="form-label">Status of Lead</label>
+                            <span class="required-label"
+                                *ngIf="!leadModelInput.statusOfLead || leadModelInput.statusOfLead.trim() === ''">REQUIRED</span>
+                        </div>
+
+                        <div class="card flex justify-content-center">
+                                <p-dropdown [showClear]="true"
+                                [options]="leadStatus" [(ngModel)]="leadModelInput.statusOfLead"
+                                optionValue="name"
+                                optionLabel="name"
+                                placeholder="--Select Status--" />
+                            </div>
+                    </div>
+
+                    <!-- Source -->
+                    <div class="col-md-6 mb-2">
+                        <label class="form-label">Source</label>
+                        <input type="text" [(ngModel)]="leadModelInput.source" class="form-control"
+                            placeholder="Source" />
+                    </div>
+
+
+
+                    <!-- Department -->
+                    <div class="col-md-6 mb-2">
+                        <div>
+                            <label class="form-label">Department</label>
+                            <span class="required-label"
+                                *ngIf="!leadModelInput.departmentId || leadModelInput.departmentId === 0">REQUIRED</span>
+                        </div>
+                        <div class="card flex justify-content-center">
+                                <p-dropdown [showClear]="true"
+                                [options]="departments" [(ngModel)]="leadModelInput.departmentId"
+                                optionValue="id"
+                                optionLabel="name"
+                                placeholder="--Select Department--" />
+                            </div>
+                    </div>
+
+
+                    <!-- Lead Information -->
+                    <div class="col-md-6 mb-2">
+                        <label class="form-label">Lead Information</label>
+                        <input type="text" [(ngModel)]="leadModelInput.leadInformation" class="form-control"
+                            placeholder="Lead Information" />
+                    </div>
+
+
+                    <!-- Manager -->
+                    <div class="col-md-6 mb-2">
+                        <div>
+                            <label class="form-label">Manager</label>
+                            <span class="required-label"
+                                *ngIf="!leadModelInput.managerId || leadModelInput.managerId === 0">REQUIRED</span>
+                        </div>
+                        <div class="card flex justify-content-center">
+                                <p-dropdown [showClear]="true"
+                                [options]="managers" [(ngModel)]="leadModelInput.managerId"
+                                optionValue="id"
+                                optionLabel="name"
+                                placeholder="--Select Manager--" />
+                            </div>
+                    </div>
+
+
+
+                    <!-- Result -->
+                    <div class="col-md-6 mb-2">
+                        <label class="form-label">Result</label>
+                        <input type="text" [(ngModel)]="leadModelInput.result" class="form-control"
+                            placeholder="Result" />
+                    </div>
+
+
+                    <!-- Assigned To -->
+                    <div class="col-md-6 mb-2">
+                        <div>
+                            <label class="form-label">Assigned To</label>
+                            <span class="required-label"
+                                *ngIf="!leadModelInput.assignedToId || leadModelInput.assignedToId.trim() === ''">REQUIRED</span>
+                        </div>
+                        <div class="card flex justify-content-center">
+                                <p-dropdown [showClear]="true"
+                                [options]="usersList" [(ngModel)]="leadModelInput.assignedToId"
+                                optionValue="id"
+                                optionLabel="name"
+                                placeholder="--Assigned To--" />
+                            </div>
+                    </div>
+
+                    <!-- Reminder Date -->
+                    <div class="col-md-6 mb-2">
+                        <label class="form-label">Reminder Date</label>
+                        <div class="flex justify-content-center">
+                            <p-calendar [(ngModel)]="leadModelInput.reminderDateTime" [iconDisplay]="'input'"
+                                [showIcon]="true" />
+                        </div>
+                    </div>
+
+                    <!-- Generated By -->
+                    <div class="col-md-6 mb-2">
+                        <label class="form-label">Generated By</label>
+
+                         <div class="card flex justify-content-center">
+                                <p-dropdown [showClear]="true"
+                                [options]="usersList" [(ngModel)]="leadModelInput.generatedById"
+                                optionValue="id"
+                                optionLabel="name"
+                                placeholder="--Select Generated By--" />
+                            </div>
+                    </div>
+
+                    <div class="col-md-6 mb-2">
+
+                        <label></label>
+
+                        <div class="d-flex">
+                            <div class="me-5">
+                                <div class="d-flex">
+                                    <label class="form-label mt-1">Is Staff Consultant?</label>
+                                
+                                    <div class="form-check form-switch ms-3">
+                                        <input class="form-check-input mt-2 fs-6" [checked]="leadModelInput.isStaffConsultant"
+                                        type="checkbox">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mx-5">
+                                <div class="d-flex">
+                                    <label class="form-label mt-1">Is Client Manager?</label>
+                                
+                                    <div class="form-check form-switch ms-3">
+                                        <input class="form-check-input mt-2 fs-6" [checked]="leadModelInput.isClientManager"
+                                        type="checkbox">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="ms-5">
+                                <div class="d-flex">
+                                    <label class="form-label mt-1">Called?</label>
+                                
+                                    <div class="form-check form-switch ms-3">
+                                        <input class="form-check-input mt-2 fs-6" [checked]="leadModelInput.called"
+                                        type="checkbox">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

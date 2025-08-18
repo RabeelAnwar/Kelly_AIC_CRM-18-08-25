@@ -1,0 +1,5 @@
+<app-top-navbar *ngIf="!isLoginPage"></app-top-navbar>
+<p-toast position="bottom-right" [baseZIndex]="5000" />
+<div class="container-fluid">
+    <router-outlet></router-outlet>
+</div>

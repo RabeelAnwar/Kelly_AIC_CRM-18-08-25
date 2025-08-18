@@ -1,0 +1,358 @@
+<style>
+    ::ng-deep .ng-placeholder {
+        font-size: 16px;
+    }
+</style>
+
+<div>
+    <div class="header">
+        <h1>User Master</h1>
+        <div>
+            <button class="btn btn-success py-0 px-2 mx-1" (click)="saveUser()">
+                {{ userInput.id ? 'Update' : 'Save' }}
+            </button>
+            <button class="btn btn-danger py-0 px-2" (click)="resetForm()">Cancel</button>
+        </div>
+    </div>
+
+    <div class="company-info-box mx-2 mb-3">
+        <div class="section-header fw-normal p-1">
+            User Information
+        </div>
+
+        <div class="form-content py-0">
+
+            <div class="row mb-2">
+                <div class="col-md-4">
+                    <div>
+                        <label class="form-label">First Name</label>
+                        <span *ngIf="!userInput.firstName || userInput.firstName.trim() === ''"
+                            class="required-label">REQUIRED</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="First Name" [(ngModel)]="userInput.firstName">
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Middle Name</label>
+                    <input type="text" class="form-control" placeholder="Middle Name"
+                        [(ngModel)]="userInput.middleName">
+                </div>
+
+                <div class="col-md-4">
+                    <div>
+                        <label class="form-label">Last Name</label>
+                        <span *ngIf="!userInput.lastName || userInput.lastName.trim() === ''"
+                            class="required-label">REQUIRED</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Last Name" [(ngModel)]="userInput.lastName">
+                </div>
+            </div>
+
+            <div class="row mb-2">
+
+                <div class="col-md-4">
+                    <div>
+                        <label class="form-label">User Name</label>
+                        <span *ngIf="!userInput.userName || userInput.userName.trim() === ''"
+                            class="required-label">REQUIRED</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="User Name" [(ngModel)]="userInput.userName">
+                </div>
+
+                <div class="col-md-4">
+                    <div>
+                        <label class="form-label">Password</label>
+                        <span *ngIf="!userInput.password || userInput.password.trim() === ''"
+                            class="required-label">REQUIRED</span>
+                    </div>
+                    <input type="password" class="form-control" placeholder="Password" [(ngModel)]="userInput.password">
+                </div>
+
+                <div class="col-md-4">
+                    <div>
+                        <label class="form-label">Contact Type</label>
+                        <span *ngIf="!userInput.contactTypeId" class="required-label">REQUIRED</span>
+                    </div>
+
+                     <div class="card flex justify-content-center">
+                                <p-dropdown [showClear]="true"
+                                [options]="contactTypes" [(ngModel)]="userInput.contactTypeId"
+                                optionValue="id"
+                                optionLabel="name"
+                                (onChange)="onContactTypeChange(userInput.contactTypeId);"
+                                placeholder="--Select Contact Type--" />
+                                </div>
+                </div>
+
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-md-6">
+                    <label class="form-label">Address 1</label>
+                    <input type="text" class="form-control" placeholder="address" [(ngModel)]="userInput.address1">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Address 2</label>
+                    <input type="text" class="form-control" placeholder="address" [(ngModel)]="userInput.address2">
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-md-3">
+                    <label class="form-label">Country</label>
+                    <div class="card flex justify-content-center">
+                                <p-dropdown [showClear]="true"
+                                [options]="countries" [(ngModel)]="userInput.country"
+                                (onChange)="onCountryChange(userInput.country)" 
+                                optionValue="name"
+                                optionLabel="name"
+                                (onClear)="userInput.state = ''; userInput.city = ''; cities = []; states = [];"
+                                placeholder="--Select Country--" />
+                            </div>
+                </div>
+                <div class="col-md-3">
+                    <div>
+                        <span *ngIf="!userInput.state" class="required-label">REQUIRED</span>
+                        <label class="form-label">State</label>
+                    </div>
+                     <div class="card flex justify-content-center">
+                                <p-dropdown [showClear]="true"
+                                [options]="states" [(ngModel)]="userInput.state"
+                                (onChange)="getCities(userInput.state)" 
+                                optionValue="name"
+                                optionLabel="name"
+                                (onClear)="userInput.city = ''; cities = [];"
+                                placeholder="--Select State--" />
+                        </div>
+                </div>
+                <div class="col-md-3">
+                    <div>
+                        <label class="form-label">City</label>
+                        <span *ngIf="!userInput.city" class="required-label">REQUIRED</span>
+                    </div>
+                    <div class="card flex justify-content-center">
+                                <p-dropdown [showClear]="true"
+                                [options]="cities" [(ngModel)]="userInput.city"
+                                optionValue="name"
+                                optionLabel="name"
+                                placeholder="--Select city--" />
+                        </div>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">ZipCode</label>
+                    <input type="text" class="form-control" placeholder="zipcode" [(ngModel)]="userInput.zipCode">
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-md-4">
+                    <label class="form-label">Phone No 1</label>
+                    <div class="input-group">
+                        <span class="input-group-text height-26px"> <i class="fa fa-phone"
+                                style="color: #555;"></i></span>
+                        <input type="text" class="form-control" style="width: 50%;" placeholder="Phone Number"
+                            mask="(000) 000-0000" phoneValid [(ngModel)]="userInput.phone1" maxlength="15"
+                            minlength="10">
+                        <input type="text" class="form-control " placeholder="EXT" maxlength="15"
+                            [(ngModel)]="userInput.phone1Ext">
+                    </div>
+                    <p *ngIf="!(userInput.phone1 | phoneValid)" class="text-danger">
+                        Must be at least 10 and max 15 digits.
+                    </p>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Phone No 2</label>
+                    <div class="input-group">
+                        <span class="input-group-text height-26px"> <i class="fa fa-phone"
+                                style="color: #555;"></i></span>
+                        <input type="text" class="form-control" style="width: 50%;" placeholder="Phone Number"
+                            mask="(000) 000-0000" phoneValid [(ngModel)]="userInput.phone2" maxlength="15"
+                            minlength="10">
+                        <input type="text" class="form-control " placeholder="EXT" maxlength="15"
+                            [(ngModel)]="userInput.phone2Ext">
+                    </div>
+
+                    <p *ngIf="!(userInput.phone2 | phoneValid)" class="text-danger">
+                        Must be at least 10 and max 15 digits.
+                    </p>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Alternate Phone no</label>
+                    <div class="input-group">
+                        <span class="input-group-text height-26px"> <i class="fa fa-phone"
+                                style="color: #555;"></i></span>
+                        <input type="text" class="form-control" style="width: 50%;" placeholder="Alternate Phone no"
+                            mask="(000) 000-0000" phoneValid [(ngModel)]="userInput.alternatePhone" maxlength="15"
+                            minlength="10">
+                        <input type="text" class="form-control " placeholder="EXT" maxlength="15"
+                            [(ngModel)]="userInput.alternatePhoneExt">
+                    </div>
+                    <p *ngIf="!(userInput.alternatePhone | phoneValid)" class="text-danger">
+                        Must be at least 10 and max 15 digits.
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-md-3">
+                    <label class="form-label">Work Email-Id</label>
+                    <div class="input-group">
+                        <span class="input-group-text height-26px"> <i class="fa fa-envelope"
+                                style="color: #555;"></i></span>
+                        <input type="email" class="form-control" placeholder="work email address"
+                            [(ngModel)]="userInput.workEmail">
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label">Personal Email-Id</label>
+                    <div class="input-group">
+                        <span class="input-group-text height-26px"> <i class="fa fa-envelope"
+                                style="color: #555;"></i></span>
+                        <input type="email" class="form-control" placeholder="personal email address"
+                            [(ngModel)]="userInput.personalEmail">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">MS Teams ID</label>
+                    <div class="input-group">
+                        <span class="input-group-text height-26px">
+                            <i class="fa fa-comment" style="color: #5056AA;"></i></span>
+                        <input type="text" class="form-control" placeholder="teams id" [(ngModel)]="userInput.skypeId">
+                    </div>
+                </div>
+
+                <div class="col-md-3" *ngIf="!isAdminEdit">
+                    <label class="form-label">Is-Active?</label>
+                    <div>
+                        <input type="checkbox" [(ngModel)]="userInput.activeStatus">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="company-info-box mx-2">
+        <div class="section-header fw-normal p-1">
+            User Details
+        </div>
+
+        <div class="card p-2">
+
+            <p-table #dt [value]="usersList" [paginator]="true" [rows]="10" [globalFilterFields]="searchFields"
+                [rowHover]="true" [scrollable]="true" scrollHeight="550px" [style]="{ width: '100%' }"
+                columnResizeMode="expand" [resizableColumns]="true">
+                <ng-template pTemplate="colgroup">
+                    <colgroup>
+                        <col style="width: 30px" />
+                        <col style="width: 130px" />
+                        <col style="width: 130px" />
+                        <col style="width: 130px" />
+                        <col style="width: 130px" />
+                        <col style="width: 130px" />
+                        <col style="width: 130px" />
+                        <col style="width: 130px" />
+                        <col style="width: 130px" />
+                        <col style="width: 80px" />
+                        <col style="width: 80px" />
+                    </colgroup>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pResizableColumn>Sr.</th>
+                        <th pResizableColumn>User Name</th>
+                        <th pResizableColumn>Password</th>
+                        <th pResizableColumn>Contact Name</th>
+                        <th pResizableColumn>City</th>
+                        <th pResizableColumn>State</th>
+                        <th pResizableColumn>Phone1</th>
+                        <th pResizableColumn>WorkEmailId</th>
+                        <th pResizableColumn>MS Teams ID</th>
+                        <th pResizableColumn>ActiveStatus</th>
+                        <th pResizableColumn>Action</th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th>
+                            <input type="text" pInputText size="50" placeholder="Search User Name"
+                                (input)="dt.filter($any($event.target).value, 'firstName', 'contains')"
+                                style="width: 100%" />
+                        </th>
+                        <th>
+                        </th>
+                        <th>
+                            <input type="text" pInputText size="50" placeholder="Search Contact Name"
+                                (input)="dt.filter($any($event.target).value, 'firstName', 'contains')"
+                                style="width: 100%" />
+                        </th>
+                        <th>
+                            <input type="text" pInputText size="50" placeholder="Search City"
+                                (input)="dt.filter($any($event.target).value, 'city', 'contains')"
+                                style="width: 100%" />
+                        </th>
+                        <th>
+                            <input type="text" pInputText size="50" placeholder="Search State"
+                                (input)="dt.filter($any($event.target).value, 'state', 'contains')"
+                                style="width: 100%" />
+                        </th>
+                        <th>
+                            <input type="text" pInputText size="50" placeholder="Search Phone1"
+                                (input)="dt.filter($any($event.target).value, 'phone1', 'contains')"
+                                style="width: 100%" />
+                        </th>
+                        <th>
+                            <input type="text" pInputText size="50" placeholder="Search WorkEmailId"
+                                (input)="dt.filter($any($event.target).value, 'workEmail', 'contains')"
+                                style="width: 100%" />
+                        </th>
+                        <th>
+                            <input type="text" pInputText size="50" placeholder="Search TeamsId"
+                                (input)="dt.filter($any($event.target).value, 'skypeId', 'contains')"
+                                style="width: 100%" />
+                        </th>
+                        <th></th>
+                        <th></th>
+
+                    </tr>
+
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+                    <tr>
+                        <td>{{ rowIndex + 1 }}</td>
+                        <td>{{ rowData.userName }}</td>
+                        <td>****</td>
+                        <td>{{ rowData.firstName }} {{ rowData.lastName }}</td>
+                        <td>{{ rowData.city }}</td>
+                        <td>{{ rowData.state }}</td>
+                        <td>{{ rowData.phone1 }} - {{ rowData.phone1Ext }}</td>
+                        <td>{{ rowData.workEmail }}</td>
+                        <td>{{ rowData.skypeId }}</td>
+                        <td>
+                            <div class="form-check form-switch ms-3">
+                                <input class="form-check-input mt-2 fs-6" type="checkbox"
+                                    [disabled]="adminActionsDisable(rowData.userName)"
+                                    (change)="onStatusChange($event, rowData)" [checked]="rowData.activeStatus">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex justify-content-center pt-1">
+                                <div class="p-3 py-0 cursor-pointer" (click)="editUser(rowData)">
+                                    <span><i class="far fa-edit"></i></span>
+                                </div>
+                                <div class="p-3 py-0 cursor-pointer" (click)="deleteUser(rowData.id)">
+                                    <span><i class="fas fa-trash"></i></span>
+                                </div>
+                            </div>
+
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+    </div>
+
+</div>

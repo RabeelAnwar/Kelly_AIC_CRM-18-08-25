@@ -1,0 +1,136 @@
+<style>
+    ::ng-deep p-calendar .p-inputtext {
+        padding: 0 10px;
+    }
+
+    ::ng-deep p-calendar span {
+        width: 100% !important;
+    }
+</style>
+
+<div>
+    <div class="header">
+        <h1>Audits</h1>
+    </div>
+
+    <div class="company-info-box mx-2 mb-3">
+        <div class="form-content py-0">
+
+            <div class="row py-2">
+
+                <div class="col-md-2">
+                    <label class="form-label">User</label>
+                    <div class="card flex justify-content-center">
+                                <p-dropdown [showClear]="true"
+                                [options]="usersList" [(ngModel)]="input.creatorId"
+                                optionValue="id"
+                                optionLabel="name"
+                                (onChange)="showRpt();"
+                                placeholder="Select User" />
+                            </div>
+                </div>
+
+                <div class="col-md-2">
+                    <label class="form-label">From Date</label>
+                    <div class="flex justify-content-center">
+                        <p-calendar [(ngModel)]="input.fromDate" [iconDisplay]="'input'" [showIcon]="true" />
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <label class="form-label">To Date</label>
+                    <div class="flex justify-content-center">
+                        <p-calendar [(ngModel)]="input.toDate" [iconDisplay]="'input'" [showIcon]="true" />
+                    </div>
+                </div>
+
+                <div class="col-md-1">
+                    <label> </label>
+                    <div class="d-flex justify-content-start">
+                        <div class="mt-1">
+                            <button class="btn btn-primary py-0 px-2" (click)="showRpt();">
+                                Show
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+
+                    <label> </label>
+                    <div class="d-flex justify-content-start">
+                        <label class="form-label">Quick Tabs</label>
+
+                        <div class="ms-2">
+                            <button type="button" class="btn btn-primary py-0" (click)="setToday()">Today</button>
+                        </div>
+
+                        <div class="ms-2">
+                            <button type="button" class="btn btn-warning py-0" (click)="setThisWeek()">This
+                                Week</button>
+                        </div>
+
+                        <div class="ms-2">
+                            <button type="button" class="btn btn-danger py-0" (click)="setThisMonth()">This
+                                Month</button>
+                        </div>
+
+                        <div class="ms-2">
+                            <button type="button" class="btn btn-secondary py-0"
+                                (click)="setYesterday()">Yesterday</button>
+                        </div>
+
+                        <div class="ms-2">
+                            <button type="button" class="btn btn-info py-0" (click)="setLastWeek()">Last Week</button>
+                        </div>
+
+                        <div class="ms-2">
+                            <button type="button" class="btn btn-success py-0" (click)="setLastMonth()">Last
+                                Month</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="company-info-box mx-2 mb-3">
+
+        <div class="section-header fw-normal p-1 d-flex justify-content-between align-items-center">
+            <h6 class="mb-0 text-white" (click)="showRpt();"><i class="fas fa-bell me-2"></i>Recent Audits
+                ({{recentAudits}})</h6>
+            <button class="btn btn-sm btn-outline-secondary" style="border-color: #fff;"><i
+                    class="fas fa-sync text-white"></i></button>
+        </div>
+        <div class="form-content py-0">
+            <div class="mt-1">
+                <p-table #dt [value]="auditRptList" [paginator]="true" [rows]="25" [rowHover]="true" [scrollable]="true"
+                    scrollHeight="550px" [style]="{ width: '100%' }" columnResizeMode="expand"
+                    [resizableColumns]="true">
+
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th class="w-25"></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+                        <tr>
+                            <td class="fw-bolder">{{ rowData.creatorName }}</td>
+                            <td>{{ rowData.message }}</td>
+                            <td class="text-end">
+                                <span><i class="fa-regular fa-clock"></i></span>
+                                {{ rowData.creationTime | timeAgoDetailed }}
+                                <span><i class="fa-solid fa-calendar-days mx-1"></i></span>
+                                {{ rowData.creationTime | date: 'MM-dd-yyyy' }}
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+</div>

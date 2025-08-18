@@ -1,0 +1,129 @@
+<div class="row">
+    <div class="col-md-2 mt-4">
+        <app-left-client-search-nav></app-left-client-search-nav>
+    </div>
+    <div class="col-md-10 ps-0">
+
+        <div>
+
+            <div class="header">
+                <h1>Client List</h1>
+            </div>
+
+
+            <div class="card p-2">
+
+                <p-table #dt [value]="clientsList" [paginator]="true" [rows]="10" [globalFilterFields]="searchFields"
+                    [rowHover]="true" [scrollable]="true" scrollHeight="550px" [style]="{ width: '100%' }"
+                    columnResizeMode="expand" [resizableColumns]="true">
+                    <!-- <ng-template pTemplate="colgroup">
+                    <colgroup>
+                        <col style="width: 30px" />
+                        <col style="width: 130px" />
+                        <col style="width: 130px" />
+                        <col style="width: 130px" />
+                        <col style="width: 130px" />
+                        <col style="width: 130px" />
+                        <col style="width: 130px" />
+                        <col style="width: 130px" />
+                        <col style="width: 130px" />
+                        <col style="width: 80px" />
+                        <col style="width: 80px" />
+                    </colgroup>
+                </ng-template> -->
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Sr</th>
+                            <th>Client Name</th>
+                            <th>State</th>
+                            <th>City</th>
+                            <th>Phone1</th>
+                            <th>Purchase Contact Name</th>
+                            <th>Purchase Contact No</th>
+                            <th>Company Size</th>
+                            <th>Registered?</th>
+                            <th>Action</th>
+                        </tr>
+                        <tr>
+                            <th></th>
+
+                            <th>
+                                <input type="text" pInputText size="50" placeholder="Search Client Name"
+                                    (input)="dt.filter($any($event.target).value, 'clientName', 'contains')"
+                                    style="width: 100%" />
+                            </th>
+                            <th>
+                                <input type="text" pInputText size="50" placeholder="Search City"
+                                    (input)="dt.filter($any($event.target).value, 'city', 'contains')"
+                                    style="width: 100%" />
+                            </th>
+                            <th>
+                                <input type="text" pInputText size="50" placeholder="Search State"
+                                    (input)="dt.filter($any($event.target).value, 'state', 'contains')"
+                                    style="width: 100%" />
+                            </th>
+                            <th>
+                                <input type="text" pInputText size="50" placeholder="Search Phone1"
+                                    (input)="dt.filter($any($event.target).value, 'phone1', 'contains')"
+                                    style="width: 100%" />
+                            </th>
+                            <th>
+                                <input type="text" pInputText size="50" placeholder="Search Purchase Contact Name"
+                                    (input)="dt.filter($any($event.target).value, 'purchaseContactName', 'contains')"
+                                    style="width: 100%" />
+                            </th>
+                            <th>
+                                <input type="text" pInputText size="50" placeholder="Search Purchase Contact No"
+                                    (input)="dt.filter($any($event.target).value, 'purchaseContact', 'contains')"
+                                    style="width: 100%" />
+                            </th>
+                            <th>
+                                <input type="text" pInputText size="50" placeholder="Search Company Size"
+                                    (input)="dt.filter($any($event.target).value, 'companySize', 'contains')"
+                                    style="width: 100%" />
+                            </th>
+                            <th></th>
+                            <th></th>
+
+                        </tr>
+
+                    </ng-template>
+                    <ng-template pTemplate="body" let-client let-rowIndex="rowIndex">
+                        <tr>
+
+                            <td>{{ rowIndex + 1 }}</td>
+                            <td> <a href="javascript:void(0)" class="clientNameLink" (click)="clientDashboard(client.id);">
+                                    {{ client.clientName }}</a></td>
+                            <td>{{ client.state }}</td>
+                            <td>{{ client.city }}</td>
+                            <td>{{ client.officeContact | phoneFormat }}</td>
+                            <td>{{ client.purchaseContactName }}</td>
+                            <td>{{ client.purchaseContact | phoneFormat  }}  {{ client.purchaseContactExt }}</td>
+                            <td>{{ client.companySize }}</td>
+                            <td>
+                                <div class="form-check form-switch ms-3">
+                                    <input class="form-check-input mt-2 fs-6" type="checkbox"
+                                        (change)="onRegisteredChange($event, client)" [checked]="client.registered">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex justify-content-start pt-1">
+                                    <div class="p-0 pe-3">
+                                        <span class="cursor-pointer" (click)="editClient(client);">
+                                            <i class="far fa-edit"></i></span>
+                                    </div>
+
+                                    <div class="p-0 pe-3">
+                                        <span class="cursor-pointer" (click)="deleteClient(client.id);"><i
+                                                class="fas fa-trash"></i></span>
+                                    </div>
+                                </div>
+                            </td>
+
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+</div>

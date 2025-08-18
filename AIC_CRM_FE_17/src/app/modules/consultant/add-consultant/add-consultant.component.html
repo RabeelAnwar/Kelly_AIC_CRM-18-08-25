@@ -1,0 +1,274 @@
+<style>
+    ::ng-deep .ng-placeholder {
+        font-size: 16px;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-2 mt-4">
+        <app-left-consultant-search-nav></app-left-consultant-search-nav>
+    </div>
+    <div class="col-md-10 ps-0">
+        <div class="header">
+            <h1>Consultant Master</h1>
+            <div>
+                <button class="btn btn-success py-0 px-2 mx-1" (click)="saveConsultant();">
+                    {{ consultantInput.id ? 'Update' : 'Save' }}
+                </button>
+                <button class="btn btn-danger py-0 px-2" (click)="onCancel();">Close</button>
+            </div>
+        </div>
+
+        <div class="company-info-box mx-2 mb-3">
+            <div class="section-header fw-normal p-1">
+                Consultant Detail
+            </div>
+
+            <div class="form-content py-0">
+                <div class="row mb-2">
+                    <div class="col-md-3">
+                        <label class="form-label">Assigned To</label>
+                        <div class="card flex justify-content-center">
+                            <p-dropdown [showClear]="true" [options]="usersList"
+                                [(ngModel)]="consultantInput.assignedToId" optionValue="id" optionLabel="name"
+                                placeholder="--Assigned To--" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div>
+                            <label class="form-label">First Name</label>
+                            <span class="required-label"
+                                *ngIf="!consultantInput.firstName || consultantInput.firstName.trim() === ''">
+                                REQUIRED
+                            </span>
+                        </div>
+                        <input type="text" class="form-control" [(ngModel)]="consultantInput.firstName"
+                            placeholder="First Name">
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Middle Name</label>
+                        <input type="text" class="form-control" [(ngModel)]="consultantInput.middleName"
+                            placeholder="Middle Name">
+                    </div>
+
+                    <div class="col-md-3">
+                        <div>
+                            <label class="form-label">Last Name</label>
+                            <span class="required-label"
+                                *ngIf="!consultantInput.lastName || consultantInput.lastName.trim() === ''">
+                                REQUIRED
+                            </span>
+                        </div>
+                        <input type="text" class="form-control" [(ngModel)]="consultantInput.lastName">
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-md-3">
+                        <label class="form-label">Current Position</label>
+                        <input type="text" class="form-control" [(ngModel)]="consultantInput.currentPosition"
+                            placeholder="Current Position">
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Visa Status</label>
+                        <div class="card flex justify-content-center">
+                            <p-dropdown [showClear]="true" [options]="visaStatus"
+                                [(ngModel)]="consultantInput.visaStatus" optionValue="name" optionLabel="name"
+                                placeholder="--Select Visa Status--" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Current Rate</label>
+                        <input type="text" class="form-control" [(ngModel)]="consultantInput.currentRate"
+                            placeholder="Enter only Numbers">
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <div>
+                            <label class="form-label">Resume</label>
+                            <span class="required-label">
+                                Except (PDF, DOC, DOCX, TXT, RTF)
+                            </span>
+                        </div>
+
+                        <input type="file" class="form-control" accept=".doc,.docx,.pdf,.txt,.rtf"
+                            (change)="onFileSelected($event)">
+                        <!-- ✅ Show existing resume if in edit mode -->
+                        <div *ngIf="resumePath" class="mt-2">
+                            <label class="form-label">Existing Resume:</label><br>
+                            <a [href]="resumePath" target="_blank" class="text-primary fw-bold">
+                                <i class="fa fa-paperclip"></i> {{ getFileName(resumePath) }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        <label class="form-label">Address 1</label>
+                        <ckeditor [editor]="Editor" [config]="config" data="consultantInput.address1"
+                            [(ngModel)]="consultantInput.address1"></ckeditor>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Address 2</label>
+                        <ckeditor [editor]="Editor" [config]="config" data="consultantInput.address2"
+                            [(ngModel)]="consultantInput.address2"></ckeditor>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-md-3">
+                        <label class="form-label">Country</label>
+                        <div class="card flex justify-content-center">
+                            <p-dropdown [showClear]="true" [options]="countries" [(ngModel)]="consultantInput.country"
+                                (onChange)="onCountryChange(consultantInput.country)" optionValue="name"
+                                optionLabel="name"
+                                (onClear)="consultantInput.state = undefined; consultantInput.city = undefined; cities = []; states = [];"
+                                placeholder="--Select Country--" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">State</label>
+                        <div class="card flex justify-content-center">
+                            <p-dropdown [showClear]="true" [options]="states" [(ngModel)]="consultantInput.state"
+                                (onChange)="getCities(consultantInput.state)" optionValue="name" optionLabel="name"
+                                (onClear)="consultantInput.city = undefined; cities = [];"
+                                placeholder="--Select State--" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">City</label>
+                        <div class="card flex justify-content-center">
+                            <p-dropdown [showClear]="true" [options]="cities" [(ngModel)]="consultantInput.city"
+                                optionValue="name" optionLabel="name" placeholder="--Select city--" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Zip Code</label>
+                        <input type="text" class="form-control" [(ngModel)]="consultantInput.zipCode"
+                            placeholder="Zip Code">
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-md-3">
+                        <label class="form-label">Office</label>
+                        <div class="input-group">
+                            <span class="input-group-text height-26px">
+                                <i class="fa fa-phone" style="color: #555;"></i>
+                            </span>
+                            <input type="text" class="form-control" [(ngModel)]="consultantInput.officePhone"
+                                style="width: 50%;" mask="(000) 000-0000" phoneValid placeholder="Phone Number"
+                                maxlength="15" minlength="10">
+                            <input type="text" class="form-control" [(ngModel)]="consultantInput.officePhoneExt"
+                                placeholder="EXT" maxlength="15">
+                        </div>
+                        <p *ngIf="!(consultantInput.officePhone | phoneValid)" class="text-danger">
+                            Must be at least 10 and max 15 digits.
+                        </p>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Cell</label>
+                        <div class="input-group">
+                            <span class="input-group-text height-26px">
+                                <i class="fa fa-phone" style="color: #555;"></i>
+                            </span>
+                            <input type="text" class="form-control" [(ngModel)]="consultantInput.cellPhone"
+                                style="width: 50%;" mask="(000) 000-0000" phoneValid placeholder="Phone Number"
+                                maxlength="15" minlength="10">
+                            <input type="text" class="form-control" [(ngModel)]="consultantInput.cellPhoneExt"
+                                placeholder="EXT" maxlength="15">
+                        </div>
+
+                        <p *ngIf="!(consultantInput.cellPhone | phoneValid)" class="text-danger">
+                            Must be at least 10 and max 15 digits.
+                        </p>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Home</label>
+                        <div class="input-group">
+                            <span class="input-group-text height-26px">
+                                <i class="fa fa-phone" style="color: #555;"></i>
+                            </span>
+                            <input type="text" class="form-control" [(ngModel)]="consultantInput.homePhone"
+                                style="width: 50%;" mask="(000) 000-0000" phoneValid placeholder="Alternate Phone No"
+                                maxlength="15" minlength="10">
+                            <input type="text" class="form-control" [(ngModel)]="consultantInput.homePhoneExt"
+                                placeholder="EXT" maxlength="15">
+                        </div>
+                        <p *ngIf="!(consultantInput.homePhone | phoneValid)" class="text-danger">
+                            Must be at least 10 and max 15 digits.
+                        </p>
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <label class="form-label">Work Email-Id</label>
+                        <div class="input-group">
+                            <span class="input-group-text height-26px"> <i class="fa fa-envelope"
+                                    style="color: #555;"></i></span>
+                            <input type="email" class="form-control" [(ngModel)]="consultantInput.workEmail"
+                                placeholder="Work Email Address">
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-md-3">
+                        <label class="form-label">Personal Email-Id</label>
+                        <div class="input-group">
+                            <span class="input-group-text height-26px"> <i class="fa fa-envelope"
+                                    style="color: #555;"></i></span>
+                            <input type="email" class="form-control" [(ngModel)]="consultantInput.personalEmail"
+                                placeholder="Email">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">MS Teams ID</label>
+                        <div class="input-group">
+                            <span class="input-group-text height-26px">
+                                <i class="fa fa-comment" style="color: #5056AA;"></i></span>
+                            <input type="text" class="form-control" [(ngModel)]="consultantInput.skypeId"
+                                placeholder="MS Teams ID">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">LinkedIn-url</label>
+                        <div class="input-group">
+                            <span class="input-group-text height-26px">
+                                <i class="fa-brands fa-linkedin" style="color: #00aff0;"></i></span>
+                            <input type="url" class="form-control" [(ngModel)]="consultantInput.linkedInUrl"
+                                placeholder="LinkedIn URL">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">LinkedIn-Image-link</label>
+                        <div class="input-group">
+                            <span class="input-group-text height-26px">
+                                <i class="fa-brands fa-linkedin" style="color: #00aff0;"></i></span>
+                            <input type="url" class="form-control" [(ngModel)]="consultantInput.linkedInImage"
+                                placeholder="Please paste Linkedin image link here">
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-control" [(ngModel)]="consultantInput.notes" placeholder="Details.."
+                            style="height: 70px;"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

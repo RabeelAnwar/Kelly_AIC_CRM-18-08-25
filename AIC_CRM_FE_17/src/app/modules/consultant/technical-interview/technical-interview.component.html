@@ -1,0 +1,269 @@
+<div class="row">
+    <div class="col-md-2 mt-4">
+        <app-left-consultant-search-nav></app-left-consultant-search-nav>
+    </div>
+    <div class="col-md-10 ps-0">
+
+        <div class="row my-2">
+            <div class="col-6 header">
+                <h1>{{consultantData.firstName}} {{consultantData.lastName}}</h1>
+            </div>
+
+            <div class="col-6">
+                <app-consultant-top-nav [consultantData]="consultantData"></app-consultant-top-nav>
+            </div>
+        </div>
+
+        <div class="company-info-box mx-2 mb-3">
+            <div class="section-header fw-normal p-1">
+                General Details
+            </div>
+
+            <div class="form-content py-0">
+
+                <div class="row my-2">
+
+                    <div class="col-md-6">
+                        <table>
+                            <tr>
+                                <td class="text-white" style="background: #337ab7;">Current Position :</td>
+                                <td style="width: 650px;">111</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="col-md-6">
+                        <table>
+                            <tr>
+                                <td class="text-white" style="background: #337ab7;">Current Rate : </td>
+                                <td style="width: 675px;">111</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-3 fw-bold fs-12px">
+                        <span>Address</span>
+                    </div>
+                    <div class="col-md-3 fw-bold fs-12px">
+                        <span> Contact</span>
+                    </div>
+                    <div class="col-md-3 fw-bold fs-12px">
+                        <span> Notes</span>
+                    </div>
+                    <div class="col-md-3 fw-bold fs-12px">
+                        <span> Requisitions</span>
+                    </div>
+                </div>
+                <hr class="my-1">
+                <div class="row">
+
+                    <div class="col-md-3 fs-12px">
+                        <span>Address</span>
+                    </div>
+                    <div class="col-md-3 fs-12px">
+
+                        <div>
+                            <span class="fw-bold"> (o):</span>N/A<br>
+                            <span class="fw-bold"> (m):</span>N/A<br>
+                            <span class="fw-bold"> (home): </span>N/A
+                        </div>
+
+                    </div>
+                    <div class="col-md-3 fs-12px">
+                        <span> Notes</span>
+                    </div>
+                    <div class="col-md-3 fs-12px">
+                        <span> Requisitions</span>
+                    </div>
+                </div>
+
+                <div class="row my-2">
+
+                    <div class="col-md-4">
+                        <table>
+                            <tr>
+                                <td class="text-white" style="background: #337ab7;">(w) email: :</td>
+                                <td style="width: 430px;">111</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="col-md-5">
+                        <table>
+                            <tr>
+                                <td class="text-white" style="background: #337ab7;">(p) email : </td>
+                                <td style="width: 565px;">111</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="col-md-3">
+                        <table>
+                            <tr>
+                                <td class="text-white" style="background: #337ab7; width: 80px;">MS Teams ID :
+                                </td>
+                                <td style="width: 290px;">111</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="header pt-0 ms-auto justify-content-end" style="border-bottom: none;">
+            <div>
+                <button class="btn btn-success py-0 px-2 mx-1" (click)="saveConsultantInterview();">
+                    {{ interviewInput.id ? 'Update' : 'Save' }}
+                </button>
+                <button class="btn btn-danger py-0 px-2" (click)="onCancel();">Close</button>
+            </div>
+        </div>
+
+        <div class="company-info-box mx-2 mb-3">
+            <div class="section-header fw-normal p-1">
+                Technical Interview
+            </div>
+
+            <div class="form-content py-0">
+
+                <div class="row mb-2">
+                    <div class="col-md-4">
+                        <label class="form-label">Requisition</label>
+                        <div class="card flex justify-content-center">
+                                <p-dropdown [showClear]="true"
+                                [options]="clientsList" [(ngModel)]="interviewInput.requisition"
+                                optionValue="id"
+                                optionLabel="name"
+                                placeholder="--Select--" />
+                            </div>
+                    </div>
+
+
+                    <div class="col-md-4">
+                        <label class="form-label">Interview By [Staff]</label>
+                        <div class="card flex justify-content-center">
+                                <p-dropdown [showClear]="true"
+                                [options]="clientsList" [(ngModel)]="interviewInput.interviewByStaff"
+                                optionValue="id"
+                                optionLabel="name"
+                                placeholder="--Select--" />
+                            </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Interview By [Non Staff]</label>
+                        <input type="text" class="form-control" [(ngModel)]="interviewInput.interviewByNonStaff">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Comments</label>
+                        <textarea class="form-control" [(ngModel)]="interviewInput.comments"
+                            style="height: 70px;"></textarea>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Interview Results</label>
+                        <textarea class="form-control" [(ngModel)]="interviewInput.interviewResults"
+                            style="height: 70px;"></textarea>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="form-content py-0">
+
+                <div class="row mb-2">
+                    <p-table #dt [value]="clientsList" [rows]="10" [globalFilterFields]="['clientName']"
+                        [rowHover]="true" scrollHeight="550px" [style]="{ width: '100%' }" columnResizeMode="expand"
+                        [resizableColumns]="true">
+                        <ng-template pTemplate="colgroup">
+                            <colgroup>
+
+                                <col style="width: 5%" />
+                                <col style="width: 10%" />
+                                <col style="width: 10%" />
+                                <col style="width: 10%" />
+                                <col style="width: 25%" />
+                                <col style="width: 10%" />
+                                <col style="width: 10%" />
+                            </colgroup>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+
+                            <tr>
+                                <th pResizableColumn>Sr</th>
+                                <th pResizableColumn>Requistion</th>
+                                <th pResizableColumn>Interview By [Staff]</th>
+                                <th pResizableColumn>Interview By [NonStaff]</th>
+                                <th pResizableColumn>Comments</th>
+                                <th pResizableColumn>Result</th>
+                                <th pResizableColumn>Action</th>
+                            </tr>
+
+                            <tr>
+                                <th></th>
+                                <th>
+                                    <input type="text" pInputText size="50" placeholder="Search User Name"
+                                        (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                                        style="width: 100%" />
+                                </th>
+
+                                <th>
+                                    <input type="text" pInputText size="50" placeholder="Search Contact Name"
+                                        (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                                        style="width: 100%" />
+                                </th>
+                                <th>
+                                    <input type="text" pInputText size="50" placeholder="Search City"
+                                        (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                                        style="width: 100%" />
+                                </th>
+                                <th>
+                                    <input type="text" pInputText size="50" placeholder="Search State"
+                                        (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                                        style="width: 100%" />
+                                </th>
+                                <th>
+                                    <input type="text" pInputText size="50" placeholder="Search Phone1"
+                                        (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                                        style="width: 100%" />
+                                </th>
+
+                                <th></th>
+
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+                            <tr>
+                                <td>{{ rowIndex + 1 }}</td>
+                                <td>{{ rowData.name }}</td>
+                                <td>{{ rowData.status }}</td>
+                                <td>{{ rowData.status }}</td>
+                                <td>{{ rowData.status }}</td>
+                                <td>{{ rowData.status }}</td>
+
+                                <td>
+                                    <div class="d-flex justify-content-start pt-1">
+                                        <div class="p-0 pe-3">
+                                            <span class="cursor-pointer"><i class="far fa-edit"></i></span>
+                                        </div>
+
+                                        <div class="p-0 pe-3">
+                                            <span class="cursor-pointer"><i class="fas fa-trash"></i></span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

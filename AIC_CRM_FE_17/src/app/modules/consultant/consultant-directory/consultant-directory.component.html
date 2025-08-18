@@ -1,0 +1,156 @@
+<div class="row">
+    <div class="col-md-2 mt-4">
+        <app-left-consultant-search-nav
+            [fildteredConsultantsIds]="fildteredConsultantsIds"></app-left-consultant-search-nav>
+    </div>
+    <div class="col-md-10 ps-0">
+
+        <div>
+            <div class="header">
+                <h1>Consultant List</h1>
+            </div>
+
+            <!-- <button (click)="exportToWord();">Export to Word</button> -->
+
+            <div class="card p-2">
+
+                <p-table #dt [value]="consultantsList" [paginator]="true" [rows]="10" (onFilter)="onTableFilter($event)"
+                    [globalFilterFields]="searchFields" [rowHover]="true" [scrollable]="true" scrollHeight="550px"
+                    [style]="{ width: '100%' }" columnResizeMode="expand" [resizableColumns]="true">
+                    <!-- <ng-template pTemplate="colgroup">
+                    <colgroup>
+                        <col style="width: 30px" />
+                        <col style="width: 130px" />
+                        <col style="width: 130px" />
+                        <col style="width: 130px" />
+                        <col style="width: 130px" />
+                        <col style="width: 130px" />
+                        <col style="width: 130px" />
+                        <col style="width: 130px" />
+                        <col style="width: 130px" />
+                        <col style="width: 80px" />
+                        <col style="width: 80px" />
+                    </colgroup>
+                </ng-template> -->
+                    <ng-template pTemplate="header">
+
+                        <tr>
+                            <th colspan="11">
+                                <input type="text" pInputText size="50" placeholder="Global Search..."
+                                    (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                                    [(ngModel)]="inputSearch" style="width: 100%" />
+
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>Sr</th>
+                            <th>Name</th>
+                            <th>Address</th>
+                            <th>Current Position</th>
+                            <th>State</th>
+                            <th>City</th>
+                            <th>Phone1</th>
+                            <th>WorkEmailId</th>
+                            <th>Call Records</th>
+                            <th>Resume</th>
+                            <th>Action</th>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th>
+                                <input type="text" pInputText size="50" placeholder="Search..."
+                                    (input)="dt.filter($any($event.target).value, 'firstName', 'contains')"
+                                    style="width: 100%" />
+                            </th>
+
+                            <th>
+                                <input type="text" pInputText size="50" placeholder="Search..."
+                                    (input)="dt.filter($any($event.target).value, 'completeAddress', 'contains')"
+                                    style="width: 100%" />
+                            </th>
+
+                            <th>
+                                <input type="text" pInputText size="50" placeholder="Search..."
+                                    (input)="dt.filter($any($event.target).value, 'currentPosition', 'contains')"
+                                    style="width: 100%" />
+                            </th>
+
+                            <th>
+                                <input type="text" pInputText size="50" placeholder="Search..."
+                                    (input)="dt.filter($any($event.target).value, 'state', 'contains')"
+                                    style="width: 100%" />
+                            </th>
+
+                            <th>
+                                <input type="text" pInputText size="50" placeholder="Search..."
+                                    (input)="dt.filter($any($event.target).value, 'city', 'contains')"
+                                    style="width: 100%" />
+                            </th>
+
+                            <th>
+                                <input type="text" pInputText size="50" placeholder="Search..."
+                                    (input)="dt.filter($any($event.target).value, 'cellPhone', 'contains')"
+                                    style="width: 100%" />
+                            </th>
+
+                            <th>
+                                <input type="text" pInputText size="50" placeholder="Search..."
+                                    (input)="dt.filter($any($event.target).value, 'workEmail', 'contains')"
+                                    style="width: 100%" />
+                            </th>
+
+                            <th>
+                                <input type="text" pInputText size="50" placeholder="Search..."
+                                    (input)="dt.filter($any($event.target).value, 'callRecords', 'contains')"
+                                    style="width: 100%" />
+                            </th>
+
+                            <th></th>
+                            <th></th>
+
+                        </tr>
+
+                    </ng-template>
+                    <ng-template pTemplate="body" let-consultant let-rowIndex="rowIndex">
+                        <tr>
+                            <td>{{ rowIndex + 1 }}</td>
+                            <td> <a href="javascript:void(0)" class="clientNameLink"
+                                    (click)="consultantDashboard(consultant.id);">
+                                    {{ consultant.lastName }}, {{consultant.firstName}}</a></td>
+                            <!-- <td [innerHTML]="consultant.address1"></td> -->
+                            <td>{{ consultant.completeAddress }}</td>
+                            <td>{{ consultant.currentPosition }}</td>
+                            <td>{{ consultant.state }}</td>
+                            <td>{{ consultant.city }}</td>
+                            <td>{{ consultant.cellPhone | phoneFormat }}</td>
+                            <td>{{ consultant.workEmail }}</td>
+                            <td [innerHTML]="consultant.callRecords"></td>
+                            <!-- {{ consultant.resume }}  -->
+                            <div class="text-center">
+                                <span class="cursor-pointer" *ngIf="consultant.resume">
+                                    <i class="far fa-circle-down" (click)="downloadFile(consultant.resume);"> </i>
+                                </span>
+                            </div>
+                            <td>
+                                <div class="d-flex justify-content-start pt-1">
+                                    <div class="p-0 pe-3">
+                                        <span class="cursor-pointer" (click)="editConsultant(consultant);">
+                                            <i class="far fa-edit"></i>
+                                        </span>
+                                    </div>
+
+                                    <div class="p-0 pe-3">
+                                        <span class="cursor-pointer" (click)="deleteConsultant(consultant.id);">
+                                            <i class="fas fa-trash"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </td>
+
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+</div>

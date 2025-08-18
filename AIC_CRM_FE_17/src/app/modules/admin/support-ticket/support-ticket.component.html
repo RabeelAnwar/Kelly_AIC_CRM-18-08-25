@@ -1,0 +1,105 @@
+<style>
+    ::ng-deep .ng-placeholder {
+        font-size: 16px;
+    }
+</style>
+
+<div>
+    <div class="header">
+        <h1 style="color: red; font-weight: bolder;">Support Ticket</h1>
+        <div>
+            <button class="btn btn-success py-0 px-2 mx-1" (click)="save();">RaiseTicket</button>
+            <button class="btn btn-danger py-0 px-2" routerLink="/home">Close</button>
+        </div>
+    </div>
+
+    <div class="company-info-box mx-2 mb-3">
+        <div class="section-header fw-normal p-1">
+            Raise Ticket
+        </div>
+
+        <div class="form-content py-0">
+            <div class="row ">
+
+                <div class="col-md-3">
+                    <label class="form-label">{{currentTime | date:'medium'}}</label>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+
+                <div class="col-md-3">
+                    <div>
+                        <label class="form-label">Type</label>
+                        <span class="required-label" *ngIf="!input.type || input.type.trim() === ''">REQUIRED</span>
+                    </div>
+                   
+                    <div class="card flex justify-content-center">
+                                <p-dropdown [showClear]="true"
+                                [options]="type" [(ngModel)]="input.type"
+                                optionValue="name"
+                                optionLabel="name"
+                                placeholder="Type" />
+                            </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div>
+                        <label class="form-label">Status</label>
+                        <span class="required-label" *ngIf="!input.status || input.status.trim() === ''">REQUIRED</span>
+                    </div>
+
+                    <div class="card flex justify-content-center">
+                                <p-dropdown [showClear]="true"
+                                [options]="status" [(ngModel)]="input.status"
+                                optionValue="name"
+                                optionLabel="name"
+                                placeholder="Status" />
+                            </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div>
+                        <label class="form-label">Priority</label>
+                        <span class="required-label"
+                            *ngIf="!input.priority || input.priority.trim() === ''">REQUIRED</span>
+                    </div>
+                   
+                            <div class="card flex justify-content-center">
+                                <p-dropdown [showClear]="true"
+                                [options]="priority" [(ngModel)]="input.priority"
+                                optionValue="name"
+                                optionLabel="name"
+                                placeholder="Priority" />
+                            </div>
+                </div>
+
+                <div class="col-md-3">
+
+                    <div>
+                        <label class="form-label">Subject</label>
+                        <span class="required-label"
+                            *ngIf="!input.subject || input.subject.trim() === ''">REQUIRED</span>
+                    </div>
+                    <input type="text" [(ngModel)]="input.subject" class="form-control" placeholder="Subject" />
+
+                </div>
+
+            </div>
+
+            <div class="row mb-2">
+
+                <div class="col-md-2">
+                    <label class="form-label">Upload Documents</label>
+                    <input type="file" class="form-control" [(ngModel)]="input.documentFile" placeholder="Subject" />
+                </div>
+
+                <div class="col-md-10">
+                    <label class="form-label">Description</label>
+                    <ckeditor [editor]="Editor" [config]="config" data="input.description" [(ngModel)]="input.description"></ckeditor>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,131 @@
+<div class="row">
+    <div class="col-md-2 mt-4">
+        <app-left-client-search-nav></app-left-client-search-nav>
+    </div>
+    <div class="col-md-10 ps-0">
+
+        <div>
+
+            <div class="header">
+                <h1>Pipeline Directory</h1>
+            </div>
+
+
+            <div class="card p-2">
+
+                <p-table #dt [value]="pipelineList" [paginator]="true" [rows]="10" [globalFilterFields]="searchFields"
+                    [rowHover]="true" [scrollable]="true" scrollHeight="550px" [style]="{ width: '100%' }"
+                    columnResizeMode="expand" [resizableColumns]="true">
+                    <!-- <ng-template pTemplate="colgroup">
+                    <colgroup>
+                        <col style="width: 30px" />
+                        <col style="width: 130px" />
+                        <col style="width: 130px" />
+                        <col style="width: 130px" />
+                        <col style="width: 130px" />
+                        <col style="width: 130px" />
+                        <col style="width: 130px" />
+                        <col style="width: 130px" />
+                        <col style="width: 130px" />
+                        <col style="width: 80px" />
+                        <col style="width: 80px" />
+                    </colgroup>
+                </ng-template> -->
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Pipeline</th>
+                            <th>Pipeline Type</th>
+                            <th>Client Name</th>
+                            <th>Manager</th>
+                            <th>Pipeline Amount</th>
+                            <th>Winning Probabilities</th>
+                            <th>Winning Probability Amount</th>
+                            <th>Pipeline Source</th>
+                            <th>Action</th>
+                        </tr>
+                        <tr>
+                            <th>
+                                <input type="text" pInputText size="50" placeholder="Search..."
+                                    (input)="dt.filter($any($event.target).value, 'Pipeline', 'contains')"
+                                    style="width: 100%" />
+                            </th>
+
+                            <th>
+                                <input type="text" pInputText size="50" placeholder="Search..."
+                                    (input)="dt.filter($any($event.target).value, 'pipelineTypes', 'contains')"
+                                    style="width: 100%" />
+                            </th>
+
+                            <th>
+                                <input type="text" pInputText size="50" placeholder="Search..."
+                                    (input)="dt.filter($any($event.target).value, 'clientId', 'contains')"
+                                    style="width: 100%" />
+                            </th>
+
+                            <th>
+                                <input type="text" pInputText size="50" placeholder="Search..."
+                                    (input)="dt.filter($any($event.target).value, 'managerId', 'contains')"
+                                    style="width: 100%" />
+                            </th>
+
+                            <th>
+                                <input type="text" pInputText size="50" placeholder="Search..."
+                                    (input)="dt.filter($any($event.target).value, 'pipelineAmount', 'contains')"
+                                    style="width: 100%" />
+                            </th>
+
+                            <th>
+                                <input type="text" pInputText size="50" placeholder="Search..."
+                                    (input)="dt.filter($any($event.target).value, 'winningProbabilities', 'contains')"
+                                    style="width: 100%" />
+                            </th>
+
+                            <th>
+                                <input type="text" pInputText size="50" placeholder="Search..."
+                                    (input)="dt.filter($any($event.target).value, 'winningProbabilityAmount', 'contains')"
+                                    style="width: 100%" />
+                            </th>
+
+                            <th>
+                                <input type="text" pInputText size="50" placeholder="Search..."
+                                    (input)="dt.filter($any($event.target).value, 'pipelineSource', 'contains')"
+                                    style="width: 100%" />
+                            </th>
+
+                            <th></th>
+
+                        </tr>
+
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+                        <tr>
+
+                            <td>Pipeline?</td>
+                            <td>{{ rowData.pipelineTypes }}</td>
+                            <td>{{ rowData.clientId }} Client Name</td>
+                            <td>{{ rowData.managerId }} Manager</td>
+                            <td>{{ rowData.pipelineAmount }}</td>
+                            <td>{{ rowData.winningProbabilities }}</td>
+                            <td>{{ rowData.winningProbabilityAmount }}</td>
+                            <td>{{ rowData.pipelineSource }}</td>
+
+                            <td>
+                                <div class="d-flex justify-content-start pt-1">
+                                    <!-- <div class="p-0 pe-3">
+                                        <span class="cursor-pointer"><i class="far fa-edit"></i></span>
+                                    </div> -->
+
+                                    <div class="p-0 pe-3">
+                                        <span class="cursor-pointer" (click)="deletePipeline(rowData.id);">
+                                            <i class="fas fa-trash"></i></span>
+                                    </div>
+                                </div>
+                            </td>
+
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+</div>

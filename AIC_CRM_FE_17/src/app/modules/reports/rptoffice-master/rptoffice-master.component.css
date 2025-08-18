@@ -1,0 +1,41 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.header h1 {
+    font-size: 24px;
+    color: #777;
+    margin: 0;
+    font-weight: 400;
+}
+
+.section-header {
+    background: rgba(0, 0, 0, 0) linear-gradient(#0163a2, #053972) repeat scroll 0 0 !important;
+    color: white;
+    border: #337ab7;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.company-info-box {
+    background-color: #fff;
+    border: 1px solid #337ab7;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+.form-content {
+    padding: 15px;
+}
+
+
+
+.form-label {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 5px;
+}

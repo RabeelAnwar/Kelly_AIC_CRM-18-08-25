@@ -1,0 +1,49 @@
+<div class="row">
+    <div class="col-md-2 mt-4">
+        <app-left-client-search-nav></app-left-client-search-nav>
+    </div>
+    <div class="col-md-10 ps-0">
+
+        <div>
+            <div class="header">
+                <h1>Client Master</h1>
+            </div>
+
+            <div class="card p-2">
+
+                <p-table #dt [value]="clientsList" [paginator]="true" [rows]="10" [globalFilterFields]="['clientName']"
+                    [rowHover]="true" [scrollable]="true" scrollHeight="550px" [scrollable]="true"
+                    [style]="{ width: '100%' }" columnResizeMode="expand" [resizableColumns]="true">
+                    <ng-template pTemplate="colgroup">
+                        <colgroup>
+                            <col style="width: 130px" />
+                        </colgroup>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+
+                        <tr>
+                            <th>
+                                <input type="text" pInputText size="50" placeholder="Search Client"
+                                    (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                                    style="width: 100%" />
+                            </th>
+                        </tr>
+                        <tr>
+                            <th pResizableColumn>Client Name</th>
+                            <!-- Add more <th> elements if you have additional columns -->
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData>
+                        <tr>
+                            <td> <a href="javascript:void(0)" class="clientNameLink"
+                                    (click)="clientDashboard(rowData.id);">
+                                    {{ rowData.clientName }}</a></td>
+                            <!-- Add more <td> elements if you have additional columns -->
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+
+        </div>
+    </div>
+</div>

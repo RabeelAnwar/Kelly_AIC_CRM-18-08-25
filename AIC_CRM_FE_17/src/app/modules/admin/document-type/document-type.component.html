@@ -1,0 +1,89 @@
+<div class="row">
+    <div class="col-md-4 mx-auto">
+        <div class="header">
+            <h1>Document Type Master</h1>
+        </div>
+
+        <div class="form-content py-0">
+
+            <div class="row my-3 ">
+
+                <div class="col-md-12 mb-2">
+                    <div>
+                        <label class="form-label">User Type</label>
+                        <span class="required-label" *ngIf="!documentModel.userTypeId">REQUIRED</span>
+                    </div>
+
+                            <div class="card flex justify-content-center">
+                                <p-dropdown [showClear]="true"
+                                [options]="userTypes" [(ngModel)]="documentModel.userTypeId"
+                                optionValue="id"
+                                optionLabel="name"
+                                placeholder="--Select User Type--" />
+                            </div>
+                </div>
+
+                <div class="col-md-12 mb-2">
+                    <div>
+                        <label class="form-label">Document Type</label>
+                        <span class="required-label" *ngIf="!documentModel.documentTypeName">REQUIRED</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Document Type"
+                        [(ngModel)]="documentModel.documentTypeName" />
+                </div>
+
+                <div class="col-md-12">
+                    <div class="d-flex justify-content-start">
+
+                        <div class="mt-1">
+                            <button class="btn btn-success py-0 px-2 mx-1" (click)="saveDocumentType();">
+                                {{ documentModel.id ? 'Update' : 'Save' }}
+                            </button>
+                            <button class="btn btn btn-warning py-0 px-2" (click)="clearInput();">Clear</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Document Type List -->
+        <div class="company-info-box mx-2">
+            <div class="section-header fw-normal p-1">Document Types</div>
+
+            <div class="form-content p-0">
+                <div class="card-body p-0">
+                    <p-table [value]="documentTypes">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th class="w-75">Name</th>
+                                <th class="w-25">User Type</th>
+                                <th>Action</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-doc>
+                            <tr>
+                                <td>{{ doc.documentTypeName }}</td>
+                                <td>{{ userTypeGet(doc) }}</td>
+                                <td>
+                                    <div class="d-flex justify-content-start pt-1">
+                                        <div class="p-0 pe-3">
+                                            <span class="cursor-pointer" (click)="editDocumentType(doc)">
+                                                <i class="far fa-edit"></i>
+                                            </span>
+                                        </div>
+                                        <div class="p-0 pe-3">
+                                            <span class="cursor-pointer" (click)="deleteDocumentType(doc.id)">
+                                                <i class="fas fa-trash"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

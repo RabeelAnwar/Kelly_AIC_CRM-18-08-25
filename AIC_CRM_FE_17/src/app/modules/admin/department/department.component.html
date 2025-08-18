@@ -1,0 +1,91 @@
+<div class="container">     
+<div class="row">
+
+
+    <div class="col-md-12 mx-auto">
+        <div class="header mb-3">
+            <h1>Department Master</h1>
+        </div>
+
+        <div class="form-content py-0">
+
+            <div class="row my-3 ">
+                <div class="col-md-12">
+                    <div>
+                        <label class="form-label">Department Name</label>
+                        <span class="required-label" *ngIf="!departmentModel.name || departmentModel.name.trim() === ''">REQUIRED</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Department Name"
+                        [(ngModel)]="departmentModel.name">
+                </div>
+
+                <div class="col-md-8">
+                    <div class="mt-1">
+                        <label class="form-label">IsActive</label>
+                        <input type="checkbox" class="ms-2" [(ngModel)]="departmentModel.isActive">
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="d-flex justify-content-end">
+
+                        <div class="mt-1">
+                            <button class="btn btn-success py-0 px-2 mx-1" (click)="saveDepartment();">
+                                {{ departmentModel.id ? 'Update' : 'Save' }}
+                            </button>
+                            <button class="btn btn btn-warning py-0 px-2" (click)="clearInput();">Clear</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="company-info-box mx-2">
+                <div class="section-header fw-normal p-1">
+                    Departments
+                </div>
+
+                <div class="form-content p-0">
+                    <div class="card-body p-0">
+
+                        <p-table [value]="departmentList">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    
+                                    <th>Sr.no</th>
+                                    <th class="w-100">Name</th>
+                                    <th>Action</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+                                <tr>
+                                    <td>{{ rowIndex + 1 }}</td>
+                                    <td>{{ item.name }}</td>
+                                    <td>
+
+                                        <div class="d-flex justify-content-start pt-1">
+                                            <div class="p-0 pe-3">
+                                                <span class="cursor-pointer" (click)="editDepartment(item);"><i
+                                                        class="far fa-edit"></i></span>
+                                            </div>
+                                            <div class="p-0 pe-3">
+                                                <span class="cursor-pointer" (click)="deleteDepartment(item.id);"><i
+                                                        class="fas fa-trash"></i></span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>

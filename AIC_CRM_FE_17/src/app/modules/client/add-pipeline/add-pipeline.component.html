@@ -1,0 +1,96 @@
+<div class="row">
+    <div class="col-md-2 mt-4">
+        <app-left-client-search-nav></app-left-client-search-nav>
+    </div>
+    <div class="col-md-10 ps-0">
+        <div class="header">
+            <h1>Add Pipeline ({{clientData.clientName}})</h1>
+            <div>
+                <button class="btn btn-success py-0 px-2 mx-1" (click)="savePipeline();">
+                    {{ pipelineInput.id ? 'Update' : 'Save' }}
+                </button>
+                <button class="btn btn-danger py-0 px-2" (click)="goToDashboard()">Cancel</button>
+            </div>
+        </div>
+
+        <div class="row mt-2">
+
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-6">
+                <app-client-top-nav [clientData]="clientData"></app-client-top-nav>
+            </div>
+        </div>
+
+        <div class="company-info-box mx-2 mb-3">
+            <div class="section-header fw-normal p-1">
+                Client Pipeline
+            </div>
+
+            <div class="form-content py-0">
+                <div class="row mb-2">
+
+                    <div class="col-md-6">
+                        <label class="form-label">Manager</label>
+                        <div class="card flex justify-content-center">
+                                <p-dropdown [showClear]="true"
+                                [options]="managers" [(ngModel)]="pipelineInput.managerId"
+                                optionValue="id"
+                                optionLabel="name"
+                                placeholder="--Select Manager--" />
+                            </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Winning Probability Amount($)</label>
+                        <input type="text" [(ngModel)]="pipelineInput.winningProbabilityAmount" class="form-control"
+                            placeholder="Winning Probability Amount">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Pipeline Amount($)</label>
+                        <input type="text" [(ngModel)]="pipelineInput.pipelineAmount" class="form-control"
+                            placeholder="Pipeline Amount">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Pipeline Source</label>
+                        <input type="text" [(ngModel)]="pipelineInput.pipelineSource" class="form-control"
+                            placeholder="Pipeline Source">
+                    </div>
+
+                    <div class="col-md-6">
+                        <div>
+                            <label class="form-label">Pipeline Types</label>
+                            <span *ngIf="!pipelineInput.pipelineTypes || pipelineInput.pipelineTypes.trim() === ''"
+                                class="required-label">REQUIRED</span>
+                        </div>
+
+                        <div class="card flex justify-content-center">
+                                <p-dropdown [showClear]="true"
+                                [options]="pipelineTypes" [(ngModel)]="pipelineInput.pipelineTypes"
+                                optionValue="name"
+                                optionLabel="name"
+                                placeholder="--Select Pipeline Types--" />
+                            </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Pipeline associated with reqs</label>
+                        <input type="text" [(ngModel)]="pipelineInput.pipelineAssociatedWithReqs" class="form-control"
+                            placeholder="Reqs">
+                    </div>
+
+                    <div class="col-md-6 my-4">
+                        <label class="form-label">Winning Probabilities</label>
+                        <ngx-slider [(ngModel)]="pipelineInput.winningProbabilities" [(value)]="value"
+                            [options]="options"></ngx-slider>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

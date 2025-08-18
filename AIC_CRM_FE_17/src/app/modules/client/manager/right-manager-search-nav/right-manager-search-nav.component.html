@@ -1,0 +1,30 @@
+<div class="bg-danger-c manager-side-head">
+    Managers ({{ filteredManagers.length }} total)
+</div>
+<div style="border: 1px solid #d9534f;">
+
+    <div class="input-group mt-2 px-3">
+        <input type="text" class="form-control" [(ngModel)]="searchText" placeholder="search..." (input)="onSearch()">
+        <span class="input-group-text height-26px cursor-pointer" (keyup.enter)="onSearch()">
+            <i class="fa fa-search" style="color: #555;"></i>
+        </span>
+    </div>
+
+
+    <div class="d-flex justify-content-center  my-1">
+        <button class="btn btn-warning me-1"> &lt;</button>
+        1/1
+        <button class="btn btn-warning ms-1"> &gt;</button>
+
+    </div>
+
+    <div class="ms-2 mb-2">
+        <ul class="no-marker">
+            <li *ngFor="let item of filteredManagers">
+                <div class="cursor-pointer" (click)="goToDashboard(item.id)"><i class="fas fa-user"></i>
+                    {{ item.lastName }}, {{ item.firstName }}
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

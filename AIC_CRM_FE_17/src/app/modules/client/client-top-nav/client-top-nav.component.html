@@ -1,0 +1,28 @@
+<div class="d-flex mb-1">
+  <button type="button" (click)="addLead();" class="me-1 btn btn-primary">Add Lead</button>
+
+  <div class="dropdown me-1 hover-dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" aria-expanded="false">
+      Add Requisitions
+    </button>
+    <ul class="dropdown-menu">
+      <!-- <li><a class="dropdown-item" href="javascript:void(0);">Validation</a></li>
+      <li><a class="dropdown-item" href="javascript:void(0);">Clinical</a></li> -->
+      <li class="cursor-pointer" (click)="addRequisition();"><a class="dropdown-item">IT</a></li>
+    </ul>
+  </div>
+
+  <button type="button" class="me-1 btn btn-primary">Add PSA</button>
+  <button type="button" class="me-1 btn btn-primary" (click)="addManager();">Add Manager</button>
+  <!-- <button type="button" class="me-1 btn btn-primary" (click)="addPipeline();">Add Pipeline</button> -->
+
+  <div class="dropdown me-1 hover-dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" aria-expanded="false">
+      Add Client Request
+    </button>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="javascript:void(0);">RFI</a></li>
+      <li><a class="dropdown-item" href="javascript:void(0);">RFP</a></li>
+    </ul>
+  </div>
+</div>

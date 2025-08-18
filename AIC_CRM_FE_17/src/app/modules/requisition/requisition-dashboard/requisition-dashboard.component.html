@@ -1,0 +1,652 @@
+<style>
+    ::ng-deep p-calendar .p-inputtext {
+        padding: 0;
+        padding-left: 10px;
+        width: 920px;
+    }
+
+    ::ng-deep p {
+        margin: 0;
+    }
+
+    strong {
+        font-size: 12px;
+    }
+
+    .table td,
+    .table th,
+    .table tr {
+        border: none !important;
+    }
+
+    .table th {
+        width: 30% !important;
+        line-height: normal !important;
+    }
+
+    .table td {
+        line-height: normal !important;
+    }
+</style>
+<div class="container p-1 bg-white rounded shadow-sm">
+<div class="row">
+    <div class="col-md-2 mt-4">
+        <app-left-requisition-search-nav></app-left-requisition-search-nav>
+    </div>
+    <div class="col-md-10 ps-0">
+
+        <div>
+
+            <div class="header d-flex justify-content-between align-items-center p-2">
+                <h1><a (click)="clientDashboard();" class="text-danger fw-bold"
+                        style="text-decoration: none;">{{clientData.clientName}}</a></h1>
+
+                <div>
+                    <div class="d-flex mb-1">
+                        <button type="button" (click)="addLead();" class="me-1 btn btn-primary">Add Lead</button>
+                        <button type="button" (click)="addManager();" class="me-1 btn btn-primary">Add
+                            Manager</button>
+                    </div>
+                </div>
+
+                <img [src]="'assets/images/pdf.png'" style="width: 35px ; height: 35px;" class="cursor-pointer">
+
+            </div>
+
+            <div class="m-2">
+
+                <div class="col-md-12" [style]="{
+                    border: '1px',
+                    borderRadius: '5px',
+                    background: requisitionData.status ? '#DFF0D8' : '#F2DEDE'
+                }">
+
+                    <div class="row">
+                        <div class="col-md-4 ps-4">
+
+                            <div class="fs-20px fw-bold" style="color: grey;">Requisition # {{requisitionData.id}}
+                            </div>
+                            <div class="text-danger fw-bold">{{requisitionData.jobTitle}}</div>
+                            <div>Client Req # : {{requisitionData.clientReqNumber}}</div>
+
+                        </div>
+
+                        <div class="col-md-4 text-center">
+                            <!-- <span *ngIf="requisitionData.status" class="text-success fw-bold">Open</span>
+                            <span *ngIf="!requisitionData.status" class="text-danger fw-bold">Closed</span> -->
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <div class="d-flex justify-content-end pt-1">
+                                <div class="p-0 pe-2">
+                                    <span class="cursor-pointer"><i class="far fa-edit editBtn"
+                                            (click)="editRequisition(requisitionData)"></i></span>
+                                </div>
+
+                                <div class="p-0 pe-3">
+                                    <span class="cursor-pointer"><i class="fas fa-trash deleteBtn"
+                                            (click)="deleteRequisition(requisitionData.id)"></i></span>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-end pt-1 me-3">
+                                <!-- <span class="fw-bold">Status: </span> -->
+                                <div class="form-check form-switch mt-1">
+                                    <input class="form-check-input mt-2 fs-6" [checked]="requisitionData.status"
+                                        (change)="onStatusChange($event);" type="checkbox">
+                                </div>
+                                <div class="mt-1">
+                                    <span *ngIf="requisitionData.status" class="text-success fw-bold">Open</span>
+                                    <span *ngIf="!requisitionData.status" class="text-danger fw-bold">Closed</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-12">
+
+                    <div class="company-info-box mx-2 mb-3">
+                        <div class="section-header fw-normal p-1">General Details</div>
+
+                        <div class="d-flex mb-2">
+
+                            <div class="col-md-3">
+                                <strong class="p-1">Project Overview</strong>
+                                <hr class="my-1">
+                                <div class="fs-12px p-1"
+                                    [innerHTML]="requisitionData.projectDepartmentOverview | replaceNbsp | showMoreLess:200:showMore['projectOverview']">
+                                </div>
+                                <span class="show-more-less" (click)="toggleShowMore('projectOverview')">{{
+                                    showMore['projectOverview'] ? 'Show Less' : 'Show More...' }}</span>
+                            </div>
+
+                            <div class="col-md-3">
+                                <strong class="p-1">Job Description</strong>
+                                <hr class="my-1">
+                                <div class="fs-12px p-1"
+                                    [innerHTML]="requisitionData.jobDescription | replaceNbsp | showMoreLess:200:showMore['jobDescription']">
+                                </div>
+                                <span class="show-more-less" (click)="toggleShowMore('jobDescription')">{{
+                                    showMore['jobDescription'] ? 'Show Less' : 'Show More...' }}</span>
+                            </div>
+
+                            <div class="col-md-3">
+                                <strong class="p-1">Responsibilities</strong>
+                                <hr class="my-1">
+                                <div class="fs-12px p-1"
+                                    [innerHTML]="requisitionData.responsibilities | replaceNbsp | showMoreLess:200:showMore['responsibilities']">
+                                </div>
+                                <span class="show-more-less" (click)="toggleShowMore('responsibilities')">{{
+                                    showMore['responsibilities'] ? 'Show Less' : 'Show More...' }}</span>
+                            </div>
+
+                            <div class="col-md-3">
+                                <strong class="p-1">Qualifications</strong>
+                                <hr class="my-1">
+                                <div class="fs-12px p-1"
+                                    [innerHTML]="requisitionData.qualifications | replaceNbsp | showMoreLess:200:showMore['qualifications']">
+                                </div>
+                                <span class="show-more-less" (click)="toggleShowMore('qualifications')">{{
+                                    showMore['qualifications'] ? 'Show Less' : 'Show More...' }}</span>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <div class="company-info-box mx-2 mb-3">
+                                    <div class="section-header fw-normal p-1">Requisition</div>
+                                    <table class="table">
+
+                                        <tr>
+                                            <th>Manager</th>
+                                            <td>: {{requisitionData.managerName}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Job Title</th>
+                                            <td>: {{requisitionData.jobTitle}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Internal Req Coordinator</th>
+                                            <td>: {{requisitionData.internalReqCoordinatorName}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Priority</th>
+                                            <td>: {{requisitionData.priority}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Recruiter Assigned</th>
+                                            <td>: {{requisitionData.recruiterAssignedName}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Sales Rep</th>
+                                            <td>: {{requisitionData.salesRepName}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Location</th>
+                                            <td>: {{requisitionData.location}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Duration</th>
+                                            <td>: {{requisitionData.duration}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Duration Unit</th>
+                                            <td>: {{requisitionData.durationTypes}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Start Date</th>
+                                            <td>: {{requisitionData.startDate | date:'MM-dd-yyyy'}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Number of positions</th>
+                                            <td>: {{requisitionData.numberOfPositions}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>C/C2H/PComments</th>
+                                            <td>
+                                                <div [innerHTML]="requisitionData.comments"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Bill Rate</th>
+                                            <td>: {{requisitionData.billRate}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Pay Rate</th>
+                                            <td>: {{requisitionData.payRate}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Hours</th>
+                                            <td>: {{requisitionData.hours}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Overtime</th>
+                                            <td>: {{requisitionData.overtime}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Interview Process</th>
+                                            <td>: {{requisitionData.interviewProcesses}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Phone hire if out of area</th>
+                                            <td>: {{requisitionData.phoneHireIfOutOfArea}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Mark Up</th>
+                                            <td>: {{requisitionData.clientMarkup}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Limit by bill rate</th>
+                                            <td>: {{requisitionData.billRateHighestBeforeResumeNotSent}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Secondary Contact</th>
+                                            <td>: {{requisitionData.secondaryContact}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Hiring Manager (if thru a VOP)</th>
+                                            <td>: {{requisitionData.hiringManagerVop}}</td>
+                                        </tr>
+
+
+                                    </table>
+
+                                </div>
+
+                                <div class="company-info-box mx-2 mb-3">
+                                    <div class="section-header fw-normal p-1">Work Breakdown%</div>
+
+                                    <div class="row">
+
+                                        <div class="col-md-4">
+                                            <div class="ms-2" style="font-weight: bold; font-size: 12px;">
+                                                % Coding / Maintenence
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-8">
+                                            <div class="mt-1 mx-2">
+                                                <div class="progress" role="progressbar"
+                                                    aria-label="Animated striped example" aria-valuemin="0"
+                                                    [ariaValueNow]="requisitionData.codingValue" aria-valuemax="100">
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                                        [style]="{ width: requisitionData.codingValue + '%' , 'background-color': '#337ab7'}">
+                                                        {{requisitionData.codingValue}}%
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-md-4">
+                                            <div class="ms-2" style="font-weight: bold; font-size: 12px;">
+                                                % Analysis / Design
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-8">
+                                            <div class="mt-1 mx-2">
+                                                <div class="progress" role="progressbar"
+                                                    aria-label="Animated striped example" aria-valuemin="0"
+                                                    [ariaValueNow]="requisitionData.analysisValue" aria-valuemax="100">
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                                        [style]="{ width: requisitionData.analysisValue + '%' , 'background-color': '#d9534f'}">
+                                                        {{requisitionData.analysisValue}}%
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-md-4">
+                                            <div class="ms-2" style="font-weight: bold; font-size: 12px;">
+                                                % Testing
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-8">
+                                            <div class="mt-1 mx-2">
+                                                <div class="progress" role="progressbar"
+                                                    aria-label="Animated striped example" aria-valuemin="0"
+                                                    [ariaValueNow]="requisitionData.testingValue" aria-valuemax="100">
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                                        [style]="{ width: requisitionData.testingValue + '%' , 'background-color': '#5bc0de'}">
+                                                        {{requisitionData.testingValue}}%
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row mb-2">
+
+                                        <div class="col-md-4">
+                                            <div class="ms-2" style="font-weight: bold; font-size: 12px;">
+                                                % Other
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-8">
+                                            <div class="mt-1 mx-2">
+                                                <div class="progress" role="progressbar"
+                                                    aria-label="Animated striped example" aria-valuemin="0"
+                                                    [ariaValueNow]="requisitionData.otherValue" aria-valuemax="100">
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                                        [style]="{ width: requisitionData.otherValue + '%', 'background-color': '#f0ad4e'}">
+                                                        {{requisitionData.otherValue}}%
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <div class="company-info-box mx-2 mb-3">
+
+                                    <div
+                                        class="section-header fw-normal p-1 d-flex justify-content-between align-items-center">
+                                        <h6 class="mb-0 text-white">Candidates Submitted</h6>
+                                        <button class="btn btn-sm btn-outline-secondary" (click)="consultantActivity()"
+                                            style="border-color: #fff;">
+                                            <i class="fa-solid fa-paper-plane text-white"></i></button>
+                                    </div>
+
+                                    <div class="card p-2">
+
+                                        <p-table #dt [value]="interviewProcessConsultantsList" [rows]="10"
+                                            [globalFilterFields]="searchFields" [rowHover]="true" scrollHeight="550px"
+                                            [style]="{ width: '100%' }" columnResizeMode="expand"
+                                            [resizableColumns]="true">
+                                            <!-- <ng-template pTemplate="colgroup">
+                                            <colgroup>
+                                                <col style="width: 10%" />
+                                                <col style="width: 20%" />
+                                                <col style="width: 10%" />
+                                                <col style="width: 10%" />
+                                                <col style="width: 10%" />
+                                                <col style="width: 10%" />
+                                                <col style="width: 10%" />
+                                                <col style="width: 10%" />
+                                                <col style="width: 10%" />
+                                            </colgroup>
+                                        </ng-template> -->
+                                            <ng-template pTemplate="header">
+
+                                                <tr>
+                                                    <th colspan="9">
+                                                        <input type="text" pInputText size="50"
+                                                            placeholder="Global Search"
+                                                            (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                                                            style="width: 100%" />
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <th pResizableColumn>No.</th>
+                                                    <th pResizableColumn>Date Submitted</th>
+                                                    <th pResizableColumn>Name</th>
+                                                    <th pResizableColumn>B.R</th>
+                                                    <th pResizableColumn>P.R</th>
+                                                    <th pResizableColumn>M/U</th>
+                                                    <th pResizableColumn>Inv Date/Time</th>
+                                                    <th pResizableColumn>Status</th>
+                                                    <th pResizableColumn>Action</th>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="body" let-rowData>
+                                                <tr>
+                                                    <td>{{ rowData.id }}</td>
+                                                    <td>{{ rowData.creationTime | date }}</td>
+                                                    <td>
+                                                        <span class="cursor-pointer"
+                                                            (click)="consultantDashboard(rowData.consultantId);">
+                                                            {{rowData.consultantName }}
+                                                        </span>
+                                                    </td>
+                                                    <td>{{ rowData.billRate }}</td>
+                                                    <td>{{ rowData.payRate }}</td>
+                                                    <td>
+                                                        {{ calculatePercentage(rowData.billRate, rowData.payRate)
+                                                        }}%
+                                                    </td>
+                                                    <td>
+                                                        <div *ngFor="let date of rowData.interviewDateTime; let i = index">
+                                                            <span class="cursor-pointer text-decoration-underline"
+                                                                (click)="interviewProcess(rowData.id, rowData.processId[i]);">
+                                                                {{ date | date:'MM-dd-yyyy' }}
+                                                            </span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div *ngFor="let status of rowData.interviewStatus">
+                                                            <span *ngIf="status == 'Submitted'"
+                                                                class="req-candidate-submitted">{{ status }}</span>
+                                                            <span *ngIf="status == 'Interview'"
+                                                                class="req-candidate-interview">{{ status }}</span>
+                                                            <span *ngIf="status == 'Selected'"
+                                                                class="req-candidate-selected">{{ status }}</span>
+                                                        </div>
+                                                    </td>
+
+                                                    <td>
+                                                        <div class="d-flex justify-content-start pt-1">
+                                                            <div class="p-0 pe-3"
+                                                                *ngIf="!hasSelectedStatus(rowData.interviewStatus)">
+                                                                <span class="cursor-pointer"
+                                                                    (click)="interviewProcess(rowData.id);"><i
+                                                                        class="fa-regular fa-share-from-square"></i></span>
+                                                            </div>
+
+                                                            <div class="p-0 pe-3">
+                                                                <span class="cursor-pointer"
+                                                                    (click)="deleteConsultantActivity(rowData.id);">
+                                                                    <i class="fas fa-trash"></i></span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+                                        </p-table>
+                                    </div>
+                                </div>
+
+
+                                <div class="company-info-box mx-2 mb-3">
+                                    <div class="section-header fw-normal p-1">Technical Skills - IT</div>
+                                    <table class="table">
+
+                                        <tr>
+                                            <th>Hardware</th>
+                                            <td>: {{requisitionData.hardware}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>OS</th>
+                                            <td>: {{requisitionData.os}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Languages</th>
+                                            <td>: {{requisitionData.languages}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Database</th>
+                                            <td>: {{requisitionData.databases}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Protocols</th>
+                                            <td>: {{requisitionData.protocols}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Software</th>
+                                            <td>: {{requisitionData.softwareStandards}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Other</th>
+                                            <td>: {{requisitionData.others}}</td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+
+
+                                <div class="company-info-box mx-2 mb-3">
+                                    <div class="section-header fw-normal p-1">Notes</div>
+
+                                    <div class="p-2">
+
+                                        <div class="fs-12px" [innerHTML]="requisitionData.notes"></div>
+                                        <div><strong>Search String 1: </strong><span
+                                                class="fs-12px">{{requisitionData.searchString1}}</span></div>
+                                        <div><strong>Search String 2: </strong><span
+                                                class="fs-12px">{{requisitionData.searchString2}}</span></div>
+                                        <div><strong>Search String 3: </strong><span
+                                                class="fs-12px">{{requisitionData.searchString3}}</span></div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+
+                                <app-right-requisition-search-nav
+                                    [clientRequisition]="requisitionList"></app-right-requisition-search-nav>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-12">
+
+
+
+                    <div class="company-info-box mx-2 mb-3">
+                        <div class="section-header fw-normal p-1">
+                            Requisition Documents
+                        </div>
+
+                        <div class="form-content py-0">
+
+                            <div class="row mb-2">
+
+                                <div class="col-md-3">
+                                    <div>
+                                        <label class="form-label">Document Type</label>
+                                        <span class="required-label">REQUIRED</span>
+                                    </div>
+                                    <div class="card flex justify-content-center">
+                                        <p-dropdown [showClear]="true" [options]="documentTypes"
+                                            [(ngModel)]="documentUploadInput.documentTypeId" optionValue="id"
+                                            optionLabel="documentTypeName" placeholder="--Select--" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="form-label">Document Name</label>
+                                    <input type="text" class="form-control" placeholder="Document Name"
+                                        [(ngModel)]="documentUploadInput.documentName">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="form-label">Upload Documents</label>
+                                    <input type="file" class="form-control" accept=".doc,.docx,.pdf,.txt,.rtf"
+                                        (change)="onFileSelected($event)">
+
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label></label>
+                                    <div>
+                                        <button class="btn btn-success py-0 px-2 mx-1 fs-16px"
+                                            (click)="UploadDocument()">
+                                            Save
+                                        </button>
+                                        <button class="btn btn btn-danger py-0 px-2 fs-16px"
+                                            (click)="clearDocument()">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-content">
+                            <p-table #dt [value]="documentUploadList" [rows]="10" [rowHover]="true" scrollHeight="550px"
+                                [style]="{ width: '100%' }" columnResizeMode="expand" [resizableColumns]="true">
+                                <ng-template pTemplate="colgroup">
+                                    <colgroup>
+                                        <col style="width: 30%" />
+                                        <col style="width: 30%" />
+                                        <col style="width: 30%" />
+                                    </colgroup>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+
+                                        <th pResizableColumn>Document Type</th>
+                                        <th pResizableColumn>Document Name</th>
+                                        <th pResizableColumn>Download</th>
+                                        <th pResizableColumn></th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-rowData>
+                                    <tr>
+                                        <td>{{rowData.documentTypeName}}</td>
+                                        <td>{{rowData.documentName}}</td>
+                                        <td>
+                                            <div class="p-0 pe-5">
+                                                <span class="cursor-pointer">
+                                                    <i class="far fa-circle-down"
+                                                        (click)="downloadFile(rowData.documentFileName);"></i>
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex justify-content-start pt-1">
+                                                <!-- <div class="p-0 pe-3">
+                                        <span class="cursor-pointer"><i class="far fa-edit"></i></span>
+                                    </div> -->
+
+                                                <div class="p-0 pe-3">
+                                                    <span class="cursor-pointer" (click)="deleteDocument(rowData.id);">
+                                                        <i class="fas fa-trash"></i></span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,405 @@
+<style>
+    ::ng-deep .ng-placeholder {
+        font-size: 16px;
+    }
+</style>
+<div class="container p-1 bg-white rounded shadow-sm">
+<div class="row">
+    <div class="col-md-2 mt-4">
+        <app-left-requisition-search-nav></app-left-requisition-search-nav>
+    </div>
+    <div class="col-md-10 ps-0">
+        <div>
+            <div class="header">
+                <h1>Requisition IT <span *ngIf="clientData.clientName">({{clientData.clientName}})</span></h1>
+
+                <div>
+                    <button class="btn btn-success py-0 px-2 mx-1" (click)="saveRequisition()">
+                        {{ requisitionInput.id ? 'Update' : 'Save' }}
+                    </button>
+                    <button class="btn btn-danger py-0 px-2" (click)="cancel();">Close</button>
+                </div>
+            </div>
+
+            <div class="company-info-box mx-2 mb-3">
+                <div class="section-header fw-normal p-1">
+                    IT Requisition
+                </div>
+
+                <div class="form-content py-0">
+                    <div class="row mb-2">
+                        <div class="col-md-6">
+                            <div>
+                                <div>
+                                    <label class="form-label">Internal Req Coordinator</label>
+                                    <span class="required-label"
+                                        *ngIf="!requisitionInput.internalReqCoordinatorId || requisitionInput.internalReqCoordinatorId.trim() === ''">REQUIRED</span>
+                                </div>
+                                <div class="card flex justify-content-center">
+                                    <p-dropdown [showClear]="true"
+                                    [options]="usersList" [(ngModel)]="requisitionInput.internalReqCoordinatorId"
+                                    optionValue="id"
+                                    optionLabel="name"
+                                    placeholder="--Assigned To--" />
+                                </div>
+                            </div>
+
+                            <div>
+                                <div>
+                                    <label class="form-label">Requisition Type</label>
+                                    <span class="required-label"
+                                        *ngIf="!requisitionInput.requisitionType || requisitionInput.requisitionType.trim() === ''">
+                                        REQUIRED
+                                    </span>
+                                </div>
+                            
+
+                                <div class="card flex justify-content-center">
+                                        <p-dropdown [showClear]="true"
+                                        [options]="requisitionType" [(ngModel)]="requisitionInput.requisitionType"
+                                        optionValue="name"
+                                        optionLabel="name"
+                                        placeholder="--Select Requisition Type--" />
+                                    </div>
+
+
+                            </div>
+
+                            <div>
+                                <div>
+                                    <label class="form-label">Priority</label>
+                                    <span class="required-label" *ngIf="!requisitionInput.priority">REQUIRED</span>
+                                </div>
+
+                                <div class="card flex justify-content-center">
+                                        <p-dropdown [showClear]="true"
+                                        [options]="priority" [(ngModel)]="requisitionInput.priority"
+                                        optionValue="id"
+                                        optionLabel="id"
+                                        placeholder="--Priority--" />
+                                    </div>
+                            </div>
+
+                            <div>
+                                <div>
+                                    <label class="form-label">Job Title</label>
+                                    <span class="required-label"
+                                        *ngIf="!requisitionInput.jobTitle || requisitionInput.jobTitle.trim() === ''">
+                                        REQUIRED
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Job Title"
+                                    [(ngModel)]="requisitionInput.jobTitle">
+                            </div>
+
+                            <div>
+                                <label class="form-label">Client Req Number</label>
+                                <input type="text" class="form-control" placeholder="Client Req Number"
+                                    [(ngModel)]="requisitionInput.clientReqNumber">
+                            </div>
+
+                            <div>
+                                <div>
+                                    <label class="form-label">Manager</label>
+                                    <span class="required-label" *ngIf="!requisitionInput.managerId">REQUIRED</span>
+                                </div>
+
+                                <div class="card flex justify-content-center">
+                                        <p-dropdown [showClear]="true"
+                                        [options]="managers" [(ngModel)]="requisitionInput.managerId"
+                                        optionValue="id"
+                                        optionLabel="name"
+                                        placeholder="--Manager--" />
+                                    </div>
+                            </div>
+
+                            <div>
+                                <div>
+                                    <label class="form-label">Sales Rep</label>
+                                    <span class="required-label"
+                                        *ngIf="!requisitionInput.salesRepId || requisitionInput.salesRepId.trim() === ''">REQUIRED</span>
+                                </div>
+
+                                 <div class="card flex justify-content-center">
+                                        <p-dropdown [showClear]="true"
+                                        [options]="usersList" [(ngModel)]="requisitionInput.salesRepId"
+                                        optionValue="id"
+                                        optionLabel="name"
+                                        placeholder="--Sales Rep--" />
+                                    </div>
+                            </div>
+
+                            <div>
+                                <div>
+                                    <label class="form-label">Recruiter Assigned</label>
+                                    <span class="required-label"
+                                        *ngIf="!requisitionInput.recruiterAssignedId">REQUIRED</span>
+                                </div>
+
+                                <div class="card flex justify-content-center">
+                                        <p-dropdown [showClear]="true"
+                                        [options]="usersList" [(ngModel)]="requisitionInput.recruiterAssignedId"
+                                        optionValue="id"
+                                        optionLabel="name"
+                                        placeholder="--Assigned To--" />
+                                    </div>
+                            </div>
+
+                            <div>
+                                <label class="form-label">Location</label>
+                                <input type="text" class="form-control" placeholder="Location"
+                                    [(ngModel)]="requisitionInput.location">
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label class="form-label">Duration</label>
+                                    <input type="text" class="form-control" placeholder="Duration"
+                                        [(ngModel)]="requisitionInput.duration">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label"><span style="color: transparent;">.</span></label>
+                                    <div class="card flex justify-content-center">
+                                        <p-dropdown [showClear]="true"
+                                        [options]="durations" [(ngModel)]="requisitionInput.durationTypes"
+                                        optionValue="name"
+                                        optionLabel="name"
+                                        placeholder="--Duration Type--" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">Start Date</label>
+                                    <div class="flex justify-content-center">
+                                        <p-calendar [iconDisplay]="'input'" [showIcon]="true"
+                                            [(ngModel)]="requisitionInput.startDate" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div>
+                                        <label class="form-label">Number of positions</label>
+                                        <span class="required-label"
+                                            *ngIf="!requisitionInput.numberOfPositions">REQUIRED</span>
+                                    </div>
+                                    <input type="number" class="form-control" placeholder="Number of positions"
+                                        [(ngModel)]="requisitionInput.numberOfPositions">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="form-label">C/C2H/P/COMMENTS</label>
+                                    <ckeditor [editor]="Editor" [config]="config" data="requisitionInput.comments" [(ngModel)]="requisitionInput.comments"></ckeditor>
+                            </div>
+
+                            <div>
+                                <label class="form-label">Project/Department Overview</label>
+                                    <ckeditor [editor]="Editor" [config]="config" data="requisitionInput.projectDepartmentOverview" [(ngModel)]="requisitionInput.projectDepartmentOverview"></ckeditor>
+                            </div>
+
+                            <div>
+                                <label class="form-label">Job Description</label>
+                                    <ckeditor [editor]="Editor" [config]="config" data="requisitionInput.jobDescription" [(ngModel)]="requisitionInput.jobDescription"></ckeditor>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div>
+                                <label class="form-label">Pay Rate</label>
+                                <input type="text" class="form-control" placeholder="Pay Rate"
+                                    [(ngModel)]="requisitionInput.payRate">
+                            </div>
+
+                            <div>
+                                <label class="form-label">Bill Rate</label>
+                                <input type="text" class="form-control" placeholder="Bill Rate"
+                                    [(ngModel)]="requisitionInput.billRate">
+                            </div>
+
+                            <div>
+                                <label class="form-label">Hours</label>
+                                <input type="text" class="form-control" placeholder="Hours"
+                                    [(ngModel)]="requisitionInput.hours">
+                            </div>
+
+                            <div>
+                                <label class="form-label">Overtime</label>
+                                <input type="text" class="form-control" placeholder="Overtime"
+                                    [(ngModel)]="requisitionInput.overtime">
+                            </div>
+
+                            <div>
+                                <label class="form-label">Interview Process</label>
+                                <div class="card flex justify-content-center">
+                                    <p-dropdown [showClear]="true"
+                                    [options]="processes" [(ngModel)]="requisitionInput.interviewProcesses"
+                                    optionValue="name"
+                                    optionLabel="name"
+                                    placeholder="--Assigned To--" />
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="form-label">Phone Hire if Out of Area</label>
+                                <input type="text" class="form-control" placeholder="hire"
+                                    [(ngModel)]="requisitionInput.phoneHireIfOutOfArea">
+                            </div>
+
+                            <div>
+                                <label class="form-label">Client M/U</label>
+                                <input type="text" class="form-control" placeholder="%"
+                                    [(ngModel)]="requisitionInput.clientMarkup">
+                            </div>
+
+                            <div>
+                                <label class="form-label">Bill rate highest before resume not sent</label>
+                                <input type="text" class="form-control" placeholder="Limit Bill Rate"
+                                    [(ngModel)]="requisitionInput.billRateHighestBeforeResumeNotSent">
+                            </div>
+
+                            <div>
+                                <label class="form-label">Secondary Contact</label>
+                                <input type="text" class="form-control" placeholder="name"
+                                    [(ngModel)]="requisitionInput.secondaryContact">
+                            </div>
+
+                            <div>
+                                <label class="form-label">Hiring Manager (if thru a VOP)</label>
+                                <input type="text" class="form-control" placeholder="Other Managers"
+                                    [(ngModel)]="requisitionInput.hiringManagerVop">
+                            </div>
+
+                            <div>
+                                <label class="form-label">Other ways trying to fill position</label>
+                                <input type="text" class="form-control" placeholder="other way to fill"
+                                    [(ngModel)]="requisitionInput.otherWaysToFillPosition">
+                            </div>
+
+                            <div>
+                                <label class="form-label">Notes</label>
+                                    <ckeditor [editor]="Editor" [config]="config" data="requisitionInput.notes" [(ngModel)]="requisitionInput.notes"></ckeditor>
+                            </div>
+
+                            <div>
+                                <label class="form-label">Responsibilities</label>
+                                    <ckeditor [editor]="Editor" [config]="config" data="requisitionInput.responsibilities" [(ngModel)]="requisitionInput.responsibilities"></ckeditor>
+                            </div>
+
+                            <div>
+                                <label class="form-label">Qualifications</label>
+                                    <ckeditor [editor]="Editor" [config]="config" data="requisitionInput.qualifications" [(ngModel)]="requisitionInput.qualifications"></ckeditor>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="mb-2">
+                                <label class="form-label">Search Strings</label>
+                                <input type="text" class="form-control" placeholder="Search Strings1"
+                                    [(ngModel)]="requisitionInput.searchString1">
+                            </div>
+
+                            <div class="mb-2">
+                                <input type="text" class="form-control" placeholder="Search Strings2"
+                                    [(ngModel)]="requisitionInput.searchString2">
+                            </div>
+
+                            <div class="mb-2">
+                                <input type="text" class="form-control" placeholder="Search Strings3"
+                                    [(ngModel)]="requisitionInput.searchString3">
+                            </div>
+
+                            <div>
+                                <label class="form-label">Coding</label>
+                                <ngx-slider [(value)]="codingValue" [options]="codingOptions"></ngx-slider>
+                            </div>
+
+                            <div>
+                                <label class="form-label">Analysis</label>
+                                <ngx-slider [(value)]="analysisValue" [options]="analysisOptions"></ngx-slider>
+                            </div>
+
+                            <div>
+                                <label class="form-label">Testing</label>
+                                <ngx-slider [(value)]="testingValue" [options]="testingOptions"></ngx-slider>
+                            </div>
+
+                            <div>
+                                <label class="form-label">Other</label>
+                                <ngx-slider [(value)]="otherValue" [options]="otherOptions"></ngx-slider>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="company-info-box mx-2 mb-3">
+                <div class="section-header fw-normal p-1">
+                    Technical Skills
+                </div>
+
+                <div class="form-content py-0">
+                    <div class="row mb-2">
+                        <div class="col-md-6">
+                            <div>
+                                <label class="form-label">Hardware</label>
+                                <input type="text" class="form-control" placeholder="Hardware"
+                                    [(ngModel)]="requisitionInput.hardware">
+                            </div>
+
+                            <div>
+                                <label class="form-label">OS</label>
+                                <input type="text" class="form-control" placeholder="OS"
+                                    [(ngModel)]="requisitionInput.os">
+                            </div>
+
+                            <div>
+                                <label class="form-label">Languages</label>
+                                <input type="text" class="form-control" placeholder="Languages"
+                                    [(ngModel)]="requisitionInput.languages">
+                            </div>
+
+                            <div>
+                                <label class="form-label">Databases</label>
+                                <input type="text" class="form-control" placeholder="Databases"
+                                    [(ngModel)]="requisitionInput.databases">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div>
+                                <label class="form-label">Protocols</label>
+                                <input type="text" class="form-control" placeholder="Protocols"
+                                    [(ngModel)]="requisitionInput.protocols">
+                            </div>
+
+                            <div>
+                                <label class="form-label">Software Standards</label>
+                                <input type="text" class="form-control" placeholder="Software Standards"
+                                    [(ngModel)]="requisitionInput.softwareStandards">
+                            </div>
+
+                            <div>
+                                <label class="form-label">Other</label>
+                                <textarea class="form-control" placeholder="Other" style="height: 70px;"
+                                    [(ngModel)]="requisitionInput.others"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="header mb-3">
+                <h1></h1>
+
+                <div>
+                    <button class="btn btn-success py-0 px-2 mx-1" (click)="saveRequisition()">
+                        {{ requisitionInput.id ? 'Update' : 'Save' }}
+                    </button>
+                    <button class="btn btn-danger py-0 px-2" (click)="cancel();">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

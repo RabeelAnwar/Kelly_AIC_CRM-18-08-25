@@ -1,0 +1,131 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.header h1 {
+    font-size: 24px;
+    color: #777;
+    margin: 0;
+    font-weight: 400;
+}
+
+.section-header {
+    background: rgba(0, 0, 0, 0) linear-gradient(#0163a2, #053972) repeat scroll 0 0 !important;
+    color: white;
+    border: #337ab7;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.company-info-box {
+    background-color: #fff;
+    border: 1px solid #337ab7;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+.form-content {
+    padding: 15px;
+}
+
+.form-control:focus {
+    border-color: #e97342;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(233, 115, 66, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(233, 115, 66, 0.6);
+}
+
+.form-control {
+    height: 26px;
+    padding: 6px 12px !important;
+    font-size: 12px !important;
+}
+
+.form-label {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.search-input {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    width: 100%;
+    color: #6c757d;
+}
+
+table th,
+table td {
+    padding: 1px 3px;
+    font-size: 12px;
+    line-height: 2;
+}
+
+.pagination-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 15px;
+}
+
+.pagination-btn {
+    margin: 0 5px;
+    width: 80px;
+}
+
+.pagination-input {
+    width: 60px;
+    text-align: center;
+    margin: 0 5px;
+}
+
+.global-search {
+    width: 200px;
+    margin-right: 20px;
+}
+
+.btn-info {
+    color: #fff;
+    background-color: #5bc0de;
+    border-color: #46b8da;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+}
+
+.btn {
+    padding: 2px 7px;
+}
+
+li {
+    color: rgb(35, 82, 124);
+    font-size: 14px;
+}
+
+.no-marker {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.atoz_btn {
+background: rgba(255, 12, 0, 0.54);
+    color: #fff;
+    font-size: 12px;
+    padding: 0px;
+    border-radius: 2px;
+    width: 18px;
+    margin-right: 2px;
+    text-align: center;
+}
+
+.add-new-client:hover {
+    background-color: rgb(237 237 237);
+    background: rgb(237 237 237);
+}
