@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\15-07-25\\AIC-CRM-NEW-main\\AIC-CRM-NEW-main\\AIC_CRM_API\\DataAccess\\DataAccess.csproj": {}
+    "D:\\CRM\\Kelly_AIC_CRM-Git Repo\\CRM_git_code\\AIC_CRM_API\\DataAccess\\DataAccess.csproj": {}
   },
   "projects": {
-    "D:\\15-07-25\\AIC-CRM-NEW-main\\AIC-CRM-NEW-main\\AIC_CRM_API\\DataAccess\\DataAccess.csproj": {
+    "D:\\CRM\\Kelly_AIC_CRM-Git Repo\\CRM_git_code\\AIC_CRM_API\\DataAccess\\DataAccess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\15-07-25\\AIC-CRM-NEW-main\\AIC-CRM-NEW-main\\AIC_CRM_API\\DataAccess\\DataAccess.csproj",
+        "projectUniqueName": "D:\\CRM\\Kelly_AIC_CRM-Git Repo\\CRM_git_code\\AIC_CRM_API\\DataAccess\\DataAccess.csproj",
         "projectName": "DataAccess",
-        "projectPath": "D:\\15-07-25\\AIC-CRM-NEW-main\\AIC-CRM-NEW-main\\AIC_CRM_API\\DataAccess\\DataAccess.csproj",
+        "projectPath": "D:\\CRM\\Kelly_AIC_CRM-Git Repo\\CRM_git_code\\AIC_CRM_API\\DataAccess\\DataAccess.csproj",
         "packagesPath": "C:\\Users\\Rabeel Anwar\\.nuget\\packages\\",
-        "outputPath": "D:\\15-07-25\\AIC-CRM-NEW-main\\AIC-CRM-NEW-main\\AIC_CRM_API\\DataAccess\\obj\\",
+        "outputPath": "D:\\CRM\\Kelly_AIC_CRM-Git Repo\\CRM_git_code\\AIC_CRM_API\\DataAccess\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "sorf6sgEFz0=",
+  "dgSpecHash": "zqxgsrcidcU=",
   "success": true,
-  "projectFilePath": "D:\\15-07-25\\AIC-CRM-NEW-main\\AIC-CRM-NEW-main\\AIC_CRM_API\\Repository\\Repository.csproj",
+  "projectFilePath": "D:\\CRM\\Kelly_AIC_CRM-Git Repo\\CRM_git_code\\AIC_CRM_API\\Repository\\Repository.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Rabeel Anwar\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\8.0.14\\microsoft.aspnetcore.cryptography.internal.8.0.14.nupkg.sha512",
     "C:\\Users\\Rabeel Anwar\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\8.0.14\\microsoft.aspnetcore.cryptography.keyderivation.8.0.14.nupkg.sha512",
