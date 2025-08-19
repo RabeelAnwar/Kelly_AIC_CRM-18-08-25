@@ -88,7 +88,8 @@
                                 <p-dropdown [showClear]="true"
                                 [options]="usersList" [(ngModel)]="managerInput.isAssignedToId"
                                 optionValue="id"
-                                optionLabel="userName"
+                                [optionLabel]="'displayContactName'"
+            
                                 placeholder="--Is Assigned To--" />
                             </div>
                     </div>

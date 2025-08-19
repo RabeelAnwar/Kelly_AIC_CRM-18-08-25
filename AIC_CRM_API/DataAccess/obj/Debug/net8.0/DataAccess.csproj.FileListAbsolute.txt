@@ -1,0 +1,43 @@
+D:\AIC CRM\Latest-AIC-CRM\AIC_CRM_API\DataAccess\bin\Debug\net8.0\DataAccess.deps.json
+D:\AIC CRM\Latest-AIC-CRM\AIC_CRM_API\DataAccess\bin\Debug\net8.0\DataAccess.dll
+D:\AIC CRM\Latest-AIC-CRM\AIC_CRM_API\DataAccess\bin\Debug\net8.0\DataAccess.pdb
+D:\AIC CRM\Latest-AIC-CRM\AIC_CRM_API\DataAccess\obj\Debug\net8.0\DataAccess.csproj.AssemblyReference.cache
+D:\AIC CRM\Latest-AIC-CRM\AIC_CRM_API\DataAccess\obj\Debug\net8.0\DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+D:\AIC CRM\Latest-AIC-CRM\AIC_CRM_API\DataAccess\obj\Debug\net8.0\DataAccess.AssemblyInfoInputs.cache
+D:\AIC CRM\Latest-AIC-CRM\AIC_CRM_API\DataAccess\obj\Debug\net8.0\DataAccess.AssemblyInfo.cs
+D:\AIC CRM\Latest-AIC-CRM\AIC_CRM_API\DataAccess\obj\Debug\net8.0\DataAccess.csproj.CoreCompileInputs.cache
+D:\AIC CRM\Latest-AIC-CRM\AIC_CRM_API\DataAccess\obj\Debug\net8.0\DataAccess.dll
+D:\AIC CRM\Latest-AIC-CRM\AIC_CRM_API\DataAccess\obj\Debug\net8.0\refint\DataAccess.dll
+D:\AIC CRM\Latest-AIC-CRM\AIC_CRM_API\DataAccess\obj\Debug\net8.0\DataAccess.pdb
+D:\AIC CRM\Latest-AIC-CRM\AIC_CRM_API\DataAccess\obj\Debug\net8.0\ref\DataAccess.dll
+D:\AIC CRM\Latest-AIC-CRM\AIC_CRM_API\DataAccess\bin\Debug\net8.0\DataAccess.runtimeconfig.json
+D:\AIC CRM\Latest-AIC-CRM\AIC_CRM_API\DataAccess\obj\Debug\net8.0\DataAccess.genruntimeconfig.cache
+D:\Repo\AIC_CRM_API\DataAccess\bin\Debug\net8.0\DataAccess.deps.json
+D:\Repo\AIC_CRM_API\DataAccess\bin\Debug\net8.0\DataAccess.runtimeconfig.json
+D:\Repo\AIC_CRM_API\DataAccess\bin\Debug\net8.0\DataAccess.dll
+D:\Repo\AIC_CRM_API\DataAccess\bin\Debug\net8.0\DataAccess.pdb
+D:\Repo\AIC_CRM_API\DataAccess\obj\Debug\net8.0\DataAccess.csproj.AssemblyReference.cache
+D:\Repo\AIC_CRM_API\DataAccess\obj\Debug\net8.0\DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+D:\Repo\AIC_CRM_API\DataAccess\obj\Debug\net8.0\DataAccess.AssemblyInfoInputs.cache
+D:\Repo\AIC_CRM_API\DataAccess\obj\Debug\net8.0\DataAccess.AssemblyInfo.cs
+D:\Repo\AIC_CRM_API\DataAccess\obj\Debug\net8.0\DataAccess.csproj.CoreCompileInputs.cache
+D:\Repo\AIC_CRM_API\DataAccess\obj\Debug\net8.0\DataAccess.sourcelink.json
+D:\Repo\AIC_CRM_API\DataAccess\obj\Debug\net8.0\DataAccess.dll
+D:\Repo\AIC_CRM_API\DataAccess\obj\Debug\net8.0\refint\DataAccess.dll
+D:\Repo\AIC_CRM_API\DataAccess\obj\Debug\net8.0\DataAccess.pdb
+D:\Repo\AIC_CRM_API\DataAccess\obj\Debug\net8.0\DataAccess.genruntimeconfig.cache
+D:\Repo\AIC_CRM_API\DataAccess\obj\Debug\net8.0\ref\DataAccess.dll
+D:\15-07-25\AIC-CRM-NEW-main\AIC-CRM-NEW-main\AIC_CRM_API\DataAccess\bin\Debug\net8.0\DataAccess.deps.json
+D:\15-07-25\AIC-CRM-NEW-main\AIC-CRM-NEW-main\AIC_CRM_API\DataAccess\bin\Debug\net8.0\DataAccess.runtimeconfig.json
+D:\15-07-25\AIC-CRM-NEW-main\AIC-CRM-NEW-main\AIC_CRM_API\DataAccess\bin\Debug\net8.0\DataAccess.dll
+D:\15-07-25\AIC-CRM-NEW-main\AIC-CRM-NEW-main\AIC_CRM_API\DataAccess\bin\Debug\net8.0\DataAccess.pdb
+D:\15-07-25\AIC-CRM-NEW-main\AIC-CRM-NEW-main\AIC_CRM_API\DataAccess\obj\Debug\net8.0\DataAccess.csproj.AssemblyReference.cache
+D:\15-07-25\AIC-CRM-NEW-main\AIC-CRM-NEW-main\AIC_CRM_API\DataAccess\obj\Debug\net8.0\DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+D:\15-07-25\AIC-CRM-NEW-main\AIC-CRM-NEW-main\AIC_CRM_API\DataAccess\obj\Debug\net8.0\DataAccess.AssemblyInfoInputs.cache
+D:\15-07-25\AIC-CRM-NEW-main\AIC-CRM-NEW-main\AIC_CRM_API\DataAccess\obj\Debug\net8.0\DataAccess.AssemblyInfo.cs
+D:\15-07-25\AIC-CRM-NEW-main\AIC-CRM-NEW-main\AIC_CRM_API\DataAccess\obj\Debug\net8.0\DataAccess.csproj.CoreCompileInputs.cache
+D:\15-07-25\AIC-CRM-NEW-main\AIC-CRM-NEW-main\AIC_CRM_API\DataAccess\obj\Debug\net8.0\DataAccess.dll
+D:\15-07-25\AIC-CRM-NEW-main\AIC-CRM-NEW-main\AIC_CRM_API\DataAccess\obj\Debug\net8.0\refint\DataAccess.dll
+D:\15-07-25\AIC-CRM-NEW-main\AIC-CRM-NEW-main\AIC_CRM_API\DataAccess\obj\Debug\net8.0\DataAccess.pdb
+D:\15-07-25\AIC-CRM-NEW-main\AIC-CRM-NEW-main\AIC_CRM_API\DataAccess\obj\Debug\net8.0\DataAccess.genruntimeconfig.cache
+D:\15-07-25\AIC-CRM-NEW-main\AIC-CRM-NEW-main\AIC_CRM_API\DataAccess\obj\Debug\net8.0\ref\DataAccess.dll

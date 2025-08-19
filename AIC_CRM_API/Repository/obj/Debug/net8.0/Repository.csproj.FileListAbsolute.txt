@@ -1,0 +1,46 @@
+D:\AIC CRM\Latest-AIC-CRM\AIC_CRM_API\Repository\bin\Debug\net8.0\Repository.deps.json
+D:\AIC CRM\Latest-AIC-CRM\AIC_CRM_API\Repository\bin\Debug\net8.0\Repository.dll
+D:\AIC CRM\Latest-AIC-CRM\AIC_CRM_API\Repository\bin\Debug\net8.0\Repository.pdb
+D:\AIC CRM\Latest-AIC-CRM\AIC_CRM_API\Repository\bin\Debug\net8.0\DataAccess.dll
+D:\AIC CRM\Latest-AIC-CRM\AIC_CRM_API\Repository\bin\Debug\net8.0\DataAccess.pdb
+D:\AIC CRM\Latest-AIC-CRM\AIC_CRM_API\Repository\obj\Debug\net8.0\Repository.csproj.AssemblyReference.cache
+D:\AIC CRM\Latest-AIC-CRM\AIC_CRM_API\Repository\obj\Debug\net8.0\Repository.GeneratedMSBuildEditorConfig.editorconfig
+D:\AIC CRM\Latest-AIC-CRM\AIC_CRM_API\Repository\obj\Debug\net8.0\Repository.AssemblyInfoInputs.cache
+D:\AIC CRM\Latest-AIC-CRM\AIC_CRM_API\Repository\obj\Debug\net8.0\Repository.AssemblyInfo.cs
+D:\AIC CRM\Latest-AIC-CRM\AIC_CRM_API\Repository\obj\Debug\net8.0\Repository.csproj.CoreCompileInputs.cache
+D:\AIC CRM\Latest-AIC-CRM\AIC_CRM_API\Repository\obj\Debug\net8.0\Repository.csproj.Up2Date
+D:\AIC CRM\Latest-AIC-CRM\AIC_CRM_API\Repository\obj\Debug\net8.0\Repository.dll
+D:\AIC CRM\Latest-AIC-CRM\AIC_CRM_API\Repository\obj\Debug\net8.0\refint\Repository.dll
+D:\AIC CRM\Latest-AIC-CRM\AIC_CRM_API\Repository\obj\Debug\net8.0\Repository.pdb
+D:\AIC CRM\Latest-AIC-CRM\AIC_CRM_API\Repository\obj\Debug\net8.0\ref\Repository.dll
+D:\Repo\AIC_CRM_API\Repository\bin\Debug\net8.0\Repository.deps.json
+D:\Repo\AIC_CRM_API\Repository\bin\Debug\net8.0\Repository.dll
+D:\Repo\AIC_CRM_API\Repository\bin\Debug\net8.0\Repository.pdb
+D:\Repo\AIC_CRM_API\Repository\bin\Debug\net8.0\DataAccess.dll
+D:\Repo\AIC_CRM_API\Repository\bin\Debug\net8.0\DataAccess.pdb
+D:\Repo\AIC_CRM_API\Repository\obj\Debug\net8.0\Repository.csproj.AssemblyReference.cache
+D:\Repo\AIC_CRM_API\Repository\obj\Debug\net8.0\Repository.GeneratedMSBuildEditorConfig.editorconfig
+D:\Repo\AIC_CRM_API\Repository\obj\Debug\net8.0\Repository.AssemblyInfoInputs.cache
+D:\Repo\AIC_CRM_API\Repository\obj\Debug\net8.0\Repository.AssemblyInfo.cs
+D:\Repo\AIC_CRM_API\Repository\obj\Debug\net8.0\Repository.csproj.CoreCompileInputs.cache
+D:\Repo\AIC_CRM_API\Repository\obj\Debug\net8.0\Repository.sourcelink.json
+D:\Repo\AIC_CRM_API\Repository\obj\Debug\net8.0\Repository.csproj.Up2Date
+D:\Repo\AIC_CRM_API\Repository\obj\Debug\net8.0\Repository.dll
+D:\Repo\AIC_CRM_API\Repository\obj\Debug\net8.0\refint\Repository.dll
+D:\Repo\AIC_CRM_API\Repository\obj\Debug\net8.0\Repository.pdb
+D:\Repo\AIC_CRM_API\Repository\obj\Debug\net8.0\ref\Repository.dll
+D:\15-07-25\AIC-CRM-NEW-main\AIC-CRM-NEW-main\AIC_CRM_API\Repository\bin\Debug\net8.0\Repository.deps.json
+D:\15-07-25\AIC-CRM-NEW-main\AIC-CRM-NEW-main\AIC_CRM_API\Repository\bin\Debug\net8.0\Repository.dll
+D:\15-07-25\AIC-CRM-NEW-main\AIC-CRM-NEW-main\AIC_CRM_API\Repository\bin\Debug\net8.0\Repository.pdb
+D:\15-07-25\AIC-CRM-NEW-main\AIC-CRM-NEW-main\AIC_CRM_API\Repository\bin\Debug\net8.0\DataAccess.dll
+D:\15-07-25\AIC-CRM-NEW-main\AIC-CRM-NEW-main\AIC_CRM_API\Repository\bin\Debug\net8.0\DataAccess.pdb
+D:\15-07-25\AIC-CRM-NEW-main\AIC-CRM-NEW-main\AIC_CRM_API\Repository\obj\Debug\net8.0\Repository.csproj.AssemblyReference.cache
+D:\15-07-25\AIC-CRM-NEW-main\AIC-CRM-NEW-main\AIC_CRM_API\Repository\obj\Debug\net8.0\Repository.GeneratedMSBuildEditorConfig.editorconfig
+D:\15-07-25\AIC-CRM-NEW-main\AIC-CRM-NEW-main\AIC_CRM_API\Repository\obj\Debug\net8.0\Repository.AssemblyInfoInputs.cache
+D:\15-07-25\AIC-CRM-NEW-main\AIC-CRM-NEW-main\AIC_CRM_API\Repository\obj\Debug\net8.0\Repository.AssemblyInfo.cs
+D:\15-07-25\AIC-CRM-NEW-main\AIC-CRM-NEW-main\AIC_CRM_API\Repository\obj\Debug\net8.0\Repository.csproj.CoreCompileInputs.cache
+D:\15-07-25\AIC-CRM-NEW-main\AIC-CRM-NEW-main\AIC_CRM_API\Repository\obj\Debug\net8.0\Repository.csproj.Up2Date
+D:\15-07-25\AIC-CRM-NEW-main\AIC-CRM-NEW-main\AIC_CRM_API\Repository\obj\Debug\net8.0\Repository.dll
+D:\15-07-25\AIC-CRM-NEW-main\AIC-CRM-NEW-main\AIC_CRM_API\Repository\obj\Debug\net8.0\refint\Repository.dll
+D:\15-07-25\AIC-CRM-NEW-main\AIC-CRM-NEW-main\AIC_CRM_API\Repository\obj\Debug\net8.0\Repository.pdb
+D:\15-07-25\AIC-CRM-NEW-main\AIC-CRM-NEW-main\AIC_CRM_API\Repository\obj\Debug\net8.0\ref\Repository.dll

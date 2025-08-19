@@ -12,18 +12,16 @@ import { CkeditorConfigService } from '../../../../services/CkeditorConfigServic
 @Component({
   selector: 'app-add-manager',
   templateUrl: './add-manager.component.html',
-  styleUrl: './add-manager.component.css'
+  styleUrl: './add-manager.component.css',
 })
 export class AddManagerComponent {
-
   constructor(
     private apiService: ApiService,
     private toastr: ToastrService,
     private router: Router,
     private location: Location,
     private ckConfig: CkeditorConfigService
-
-  ) { }
+  ) {}
 
   public Editor = this.ckConfig.Editor;
   public config = this.ckConfig.config;
@@ -45,7 +43,6 @@ export class AddManagerComponent {
     debugger;
     const state = this.location.getState() as { manager?: ClientManagerModel };
     if (state.manager) {
-
       this.managerInput = {
         ...state.manager,
       };
@@ -62,10 +59,26 @@ export class AddManagerComponent {
   }
 
   getAllUsers(): void {
-    this.apiService.getData('Admin/UsersListGet').subscribe(res => {
+    this.apiService.getData('Admin/UsersListGet').subscribe((res) => {
       if (res.succeeded) {
+        debugger;
         this.usersList = res.data;
+        const temp: any[] = [];
+        this.usersList.forEach((i) => {
+          temp.push({
+            ...i,
+            displayContactName: i.firstName + ' ' + i.lastName,
+          });
+        });
+        this.usersList = [...temp];
         console.log(this.usersList);
+        const target = JSON.parse(localStorage.getItem('userData')!).userId;
+        // Default select first user if list is not empty
+        this.managerInput.isAssignedToId = this.usersList.find(
+          (i) => i.id === target
+        ).id ;
+
+        //this.usersList.length > 0 ? this.usersList[0].id : null;
       } else {
         this.toastr.error('Failed to load users');
       }
@@ -81,40 +94,45 @@ export class AddManagerComponent {
           this.toastr.error('Failed to load departments');
         }
       },
-      error: () => this.toastr.error('Error fetching departments')
+      error: () => this.toastr.error('Error fetching departments'),
     });
   }
 
   GetWorkUnderManagers() {
-    this.apiService.getDataById('Client/ClientManagerGetByClientId', { id: this.managerInput.clientId }).subscribe({
-      next: (response) => {
-        const dropdownItems: DropdownItem[] = [];
+    this.apiService
+      .getDataById('Client/ClientManagerGetByClientId', {
+        id: this.managerInput.clientId,
+      })
+      .subscribe({
+        next: (response) => {
+          const dropdownItems: DropdownItem[] = [];
 
-
-        response?.data.forEach((manager: any) => {
-          dropdownItems.push({
-            id: manager.id,
-            name: manager.firstName + ' ' + manager.lastName
+          response?.data.forEach((manager: any) => {
+            dropdownItems.push({
+              id: manager.id,
+              name: manager.firstName + ' ' + manager.lastName,
+            });
           });
-        });
 
-        this.managerListDD = dropdownItems;
-      },
-      error: (err) => {
-        this.toastr.error(err || 'Error loading clients list');
-      }
-    });
+          this.managerListDD = dropdownItems;
+        },
+        error: (err) => {
+          this.toastr.error(err || 'Error loading clients list');
+        },
+      });
   }
 
   getSingleClient() {
-    this.apiService.getDataById('Client/SingleClientGet', { id: this.managerInput.clientId }).subscribe({
-      next: (response) => {
-        this.clientData = response?.data || [];
-      },
-      error: (err) => {
-        this.toastr.error(err || 'Error loading clients list');
-      }
-    });
+    this.apiService
+      .getDataById('Client/SingleClientGet', { id: this.managerInput.clientId })
+      .subscribe({
+        next: (response) => {
+          this.clientData = response?.data || [];
+        },
+        error: (err) => {
+          this.toastr.error(err || 'Error loading clients list');
+        },
+      });
   }
 
   getCountries(): void {
@@ -124,7 +142,7 @@ export class AddManagerComponent {
       { name: 'Pakistan' },
       { name: 'Mexico' },
       { name: 'Brazil' },
-      { name: 'Other' }
+      { name: 'Other' },
     ];
   }
   onCountryChange(name?: any) {
@@ -137,10 +155,11 @@ export class AddManagerComponent {
     }
   }
   getStates(countryName?: string): void {
-
     if (countryName) {
       const allCountries = Country.getAllCountries();
-      const countryNames = allCountries.sort((a, b) => a.name.localeCompare(b.name));
+      const countryNames = allCountries.sort((a, b) =>
+        a.name.localeCompare(b.name)
+      );
 
       const country = countryNames.find((c) => c.name === countryName);
       if (country) {
@@ -152,7 +171,6 @@ export class AddManagerComponent {
   }
 
   getCities(stateName?: string): void {
-
     if (stateName) {
       const state = this.states.find((s) => s.name === stateName);
       if (state) {
@@ -161,7 +179,6 @@ export class AddManagerComponent {
       }
     }
     console.log(this.cities);
-
   }
 
   goToDashboard(): void {
@@ -169,35 +186,45 @@ export class AddManagerComponent {
   }
 
   saveClientManager(): void {
-    if (!this.managerInput.firstName || this.managerInput.firstName.trim() === '') {
+    if (
+      !this.managerInput.firstName ||
+      this.managerInput.firstName.trim() === ''
+    ) {
       this.toastr.warning('First Name is required');
       return;
     }
 
-    if (!this.managerInput.lastName || this.managerInput.lastName.trim() === '') {
+    if (
+      !this.managerInput.lastName ||
+      this.managerInput.lastName.trim() === ''
+    ) {
       this.toastr.warning('Last Name is required');
       return;
     }
 
-    this.apiService.saveData('Client/ClientManagerAddUpdate', this.managerInput).subscribe({
-      next: (res) => {
-        if (res.succeeded) {
+    this.apiService
+      .saveData('Client/ClientManagerAddUpdate', this.managerInput)
+      .subscribe({
+        next: (res) => {
+          if (res.succeeded) {
+            const state = this.location.getState() as {
+              fromClientDashboard?: boolean;
+            };
 
-          const state = this.location.getState() as { fromClientDashboard?: boolean };
-
-          this.router.navigate(['/ManagerDashboard', res.data.id], {
-            state: { fromClientDashboard: state.fromClientDashboard || false }
-          });
-          this.toastr.success('Manager saved successfully');
-          // this.ClientManagerGetByClientId();
-        } else {
-          this.toastr.error(res.message || 'Failed to save manager');
-        }
-      },
-      error: () => this.toastr.error('Error saving manager')
-    });
+            this.router.navigate(['/ManagerDashboard', res.data.id], {
+              state: {
+                fromClientDashboard: state.fromClientDashboard || false,
+              },
+            });
+            this.toastr.success('Manager saved successfully');
+            // this.ClientManagerGetByClientId();
+          } else {
+            this.toastr.error(res.message || 'Failed to save manager');
+          }
+        },
+        error: () => this.toastr.error('Error saving manager'),
+      });
   }
-
 
   addressTrigger(): void {
     if (this.managerInput.country) {
@@ -210,5 +237,4 @@ export class AddManagerComponent {
       }, 200);
     }
   }
-
 }
