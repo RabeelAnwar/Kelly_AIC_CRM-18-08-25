@@ -43,9 +43,9 @@ export class LeftConsultantSearchNavComponent {
 
     this.getConsultants();
   }
-  ngOnDestroy(): void {
-    localStorage.removeItem('consultantListPage');
-  }
+  // ngOnDestroy(): void {
+  //   localStorage.removeItem('consultantListPage');
+  // }
 
   ngOnChanges(): void {
 

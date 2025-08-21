@@ -1,456 +1,567 @@
 <style>
-    ::ng-deep p-calendar .p-inputtext {
-        padding: 0;
-        padding-left: 10px;
-        width: 610px;
-    }
+  ::ng-deep p-calendar .p-inputtext {
+    padding: 0;
+    padding-left: 10px;
+    width: 610px;
+  }
 
-    :host ::ng-deep mark {
-        background-color: #FFFF00 !important;
-        /* pure yellow */
-    }
+  :host ::ng-deep mark {
+    background-color: #ffff00 !important;
+    /* pure yellow */
+  }
+  .sticky-action-column {
+    position: sticky;
+    right: 0;
+    background: white;
+    z-index: 2;
+  }
+  /* ✅ ADD this class to enable text wrapping */
+  .wrap-text {
+    white-space: normal !important;
+    word-wrap: break-word;
+    word-break: break-word;
+    max-width: 100%;
+    line-height: 1.0; /* ✅ Reduce line height */
+    padding: 4px 8px; /* ✅ Adjust inner padding */
+    font-size: 12px;
+  }
+
+  /* ✅ ADD this to make sure table doesn't scroll horizontally */
+  p-table {
+    overflow-x: hidden !important;
+  }
 </style>
 
 <div *ngIf="isLoading" class="loading-overlay">
-    <div class="lds-roller">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-    </div>
+  <div class="lds-roller">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
 </div>
 
-
 <div class="row">
-    <div class="col-md-2 mt-4">
-        <app-left-consultant-search-nav
-            [fildteredConsultantsIds]="fildteredConsultantsIds"></app-left-consultant-search-nav>
-    </div>
-    <div class="col-md-10 ps-0">
+  <div class="col-md-2 mt-4">
+    <app-left-consultant-search-nav
+      [fildteredConsultantsIds]="fildteredConsultantsIds"
+    ></app-left-consultant-search-nav>
+  </div>
+  <div class="col-md-10 ps-0">
+    <div class="row my-2">
+      <div class="col-md-4">
+        <div class="header">
+          <div class="text-center">
+            <img
+              [src]="
+                consultantData.linkedInImage ||
+                'assets/images/dummy-profile-img.jpg'
+              "
+              style="width: 75px; height: 75px"
+              class="rounded"
+            />
+          </div>
 
-        <div class="row my-2">
-            <div class="col-md-4">
-
-                <div class="header">
-                    <div class="text-center">
-                        <img [src]="consultantData.linkedInImage || 'assets/images/dummy-profile-img.jpg'"
-                            style="width: 75px ; height: 75px;" class="rounded">
-                    </div>
-
-                    <h1>{{consultantData.firstName}} {{consultantData.lastName}}
-                        <span class="" *ngIf="consultantData.linkedInUrl">
-                            <a [href]="consultantData.linkedInUrl" target="_blank" class="clientNameLink">
-                                <i class="fa-brands fa-linkedin mt-3" style="color: #00aff0; font-size: 30px;"></i>
-                            </a>
-                        </span>
-                    </h1>
-                </div>
-            </div>
-            <div class="col-md-8">
-                <div class="mt-3">
-                    <app-consultant-top-nav [consultantData]="consultantData"></app-consultant-top-nav>
-                </div>
-            </div>
+          <h1>
+            {{ consultantData.firstName }} {{ consultantData.lastName }}
+            <span class="" *ngIf="consultantData.linkedInUrl">
+              <a
+                [href]="consultantData.linkedInUrl"
+                target="_blank"
+                class="clientNameLink"
+              >
+                <i
+                  class="fa-brands fa-linkedin mt-3"
+                  style="color: #00aff0; font-size: 30px"
+                ></i>
+              </a>
+            </span>
+          </h1>
         </div>
+      </div>
+      <div class="col-md-8">
+        <div class="mt-3">
+          <app-consultant-top-nav
+            [consultantData]="consultantData"
+          ></app-consultant-top-nav>
+        </div>
+      </div>
+    </div>
 
-        <div class="row">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="company-info-box mx-2 mb-3">
+          <div class="section-header fw-normal p-1">General Details</div>
 
-            <div class="col-md-12">
-                <div class="company-info-box mx-2 mb-3">
-                    <div class="section-header fw-normal p-1">
-                        General Details
-                    </div>
+          <div class="form-content py-0">
+            <div class="row my-2">
+              <div class="col-md-4">
+                <table>
+                  <tr>
+                    <td class="text-white" style="background: #337ab7">
+                      Current Position :
+                    </td>
+                    <td class="width-260px">
+                      {{ consultantData.currentPosition }}
+                    </td>
+                  </tr>
+                </table>
+              </div>
 
-                    <div class="form-content py-0">
+              <div class="col-md-4">
+                <table>
+                  <tr>
+                    <td
+                      class="text-white"
+                      style="background: #337ab7; width: 80px"
+                    >
+                      Visa :
+                    </td>
+                    <td class="width-260px">{{ consultantData.visaStatus }}</td>
+                  </tr>
+                </table>
+              </div>
 
-                        <div class="row my-2">
-
-                            <div class="col-md-4">
-                                <table>
-                                    <tr>
-                                        <td class="text-white" style="background: #337ab7;">Current Position :</td>
-                                        <td class="width-260px">{{consultantData.currentPosition}}</td>
-                                    </tr>
-                                </table>
-                            </div>
-
-                            <div class="col-md-4">
-                                <table>
-                                    <tr>
-                                        <td class="text-white" style="background: #337ab7; width: 80px;">Visa : </td>
-                                        <td class="width-260px">{{consultantData.visaStatus}}</td>
-                                    </tr>
-                                </table>
-                            </div>
-
-                            <div class="col-md-4">
-                                <table>
-                                    <tr>
-                                        <td class="text-white" style="background: #337ab7;">Current Rate : </td>
-                                        <td style="width: 270px;">{{consultantData.currentRate}}</td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-
-                        <div class="row">
-
-                            <div class="col-md-3 fw-bold fs-12px">
-                                <span>Address</span>
-                            </div>
-                            <div class="col-md-3 fw-bold fs-12px">
-                                <span> Contact</span>
-                            </div>
-                            <div class="col-md-3 fw-bold fs-12px">
-                                <span> Notes</span>
-                            </div>
-                            <div class="col-md-3 fw-bold fs-12px">
-                                <span> Requisitions</span>
-                            </div>
-                        </div>
-                        <hr class="my-1">
-                        <div class="row">
-
-                            <div class="col-md-3 fs-12px">
-                                <!-- <span [innerHTML]="consultantData.address1"></span> -->
-                                <span>{{consultantData.completeAddress}}</span>
-                            </div>
-                            <div class="col-md-3 fs-12px">
-
-                                <div>
-                                    <span class="fw-bold" mask="(000) 000-0000"> (o):</span>{{consultantData.officePhone}}<br>
-                                    <span class="fw-bold"> (m):</span>{{consultantData.cellPhone}}<br>
-                                    <span class="fw-bold"> (home): </span>{{consultantData.homePhone}}
-                                </div>
-
-                            </div>
-                            <div class="col-md-3 fs-12px">
-                                <span> {{consultantData.notes}}</span>
-                            </div>
-                            <div class="col-md-3 fs-12px">
-
-                                <ul class="no-marker">
-                                    <li *ngFor="let item of consultantData.requisition">
-                                        <div *ngIf="item.clientName" class="cursor-pointer" (click)="requisitionDashboard(item.requisitionId)">
-                                            {{ item.clientName }} #{{item.requisitionId}}
-                                        </div>
-                                    </li>
-                                </ul>
-
-                            </div>
-                        </div>
-
-                        <div class="row my-2">
-
-                            <div class="col-md-4">
-                                <table>
-                                    <tr>
-                                        <td class="text-white" style="background: #337ab7;">(w) email: :</td>
-                                        <td style="width: 295px;">{{consultantData.workEmail}}</td>
-                                    </tr>
-                                </table>
-                            </div>
-
-                            <div class="col-md-5">
-                                <table>
-                                    <tr>
-                                        <td class="text-white" style="background: #337ab7;">(p) email : </td>
-                                        <td style="width: 390px;">{{consultantData.personalEmail}}</td>
-                                    </tr>
-                                </table>
-                            </div>
-
-                            <div class="col-md-3">
-                                <table>
-                                    <tr>
-                                        <td class="text-white" style="background: #337ab7; width: 95px;">MS Teams ID :
-                                        </td>
-                                        <td class="width-260px">{{consultantData.skypeId}}</td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-
-
-                    </div>
-                </div>
-
+              <div class="col-md-4">
+                <table>
+                  <tr>
+                    <td class="text-white" style="background: #337ab7">
+                      Current Rate :
+                    </td>
+                    <td style="width: 270px">
+                      {{ consultantData.currentRate }}
+                    </td>
+                  </tr>
+                </table>
+              </div>
             </div>
 
-            <!-- <div class="col-md-3">
+            <div class="row">
+              <div class="col-md-3 fw-bold fs-12px">
+                <span>Address</span>
+              </div>
+              <div class="col-md-3 fw-bold fs-12px">
+                <span> Contact</span>
+              </div>
+              <div class="col-md-3 fw-bold fs-12px">
+                <span> Notes</span>
+              </div>
+              <div class="col-md-3 fw-bold fs-12px">
+                <span> Requisitions</span>
+              </div>
+            </div>
+            <hr class="my-1" />
+            <div class="row">
+              <div class="col-md-3 fs-12px">
+                <!-- <span [innerHTML]="consultantData.address1"></span> -->
+                <span>{{ consultantData.completeAddress }}</span>
+              </div>
+              <div class="col-md-3 fs-12px">
+                <div>
+                  <span class="fw-bold" mask="(000) 000-0000"> (o):</span
+                  >{{ consultantData.officePhone | phoneFormat }}<br />
+                  <span class="fw-bold"> (m):</span
+                  >{{ consultantData.cellPhone | phoneFormat }}<br />
+                  <span class="fw-bold"> (home): </span
+                  >{{ consultantData.homePhone | phoneFormat }}
+                </div>
+              </div>
+              <div class="col-md-3 fs-12px">
+                <span> {{ consultantData.notes }}</span>
+              </div>
+              <div class="col-md-3 fs-12px">
+                <ul class="no-marker">
+                  <li *ngFor="let item of consultantData.requisition">
+                    <div
+                      *ngIf="item.clientName"
+                      class="cursor-pointer"
+                      (click)="requisitionDashboard(item.requisitionId)"
+                    >
+                      {{ item.clientName }} #{{ item.requisitionId }}
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="row my-2">
+              <div class="col-md-4">
+                <table>
+                  <tr>
+                    <td class="text-white" style="background: #337ab7">
+                      (w) email: :
+                    </td>
+                    <td style="width: 295px">{{ consultantData.workEmail }}</td>
+                  </tr>
+                </table>
+              </div>
+
+              <div class="col-md-5">
+                <table>
+                  <tr>
+                    <td class="text-white" style="background: #337ab7">
+                      (p) email :
+                    </td>
+                    <td style="width: 390px">
+                      {{ consultantData.personalEmail }}
+                    </td>
+                  </tr>
+                </table>
+              </div>
+
+              <div class="col-md-3">
+                <table>
+                  <tr>
+                    <td
+                      class="text-white"
+                      style="background: #337ab7; width: 95px"
+                    >
+                      MS Teams ID :
+                    </td>
+                    <td class="width-260px">{{ consultantData.skypeId }}</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="col-md-3">
 
             </div> -->
+    </div>
 
-        </div>
+    <div class="company-info-box mx-2 mb-3">
+      <div class="section-header fw-normal p-1">Call Record</div>
 
-        <div class="company-info-box mx-2 mb-3">
-
-            <div class="section-header fw-normal p-1">
-                Call Record
+      <div class="form-content py-0">
+        <div class="row mb-2">
+          <div class="col-md-4">
+            <div>
+              <label class="form-label">Date/Time</label>
+              <div class="flex justify-content-center">
+                <p-calendar
+                  [(ngModel)]="callLogsInput.date"
+                  [iconDisplay]="'input'"
+                  [showIcon]="true"
+                />
+              </div>
             </div>
 
-            <div class="form-content py-0">
-                <div class="row mb-2">
-                    <div class="col-md-4">
+            <div>
+              <div class="d-flex">
+                <label class="form-label mt-1">Remind Status?</label>
 
-                        <div>
-                            <label class="form-label">Date/Time</label>
-                            <div class="flex justify-content-center">
-                                <p-calendar [(ngModel)]="callLogsInput.date" [iconDisplay]="'input'"
-                                    [showIcon]="true" />
-                            </div>
-                        </div>
-
-                        <div>
-
-                            <div class="d-flex">
-                                <label class="form-label mt-1">Remind Status?</label>
-                            
-                                <div class="form-check form-switch ms-3">
-                                    <input class="form-check-input mt-2 fs-6" [checked]="callLogsInput.remindStatus"
-                                    type="checkbox">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <label class="form-label">Reminder Date/Time</label>
-                            <div class="flex justify-content-center">
-                                <p-calendar [iconDisplay]="'input'" [showIcon]="true"
-                                    [(ngModel)]="callLogsInput.reminderDate" />
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="col-md-8">
-                        <label class="form-label">Call Record</label>
-                    <ckeditor #editor [editor]="Editor" [config]="config" data="callLogsInput.record" [(ngModel)]="callLogsInput.record"></ckeditor>
-                    </div>
-
-                    <div class="col-md-12">
-                        <label class="form-label"></label>
-
-                        <div class="d-flex justify-content-end">
-                            <button class="btn btn-success py-0 px-2 mx-1 fs-16px" (click)="saveCallRecord();">
-                                Save
-                            </button>
-                            <button class="btn btn btn-danger py-0 px-2 fs-16px"
-                                (click)="clearCallRecord();">Cancel</button>
-                        </div>
-                    </div>
+                <div class="form-check form-switch ms-3">
+                  <input
+                    class="form-check-input mt-2 fs-6"
+                    [checked]="callLogsInput.remindStatus"
+                    type="checkbox"
+                  />
                 </div>
-
+              </div>
             </div>
+
+            <div>
+              <label class="form-label">Reminder Date/Time</label>
+              <div class="flex justify-content-center">
+                <p-calendar
+                  [iconDisplay]="'input'"
+                  [showIcon]="true"
+                  [(ngModel)]="callLogsInput.reminderDate"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-8">
+            <label class="form-label">Call Record</label>
+            <ckeditor
+              #editor
+              [editor]="Editor"
+              [config]="config"
+              data="callLogsInput.record"
+              [(ngModel)]="callLogsInput.record"
+            ></ckeditor>
+          </div>
+
+          <div class="col-md-12">
+            <label class="form-label"></label>
+
+            <div class="d-flex justify-content-end">
+              <button
+                class="btn btn-success py-0 px-2 mx-1 fs-16px"
+                (click)="saveCallRecord()"
+              >
+                Save
+              </button>
+              <button
+                class="btn btn btn-danger py-0 px-2 fs-16px"
+                (click)="clearCallRecord()"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
         </div>
+      </div>
+    </div>
 
-        <div class="company-info-box mx-2 mb-3">
-            <div class="section-header fw-normal p-1">
-                Call Logs
-            </div>
+    <div class="company-info-box mx-2 mb-3">
+      <div class="section-header fw-normal p-1">Call Logs</div>
 
-            <div class="form-content py-0">
+      <div class="form-content py-0">
+        <div class="row mb-2">
+          <p-table
+            #dtCall
+            [value]="callLogsList"
+            [rows]="10"
+            [globalFilterFields]="searchCallLogs"
+            [rowHover]="true"
+            scrollHeight="auto"
+            [style]="{ width: '100%' }"
+            columnResizeMode="expand"
+            [resizableColumns]="true"
+          >
+            <ng-template pTemplate="colgroup">
+              <colgroup>
+                <col style="width: 10%" />
+                <col style="width: 5%" />
+                <col style="width: 70%" />
+                <col style="width: 5%" />
+              </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header">
+              <tr>
+                <th colspan="4">
+                  <input
+                    type="text"
+                    pInputText
+                    size="50"
+                    placeholder="Global Search"
+                    (input)="
+                      dtCall.filterGlobal($any($event.target).value, 'contains')
+                    "
+                    style="width: 100%"
+                  />
+                </th>
+              </tr>
+              <tr>
+                <th pResizableColumn>Date/Time</th>
+                <th pResizableColumn>Spoke With</th>
+                <th pResizableColumn>Call Record</th>
+                <th pResizableColumn class="sticky-action-column">Action</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData>
+              <tr>
+                <td>{{ rowData.date | date : "medium" }}</td>
+                <td>{{ rowData.creatorUserName }}</td>
+                <td [innerHTML]="rowData.record" class="wrap-text"></td>
 
-                <div class="row mb-2">
-                    <p-table #dtCall [value]="callLogsList" [rows]="10" [globalFilterFields]="searchCallLogs"
-                        [rowHover]="true" scrollHeight="550px" [style]="{ width: '100%' }" columnResizeMode="expand"
-                        [resizableColumns]="true">
-                        <ng-template pTemplate="colgroup">
-                             <colgroup>
-                                <col style="width: 10%" />
-                                <col style="width: 10%" />
-                                <col style="width: 70%" />
-                                <col style="width: 10%" />
-                            </colgroup>
-                        </ng-template>
-                        <ng-template pTemplate="header">
-
-                            <tr>
-                                <th colspan="4">
-                                    <input type="text" pInputText size="50" placeholder="Global Search"
-                                        (input)="dtCall.filterGlobal($any($event.target).value, 'contains')"
-                                        style="width: 100%" />
-                                </th>
-                            </tr>
-                            <tr>
-
-                                <th pResizableColumn>Date/Time</th>
-                                <th pResizableColumn>Spoke With</th>
-                                <th pResizableColumn>Call Record</th>
-                                <th pResizableColumn>Action</th>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-rowData>
-                            <tr>
-                                <td>{{ rowData.date | date: 'medium' }}</td>
-                                <td>{{ rowData.creatorUserName }}</td>
-                                <td [innerHTML]="rowData.record"></td>
-
-                                <td>
-                                    <div class="d-flex justify-content-start pt-1">
-                                        <div class="p-0 pe-3">
-                                            <span class="cursor-pointer">
-                                                <i class="far fa-edit" (click)="editCallRecord(rowData);"></i>
-                                            </span>
-                                        </div>
-                                        <div class="p-0 pe-3">
-                                            <span class="cursor-pointer">
-                                                <i class="fas fa-trash" (click)="deleteCallRecord(rowData.id)"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </ng-template>
-                    </p-table>
-                </div>
-            </div>
+                <td class="sticky-action-column">
+                  <div class="d-flex justify-content-start pt-1">
+                    <div class="p-0 pe-3">
+                      <span class="cursor-pointer">
+                        <i
+                          class="far fa-edit"
+                          (click)="editCallRecord(rowData)"
+                        ></i>
+                      </span>
+                    </div>
+                    <div class="p-0 pe-3">
+                      <span class="cursor-pointer">
+                        <i
+                          class="fas fa-trash"
+                          (click)="deleteCallRecord(rowData.id)"
+                        ></i>
+                      </span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
         </div>
+      </div>
+    </div>
 
-        <div class="company-info-box mx-2 mb-3">
-            <div class="section-header fw-normal p-1">
+    <div class="company-info-box mx-2 mb-3">
+      <div class="section-header fw-normal p-1">
+        <div class="d-flex justify-content-between align-items-center">
+          <span>Resume</span>
+          <div class="d-flex">
+            <input
+              #fileInput
+              style="width: 600px"
+              type="file"
+              (change)="onResumeSelected($event)"
+              class="form-control text-danger me-5"
+              placeholder=""
+              accept=".doc,.docx,.pdf,.txt,.rtf"
+            />
 
-                <div class="d-flex justify-content-between align-items-center">
-                    <span>Resume</span>
-                    <div class="d-flex">
-                        <input #fileInput style="width: 600px;" type="file" (change)="onResumeSelected($event)"
-                            class="form-control text-danger me-5" placeholder="" accept=".doc,.docx,.pdf,.txt,.rtf">
-
-                        <div class="d-flex justify-content-start ms-5">
-                            <div class="p-0 pe-5">
-                                <span class="cursor-pointer">
-                                    <i class="far fa-circle-down" (click)="downloadFile(consultantData.resume);"></i>
-                                </span>
-                            </div>
-                            <div class="p-0 pe-3">
-                                <span class="cursor-pointer">
-                                    <i class="fas fa-trash" (click)="deleteConsultantFile();"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+            <div class="d-flex justify-content-start ms-5">
+              <div class="p-0 pe-5">
+                <span class="cursor-pointer">
+                  <i
+                    class="far fa-circle-down"
+                    (click)="downloadFile(consultantData.resume)"
+                  ></i>
+                </span>
+              </div>
+              <div class="p-0 pe-3">
+                <span class="cursor-pointer">
+                  <i class="fas fa-trash" (click)="deleteConsultantFile()"></i>
+                </span>
+              </div>
             </div>
-
-            <div class="form-content py-0">
-                <div class="w-100" style="height: 900px; overflow: auto;">
-                    <div *ngIf="resumeHtml" [innerHTML]="resumeHtml"></div>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
 
-        <p class="text-danger ms-2">
-            0 requisitions found
-        </p>
+      <div class="form-content py-0">
+        <div class="w-100" style="height: 900px; overflow: auto">
+          <div *ngIf="resumeHtml" [innerHTML]="resumeHtml"></div>
+        </div>
+      </div>
+    </div>
 
-        <div class="company-info-box mx-2 mb-3">
-            <div class="section-header fw-normal p-1">
-                Consultant Documents
+    <p class="text-danger ms-2">0 requisitions found</p>
+
+    <div class="company-info-box mx-2 mb-3">
+      <div class="section-header fw-normal p-1">Consultant Documents</div>
+
+      <div class="form-content py-0">
+        <div class="row mb-2">
+          <div class="col-md-3">
+            <div>
+              <label class="form-label">Document Type</label>
+              <span class="required-label">REQUIRED</span>
             </div>
 
-            <div class="form-content py-0">
+            <div class="card flex justify-content-center">
+              <p-dropdown
+                [showClear]="true"
+                [options]="documentTypes"
+                [(ngModel)]="documentUploadInput.documentTypeId"
+                optionValue="id"
+                optionLabel="documentTypeName"
+                placeholder="--Select--"
+              />
+            </div>
+          </div>
 
-                <div class="row mb-2">
+          <div class="col-md-3">
+            <label class="form-label">Document Name</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Document Name"
+              [(ngModel)]="documentUploadInput.documentName"
+            />
+          </div>
 
-                    <div class="col-md-3">
-                        <div>
-                            <label class="form-label">Document Type</label>
-                            <span class="required-label">REQUIRED</span>
-                        </div>
-
-                        <div class="card flex justify-content-center">
-                                <p-dropdown [showClear]="true"
-                                [options]="documentTypes" [(ngModel)]="documentUploadInput.documentTypeId"
-                                optionValue="id"
-                                optionLabel="documentTypeName"
-                                placeholder="--Select--" />
-                            </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <label class="form-label">Document Name</label>
-                        <input type="text" class="form-control" placeholder="Document Name"
-                            [(ngModel)]="documentUploadInput.documentName">
-                    </div>
-
-                    <div class="col-md-3">
-                        <label class="form-label">Upload Documents</label>
-                        <!-- <div>
+          <div class="col-md-3">
+            <label class="form-label">Upload Documents</label>
+            <!-- <div>
                         <span class="required-label">
                             Except (PDF, DOC, DOCX, TXT, RTF)
                         </span>
                     </div> -->
-                        <input type="file" class="form-control" accept=".doc,.docx,.pdf,.txt,.rtf"
-                            (change)="onFileSelected($event)">
+            <input
+              type="file"
+              class="form-control"
+              accept=".doc,.docx,.pdf,.txt,.rtf"
+              (change)="onFileSelected($event)"
+            />
+          </div>
 
-                    </div>
-
-                    <div class="col-md-3">
-                        <label></label>
-                        <div>
-                            <button class="btn btn-success py-0 px-2 mx-1 fs-16px" (click)="UploadDocument()">
-                                Save
-                            </button>
-                            <button class="btn btn btn-danger py-0 px-2 fs-16px"
-                                (click)="clearDocument()">Cancel</button>
-                        </div>
-                    </div>
-                </div>
+          <div class="col-md-3">
+            <label></label>
+            <div>
+              <button
+                class="btn btn-success py-0 px-2 mx-1 fs-16px"
+                (click)="UploadDocument()"
+              >
+                Save
+              </button>
+              <button
+                class="btn btn btn-danger py-0 px-2 fs-16px"
+                (click)="clearDocument()"
+              >
+                Cancel
+              </button>
             </div>
+          </div>
+        </div>
+      </div>
 
-
-            <div class="form-content">
-                <p-table #dt [value]="documentUploadList" [rows]="10" [rowHover]="true" scrollHeight="550px"
-                    [style]="{ width: '100%' }" columnResizeMode="expand" [resizableColumns]="true">
-                    <ng-template pTemplate="colgroup">
-                        <colgroup>
-                            <col style="width: 30%" />
-                            <col style="width: 30%" />
-                            <col style="width: 30%" />
-                        </colgroup>
-                    </ng-template>
-                    <ng-template pTemplate="header">
-                        <tr>
-
-                            <th pResizableColumn>Document Type</th>
-                            <th pResizableColumn>Document Name</th>
-                            <th pResizableColumn>Download</th>
-                            <th pResizableColumn></th>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-rowData>
-                        <tr>
-                            <td>{{rowData.documentTypeName}}</td>
-                            <td>{{rowData.documentName}}</td>
-                            <td>
-                                <div class="p-0 pe-5">
-                                    <span class="cursor-pointer">
-                                        <i class="far fa-circle-down"
-                                            (click)="downloadFile(rowData.documentFileName);"></i>
-                                    </span>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="d-flex justify-content-start pt-1">
-                                    <!-- <div class="p-0 pe-3">
+      <div class="form-content">
+        <p-table
+          #dt
+          [value]="documentUploadList"
+          [rows]="10"
+          [rowHover]="true"
+          scrollHeight="550px"
+          [style]="{ width: '100%' }"
+          columnResizeMode="expand"
+          [resizableColumns]="true"
+        >
+          <ng-template pTemplate="colgroup">
+            <colgroup>
+              <col style="width: 30%" />
+              <col style="width: 30%" />
+              <col style="width: 30%" />
+            </colgroup>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th pResizableColumn>Document Type</th>
+              <th pResizableColumn>Document Name</th>
+              <th pResizableColumn>Download</th>
+              <th pResizableColumn></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData>
+            <tr>
+              <td>{{ rowData.documentTypeName }}</td>
+              <td>{{ rowData.documentName }}</td>
+              <td>
+                <div class="p-0 pe-5">
+                  <span class="cursor-pointer">
+                    <i
+                      class="far fa-circle-down"
+                      (click)="downloadFile(rowData.documentFileName)"
+                    ></i>
+                  </span>
+                </div>
+              </td>
+              <td>
+                <div class="d-flex justify-content-start pt-1">
+                  <!-- <div class="p-0 pe-3">
                                         <span class="cursor-pointer"><i class="far fa-edit"></i></span>
                                     </div> -->
 
-                                    <div class="p-0 pe-3">
-                                        <span class="cursor-pointer" (click)="deleteDocument(rowData.id);">
-                                            <i class="fas fa-trash"></i></span>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </ng-template>
-                </p-table>
-            </div>
-        </div>
+                  <div class="p-0 pe-3">
+                    <span
+                      class="cursor-pointer"
+                      (click)="deleteDocument(rowData.id)"
+                    >
+                      <i class="fas fa-trash"></i
+                    ></span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
     </div>
+  </div>
 </div>

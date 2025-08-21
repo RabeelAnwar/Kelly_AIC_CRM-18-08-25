@@ -4,6 +4,21 @@
         padding-left: 10px;
         width: 920px;
     }
+      /* ✅ ADD this class to enable text wrapping */
+  .wrap-text {
+    white-space: normal !important;
+    word-wrap: break-word;
+    word-break: break-word;
+    max-width: 100%;
+    line-height: 1.0; /* ✅ Reduce line height */
+    padding: 4px 8px; /* ✅ Adjust inner padding */
+    font-size: 12px;
+  }
+
+  /* ✅ ADD this to make sure table doesn't scroll horizontally */
+  p-table {
+    overflow-x: hidden !important;
+  }
 </style>
 
 <div class="row">
@@ -274,7 +289,7 @@
                                 <col style="width: 10%" />
                                 <col style="width: 10%" />
                                 <col style="width: 70%" />
-                                <col style="width: 10%" />
+                                <col style="width: 5%" />
                             </colgroup>
                         </ng-template>
                         <ng-template pTemplate="header">
@@ -298,7 +313,7 @@
                             <tr>
                                 <td>{{ rowData.date | date: 'medium' }}</td>
                                 <td>{{ rowData.creatorUserName }}</td>
-                                <td [innerHTML]="rowData.record"></td>
+                                <td [innerHTML]="rowData.record" class="wrap-text"></td>
 
                                 <td>
                                     <div class="d-flex justify-content-start pt-1">

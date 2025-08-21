@@ -55,7 +55,7 @@ export class ConsultantActivityComponent {
     this.getAllUsers();
     this.getSingleClient();
     this.getClientManager();
-    this.getInterviewProcessConsultantsList();
+    this.getInterviewProcessConsultantsList(this.requisitionData.id);
 
   }
 
@@ -154,7 +154,7 @@ export class ConsultantActivityComponent {
           if (res.data.id > 0) {
 
             data.disabled = true;
-            this.getInterviewProcessConsultantsList();
+            this.getInterviewProcessConsultantsList(this.requisitionData.id);
 
           }
           this.toastr.success('Consultant activity saved successfully');
@@ -170,9 +170,10 @@ export class ConsultantActivityComponent {
 
 
 
-  getInterviewProcessConsultantsList(): void {
-    this.apiService.getData('Consultant/InterviewProcessConsultantsList').subscribe({
+  getInterviewProcessConsultantsList(requisitionId: number): void {
+    this.apiService.getData('Consultant/InterviewProcessConsultantsList',{ requisitionId } ).subscribe({
       next: (response) => {
+        debugger
         if (response.succeeded) {
 
           this.activityConsultantSideList = response?.data;
@@ -194,7 +195,7 @@ export class ConsultantActivityComponent {
       this.apiService.deleteData('Consultant/ConsultantActivityDelete', { id: id }).subscribe({
         next: (res) => {
           this.toastr.success('Deleted successfully');
-          this.getInterviewProcessConsultantsList();
+          this.getInterviewProcessConsultantsList(this.requisitionData.id);
         },
         error: (err) => {
           this.toastr.error(err?.message || 'Error deleting activity');

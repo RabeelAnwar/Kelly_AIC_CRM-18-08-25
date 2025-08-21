@@ -374,11 +374,15 @@ export class ClientManagerDashboardComponent {
 
   clearCallRecord(): void {
     this.callLogsInput.record = undefined;
-    this.editor?.quill?.setText('');
+    //this.editor?.quill?.setText('');
     this.callLogsInput = new CallRecordModel();
     this.callLogsInput.date = new Date();
     // Default Type is Call
     this.callLogsInput.typeId = 2
+    // Clear CKEditor content
+    if (this.editor?.editorInstance) {
+    this.editor.editorInstance.setData(''); // ✅ This clears CKEditor content
+  }
   }
 
   editCallRecord(callRecord: CallRecordModel): void {
@@ -416,6 +420,11 @@ export class ClientManagerDashboardComponent {
       next: (res: any) => {
         if (res.succeeded) {
           this.callLogsList = res.data;
+          this.callLogsList = this.callLogsList.sort(
+            (a: CallRecordModel, b: CallRecordModel) => {
+              return new Date(b.date).getTime() - new Date(a.date).getTime();
+            }
+          );
           this.searchCallLogs = Object.keys(this.callLogsList[0]);
           console.log('searchCallLogs',this.searchCallLogs);
 

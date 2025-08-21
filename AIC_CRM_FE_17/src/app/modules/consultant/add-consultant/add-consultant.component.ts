@@ -78,7 +78,7 @@ export class AddConsultantComponent {
             name: i.firstName + ' ' + i.lastName
           });
         });
-
+debugger;
         this.usersList = dropdownItems;
         console.log(this.usersList);
       } else {

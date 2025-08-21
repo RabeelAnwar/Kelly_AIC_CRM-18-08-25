@@ -420,6 +420,7 @@ export class ConsultantDashboardComponent {
           if (res.succeeded) {
             this.getCallLogs();
             this.toastr.success('Saved successfully');
+            debugger;
             this.clearCallRecord();
           } else {
             this.toastr.error(res.message || 'Failed to save');
@@ -432,13 +433,18 @@ export class ConsultantDashboardComponent {
   @ViewChild('editor') editor: any;
 
   clearCallRecord(): void {
+    debugger;
     this.callLogsInput.record = undefined;
-    this.editor?.quill?.setText('');
     this.callLogsInput = new CallRecordModel();
 
     this.callLogsInput.date = new Date();
     // Default Type is Call
     this.callLogsInput.typeId = 2;
+    // Clear CKEditor content
+    if (this.editor?.editorInstance) {
+      this.editor.editorInstance.setData(''); // ✅ This clears CKEditor content
+    }
+    //this.editor?.quill?.setText('');
   }
 
   editCallRecord(callRecord: CallRecordModel): void {
