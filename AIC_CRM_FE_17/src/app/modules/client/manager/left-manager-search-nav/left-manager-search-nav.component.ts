@@ -23,8 +23,17 @@ export class LeftManagerSearchNavComponent {
   managersList: DropdownItem[] = [];
   managers: DropdownItem[] = [];
   allManagers: DropdownItem[] = [];
-
+  pageSize = 15;
+  currentPage = 1;
+  totalPages = 1;
   ngOnInit(): void {
+    const savedPage = localStorage.getItem('managerListPage');
+    
+    if (savedPage && !isNaN(+savedPage)) {
+      this.currentPage = +savedPage; // ✅ use the saved page number
+    } else {
+      this.currentPage = 1;
+    }
     this.getManagers();
   }
 
@@ -53,6 +62,7 @@ export class LeftManagerSearchNavComponent {
 
     const manager = this.managersList.find(c => c.id === id);
     if (manager) {
+      localStorage.setItem('managerListPage', this.currentPage.toString());
       this.router.navigate(['/ManagerDashboard', id], {
         state: { fildteredManagersIds: this.fildteredManagersIds }
       });
@@ -80,7 +90,9 @@ export class LeftManagerSearchNavComponent {
         }
         else {
           this.allManagers = dropdownItems;
-          this.managers = dropdownItems;
+          //this.managers = dropdownItems;
+           this.totalPages = Math.ceil(this.allManagers.length / this.pageSize);
+          this.setPage(this.currentPage);
         }
 
 
@@ -103,6 +115,19 @@ export class LeftManagerSearchNavComponent {
         this.toastr.error(err || 'Error loading managers list');
       }
     });
+  }
+  setPage(page: number): void {
+    if (page < 1 || page > this.totalPages) return;
+
+    this.currentPage = page;
+     localStorage.setItem('managerListPage', this.currentPage.toString()); // Save page
+
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+
+    this.managers = this.allManagers.slice(startIndex, endIndex);
+    
+
   }
 
 }

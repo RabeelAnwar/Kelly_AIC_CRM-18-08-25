@@ -27,11 +27,11 @@ export class LoginComponent {
 
   login() {
     if (this.loginModel.companyId === '' || this.loginModel.companyId === undefined || this.loginModel.companyId === null) {
-      this.toastr.error('Please enter company');
+      this.toastr.error('Please Enter Company');
       return;
     }
-    if (this.loginModel.email === '' || this.loginModel.password === '') {
-      this.toastr.error('Please enter email and password');
+    if (this.loginModel.userName === '' || this.loginModel.password === '') {
+      this.toastr.error('Please Enter Email and Password');
       return;
     }
 

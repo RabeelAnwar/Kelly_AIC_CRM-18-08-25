@@ -60,6 +60,9 @@ export class ConsultantDashboardComponent {
 
       this.consultantParamId = id;
 
+      // 🔄 Load all consultant-specific data when ID changes
+      this.loadConsultantData();
+
       const state = this.location.getState() as {
         resumeSearchHighLight?: string;
         fildteredConsultantsIds?: number[];
@@ -80,13 +83,17 @@ export class ConsultantDashboardComponent {
 
     this.getDocumentTypes();
     this.getUploadedFiles();
-    this.getCallLogs();
+    //this.getCallLogs();
 
     this.callLogsInput.date = new Date();
     // Default Type is Call
     this.callLogsInput.typeId = 2;
   }
-
+  loadConsultantData(): void {
+    this.SingleConsultantGet(); // 👤 Consultant info
+    this.getCallLogs(); // 📞 Call records
+    this.getUploadedFiles(); // 📎 Documents
+  }
   onResumeSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {

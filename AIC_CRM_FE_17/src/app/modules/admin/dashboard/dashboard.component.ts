@@ -1,27 +1,35 @@
-import { Component, ElementRef, AfterViewInit, Renderer2 } from '@angular/core';
+import { Component, ElementRef, AfterViewInit, Renderer2, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LeadModel } from '../../../models/lead/lead-model';
 import { ApiService } from '../../../services/api.service';
 import { ToastrService } from 'ngx-toastr';
 import { DashboardModel } from '../../../models/admin/dashboard-model';
 import { AuditModel } from '../../../models/reports/audit-model';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'] // fixed typo from "styleUrl" to "styleUrls"
 })
-export class DashboardComponent implements AfterViewInit {
+export class DashboardComponent implements AfterViewInit,OnInit {
 
   constructor(
     private apiService: ApiService,
     private toastr: ToastrService,
     private router: Router,
     private el: ElementRef,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private auth: AuthService,
   ) { }
   private intervalId: any;
+   TenantName: string = ''; 
+ getTenentName() {
+    this.TenantName = this.auth.getTenantName();
+    debugger;
+    console.log('Tenant Name:', this.TenantName);
 
+  }
   dashboardData: DashboardModel = new DashboardModel();
 
 
@@ -56,6 +64,7 @@ export class DashboardComponent implements AfterViewInit {
   ngOnInit() {
     this.GetAllDashboardCounts();
     this.getInterviews();
+    this.getTenentName();
 
     this.intervalId = setInterval(() => {
       if (this.storeBoxName && this.storeBoxName.trim() !== '') {

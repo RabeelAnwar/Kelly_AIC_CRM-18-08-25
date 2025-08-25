@@ -1,15 +1,14 @@
-<div class="d-flex justify-content-center  my-1">
-    <button class="btn btn-warning me-1"> &lt;</button>
+<div class="container p-1 bg-white rounded shadow-sm">
+  <!-- <div class="d-flex justify-content-center my-1">
+    <button class="btn btn-warning me-1">&lt;</button>
     1/1
-    <button class="btn btn-warning ms-1"> &gt;</button>
-</div>
+    <button class="btn btn-warning ms-1">&gt;</button>
+  </div> -->
 
-<div class="text-danger  fw-bold fs-20px">
-    Managers List
-</div>
+  <div class="text-danger fw-bold fs-20px">Managers List</div>
 
-<div>
-    <!-- <ul class="no-marker">
+  <!-- <div> -->
+  <!-- <ul class="no-marker">
         <li *ngFor="let item of managers">
             <div class="cursor-pointer" (click)="goToDashboard(item.id)"><i class="fas fa-user"></i> {{
                 item.firstName }} {{ item.lastName }} <span class="text-muted">({{item.clientName}})</span>
@@ -17,12 +16,44 @@
         </li>
     </ul> -->
 
-
-    <ul class="no-marker">
+  <!-- <ul class="no-marker">
         <li *ngFor="let item of managers">
             <div class="cursor-pointer" (click)="goToDashboard(item.id)"><i class="fas fa-user"></i><span
                     class="text-muted">{{item.name}}</span>
             </div>
         </li>
+    </ul> -->
+  <!-- </div> -->
+
+  <!-- Pagination Controls rr -->
+  <div class="d-flex justify-content-center my-1 align-items-center">
+    <button
+      class="btn btn-warning me-1 text-white"
+      (click)="setPage(currentPage - 1)"
+      [disabled]="currentPage === 1"
+    >
+      &lt;
+    </button>
+
+    <span>{{ currentPage }}/{{ totalPages }}</span>
+
+    <button
+      class="btn btn-warning ms-1 text-white"
+      (click)="setPage(currentPage + 1)"
+      [disabled]="currentPage === totalPages"
+    >
+      &gt;
+    </button>
+  </div>
+
+  <!-- consultant List -->
+  <div>
+    <ul class="no-marker">
+      <li *ngFor="let item of managers">
+        <div class="cursor-pointer" (click)="goToDashboard(item.id)">
+          <i class="fas fa-building"></i> {{ item.name }}
+        </div>
+      </li>
     </ul>
+  </div>
 </div>
