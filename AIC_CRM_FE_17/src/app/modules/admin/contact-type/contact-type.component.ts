@@ -7,18 +7,13 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-contact-type',
   templateUrl: './contact-type.component.html',
-  styleUrl: './contact-type.component.css'
+  styleUrl: './contact-type.component.css',
 })
 export class ContactTypeComponent {
-
-  
   contactTypeList: SelectItem[] = [];
   contactTypeModel: ContactTypeModel = new ContactTypeModel();
 
-  constructor(
-    private apiService: ApiService,
-    private toastr: ToastrService
-  ) {}
+  constructor(private apiService: ApiService, private toastr: ToastrService) {}
 
   ngOnInit(): void {
     this.getContactTypes();
@@ -33,38 +28,55 @@ export class ContactTypeComponent {
           this.toastr.error('Failed to load contact types');
         }
       },
-      error: () => this.toastr.error('Error fetching contact types')
+      error: () => this.toastr.error('Error fetching contact types'),
     });
   }
 
   saveContactType(): void {
-
-    if (!this.contactTypeModel.name || this.contactTypeModel.name.trim() === '') {
+    if (
+      !this.contactTypeModel.name ||
+      this.contactTypeModel.name.trim() === ''
+    ) {
       this.toastr.warning('Contact Type Name is required');
       return;
     }
 
-    this.apiService.saveData('Admin/ContactTypeAddUpdate', this.contactTypeModel).subscribe({
-      next: (res: any) => {
-        if (res.succeeded) {
-          this.toastr.success('Contact type saved successfully');
-          this.getContactTypes();
-          this.clearInput();
-        } else {
-          this.toastr.error('Save failed');
-        }
-      },
-      error: () => this.toastr.error('Error saving contact type')
-    });
+    this.apiService
+      .saveData('Admin/ContactTypeAddUpdate', this.contactTypeModel)
+      .subscribe({
+        next: (res: any) => {
+          console.log('API Response:', res);
+          if (res.succeeded && res.data === true) {
+            this.toastr.success(
+              res.message || 'Contact type saved successfully'
+            );
+            this.getContactTypes();
+            this.clearInput();
+          } else {
+            this.toastr.error(res.message || 'Save failed');
+          }
+
+          // if (res.succeeded)
+          //   if (res.succeeded && res.data === true) {
+          //   this.toastr.success('Contact type saved successfully');
+          //   this.getContactTypes();
+          //   this.clearInput();
+          // } else {
+          //   this.toastr.error('Save failed');
+          // }
+        },
+        error: () => this.toastr.error('Error saving contact type'),
+      });
   }
 
   deleteContactType(id: number): void {
-
-    const confirmDelete = confirm('Are you sure you want to delete this contact type?');
+    const confirmDelete = confirm(
+      'Are you sure you want to delete this contact type?'
+    );
     if (!confirmDelete) {
       return;
     }
-    
+
     const params = { Id: id.toString() };
 
     this.apiService.deleteData('Admin/ContactTypeDelete', params).subscribe({
@@ -76,7 +88,7 @@ export class ContactTypeComponent {
           this.toastr.error('Delete failed');
         }
       },
-      error: () => this.toastr.error('Error deleting contact type')
+      error: () => this.toastr.error('Error deleting contact type'),
     });
   }
 
@@ -87,5 +99,4 @@ export class ContactTypeComponent {
   clearInput(): void {
     this.contactTypeModel = new ContactTypeModel();
   }
-
 }
