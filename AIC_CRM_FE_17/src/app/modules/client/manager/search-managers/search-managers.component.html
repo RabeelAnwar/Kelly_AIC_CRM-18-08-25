@@ -1,24 +1,31 @@
 <div class="row">
-    <div class="col-md-2 mt-4">
-        <app-left-manager-search-nav
-            [fildteredManagersIds]="fildteredManagersIds"></app-left-manager-search-nav>
-    </div>
-    <div class="col-md-10 ps-0">
+  <div class="col-md-2 mt-4">
+    <app-left-manager-search-nav
+      [fildteredManagersIds]="fildteredManagersIds"
+    ></app-left-manager-search-nav>
+  </div>
+  <div class="col-md-10 ps-0">
+    <div>
+      <div class="header">
+        <h1>Manager List</h1>
+      </div>
 
-        <div>
-
-            <div class="header">
-                <h1>Manager List</h1>
-            </div>
-
-
-            <div class="card p-2">
-
-                <p-table #dt [value]="managersList" [paginator]="true" [rows]="10" [globalFilterFields]="searchFields"
-                (onFilter)="onTableFilter($event)"
-                    [rowHover]="true" [scrollable]="true" scrollHeight="550px" [style]="{ width: '100%' }"
-                    columnResizeMode="expand" [resizableColumns]="true">
-                    <!-- <ng-template pTemplate="colgroup">
+      <div class="card p-2">
+        <p-table
+          #dt
+          [value]="managersList"
+          [paginator]="true"
+          [rows]="10"
+          [globalFilterFields]="searchFields"
+          (onFilter)="onTableFilter($event)"
+          [rowHover]="true"
+          [scrollable]="true"
+          scrollHeight="550px"
+          [style]="{ width: '100%' }"
+          columnResizeMode="expand"
+          [resizableColumns]="true"
+        >
+          <!-- <ng-template pTemplate="colgroup">
                     <colgroup>
                         <col style="width: 30px" />
                         <col style="width: 130px" />
@@ -33,140 +40,270 @@
                         <col style="width: 80px" />
                     </colgroup>
                 </ng-template> -->
-                    <ng-template pTemplate="header">
+          <ng-template pTemplate="header">
+            <tr>
+              <th colspan="13">
+                <input
+                  type="text"
+                  pInputText
+                  size="50"
+                  placeholder="Global Search..."
+                  (input)="
+                    dt.filterGlobal($any($event.target).value, 'contains')
+                  "
+                  style="width: 100%"
+                />
+              </th>
+            </tr>
+            <tr>
+              <th>Sr.</th>
+              <th>Manager Name</th>
+              <!-- <th>Address</th> -->
+              <th>Skills Needed</th>
+              <th>Client Name</th>
+              <th>Job Title</th>
+              <th>Work Email-Id</th>
+              <th>Personal Email-Id</th>
+              <th>Office Contact No</th>
+              <th>Contact No</th>
+              <th>Call Records</th>
+              <th>Notes</th>
+              <th>Action</th>
+            </tr>
+            <tr>
+              <th></th>
+              <th>
+                <input
+                  type="text"
+                  pInputText
+                  size="50"
+                  placeholder="Search..."
+                  (input)="
+                    dt.filter($any($event.target).value, 'fullName', 'contains')
+                  "
+                  style="width: 100%"
+                />
+              </th>
 
-                        <tr>
-                            <th colspan="13">
-                                <input type="text" pInputText size="50" placeholder="Global Search..."
-                                    (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                                    style="width: 100%" />
-                            </th>
-                        </tr>
-                        <tr>
-                            <th>Sr.</th>
-                            <th>Manager Name</th>
-                            <th>Address</th>
-                            <th>Skills Needed</th>
-                            <th>Client Name</th>
-                            <th>Job Title</th>
-                            <th>Work Email-Id</th>
-                            <th>Personal Email-Id</th>
-                            <th>Office Contact No</th>
-                            <th>Contact No</th>
-                            <th>Call Records</th>
-                            <th>Notes</th>
-                            <th>Action</th>
-                        </tr>
-                        <tr>
-                            <th></th>
-                            <th>
-                                <input type="text" pInputText size="50" placeholder="Search..."
-                                    (input)="dt.filter($any($event.target).value, 'fullName', 'contains')"
-                                    style="width: 100%" />
-                            </th>
+              <!-- <th>
+                <input
+                  type="text"
+                  pInputText
+                  size="50"
+                  placeholder="Search..."
+                  (input)="
+                    dt.filter(
+                      $any($event.target).value,
+                      'completeAddress',
+                      'contains'
+                    )
+                  "
+                  style="width: 100%"
+                />
+              </th> -->
 
-                            <th>
-                                <input type="text" pInputText size="50" placeholder="Search..."
-                                    (input)="dt.filter($any($event.target).value, 'completeAddress', 'contains')"
-                                    style="width: 100%" />
-                            </th>
+              <th>
+                <input
+                  type="text"
+                  pInputText
+                  size="50"
+                  placeholder="Search..."
+                  (input)="
+                    dt.filter(
+                      $any($event.target).value,
+                      'skillNeeded',
+                      'contains'
+                    )
+                  "
+                  style="width: 100%"
+                />
+              </th>
 
-                            <th>
-                                <input type="text" pInputText size="50" placeholder="Search..."
-                                    (input)="dt.filter($any($event.target).value, 'skillNeeded', 'contains')"
-                                    style="width: 100%" />
-                            </th>
+              <th>
+                <input
+                  type="text"
+                  pInputText
+                  size="50"
+                  placeholder="Search..."
+                  (input)="
+                    dt.filter(
+                      $any($event.target).value,
+                      'clientName',
+                      'contains'
+                    )
+                  "
+                  style="width: 100%"
+                />
+              </th>
 
-                            <th>
-                                <input type="text" pInputText size="50" placeholder="Search..."
-                                    (input)="dt.filter($any($event.target).value, 'clientName', 'contains')"
-                                    style="width: 100%" />
-                            </th>
+              <th>
+                <input
+                  type="text"
+                  pInputText
+                  size="50"
+                  placeholder="Search..."
+                  (input)="
+                    dt.filter($any($event.target).value, 'title', 'contains')
+                  "
+                  style="width: 100%"
+                />
+              </th>
 
-                            <th>
-                                <input type="text" pInputText size="50" placeholder="Search..."
-                                    (input)="dt.filter($any($event.target).value, 'title', 'contains')"
-                                    style="width: 100%" />
-                            </th>
+              <th>
+                <input
+                  type="text"
+                  pInputText
+                  size="50"
+                  placeholder="Search..."
+                  (input)="
+                    dt.filter(
+                      $any($event.target).value,
+                      'workEmail',
+                      'contains'
+                    )
+                  "
+                  style="width: 100%"
+                />
+              </th>
 
-                            <th>
-                                <input type="text" pInputText size="50" placeholder="Search..."
-                                    (input)="dt.filter($any($event.target).value, 'workEmail', 'contains')"
-                                    style="width: 100%" />
-                            </th>
+              <th>
+                <input
+                  type="text"
+                  pInputText
+                  size="50"
+                  placeholder="Search..."
+                  (input)="
+                    dt.filter(
+                      $any($event.target).value,
+                      'personalEmail',
+                      'contains'
+                    )
+                  "
+                  style="width: 100%"
+                />
+              </th>
 
-                            <th>
-                                <input type="text" pInputText size="50" placeholder="Search..."
-                                    (input)="dt.filter($any($event.target).value, 'personalEmail', 'contains')"
-                                    style="width: 100%" />
-                            </th>
+              <th>
+                <input
+                  type="text"
+                  pInputText
+                  size="50"
+                  placeholder="Search..."
+                  (input)="
+                    dt.filter(
+                      $any($event.target).value,
+                      'officePhone',
+                      'contains'
+                    )
+                  "
+                  style="width: 100%"
+                />
+              </th>
 
-                            <th>
-                                <input type="text" pInputText size="50" placeholder="Search..."
-                                    (input)="dt.filter($any($event.target).value, 'officePhone', 'contains')"
-                                    style="width: 100%" />
-                            </th>
+              <th>
+                <input
+                  type="text"
+                  pInputText
+                  size="50"
+                  placeholder="Search..."
+                  (input)="
+                    dt.filter(
+                      $any($event.target).value,
+                      'cellPhone',
+                      'contains'
+                    )
+                  "
+                  style="width: 100%"
+                />
+              </th>
 
-                            <th>
-                                <input type="text" pInputText size="50" placeholder="Search..."
-                                    (input)="dt.filter($any($event.target).value, 'cellPhone', 'contains')"
-                                    style="width: 100%" />
-                            </th>
+              <th>
+                <input
+                  type="text"
+                  pInputText
+                  size="50"
+                  placeholder="Search..."
+                  (input)="
+                    dt.filter(
+                      $any($event.target).value,
+                      'callRecords',
+                      'contains'
+                    )
+                  "
+                  style="width: 100%"
+                />
+              </th>
 
-                            <th>
-                                <input type="text" pInputText size="50" placeholder="Search..."
-                                    (input)="dt.filter($any($event.target).value, 'callRecords', 'contains')"
-                                    style="width: 100%" />
-                            </th>
+              <th>
+                <input
+                  type="text"
+                  pInputText
+                  size="50"
+                  placeholder="Search..."
+                  (input)="
+                    dt.filter($any($event.target).value, 'notes', 'contains')
+                  "
+                  style="width: 100%"
+                />
+              </th>
 
-                            <th>
-                                <input type="text" pInputText size="50" placeholder="Search..."
-                                    (input)="dt.filter($any($event.target).value, 'notes', 'contains')"
-                                    style="width: 100%" />
-                            </th>
+              <th></th>
+              <th></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+            <tr>
+              <td>{{ rowIndex + 1 }}</td>
+              <td class="wrap-text">
+                <a
+                  href="javascript:void(0)"
+                  class="clientNameLink"
+                  (click)="goToManagerDashboard(rowData)"
+                >
+                  {{ rowData.lastName }},<br />
+                  {{ rowData.firstName }}
+                </a>
+              </td>
+              <!-- <td [innerHTML]="rowData.address1"></td> -->
+              <!-- <td>
+                {{ rowData.completeAddress }}
+              </td> -->
+              <td>{{ rowData.skillNeeded }}</td>
+              <td>{{ rowData.clientName }}</td>
+              <td class="wrap-text">{{ rowData.title }}</td>
+              <td class="wrap-text" style="word-break: break-word">
+                {{ rowData.workEmail }}
+              </td>
+              <td>{{ rowData.personalEmail }}</td>
+              <td>
+                {{ rowData.officePhone | phoneFormat }}
+                {{ rowData.officePhoneExt }}
+              </td>
+              <td>
+                {{ rowData.cellPhone | phoneFormat }} {{ rowData.cellPhoneExt }}
+              </td>
+              <td [innerHTML]="rowData.callRecords" class="wrap-text"></td>
+              <td class="wrap-text">{{ rowData.notes }}</td>
 
-                            <th></th>
-                            <th></th>
-
-                        </tr>
-
-                    </ng-template>
-                    <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
-                        <tr>
-
-                            <td>{{ rowIndex + 1 }}</td>
-                            <td><a href="javascript:void(0)" class="clientNameLink"
-                                    (click)="goToManagerDashboard(rowData)"> {{ rowData.lastName }}, {{ rowData.firstName
-                                    }} </a></td>
-                            <!-- <td [innerHTML]="rowData.address1"></td> -->
-                            <td>{{rowData.completeAddress}}</td>
-                            <td>{{ rowData.skillNeeded }}</td>
-                            <td>{{ rowData.clientName }}</td>
-                            <td>{{ rowData.title }}</td>
-                            <td>{{ rowData.workEmail }}</td>
-                            <td>{{ rowData.personalEmail }}</td>
-                            <td>{{ rowData.officePhone | phoneFormat }} {{ rowData.officePhoneExt }}</td>
-                            <td>{{ rowData.cellPhone | phoneFormat }} {{ rowData.cellPhoneExt }}</td>
-                            <td [innerHTML]="rowData.callRecords"></td>
-                            <td>{{ rowData.notes }}</td>
-
-                            <td>
-                                <div class="d-flex justify-content-start pt-1">
-                                    <!-- <div class="p-0 pe-3">
+              <td>
+                <div class="d-flex justify-content-start pt-1">
+                  <!-- <div class="p-0 pe-3">
                                         <span class="cursor-pointer"><i class="far fa-edit"></i></span>
                                     </div> -->
 
-                                    <div class="p-0 pe-3">
-                                        <span class="cursor-pointer" (click)="deleteClientManager(rowData.id);"><i
-                                                class="fas fa-trash"></i></span>
-                                    </div>
-                                </div>
-                            </td>
-
-                        </tr>
-                    </ng-template>
-                </p-table>
-            </div>
-        </div>
+                  <div class="p-0 pe-3">
+                    <span
+                      class="cursor-pointer"
+                      (click)="deleteClientManager(rowData.id)"
+                      ><i class="fas fa-trash"></i
+                    ></span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
     </div>
+  </div>
 </div>

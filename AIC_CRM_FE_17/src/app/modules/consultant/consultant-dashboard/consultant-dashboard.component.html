@@ -9,23 +9,6 @@
     background-color: #ffff00 !important;
     /* pure yellow */
   }
-  .sticky-action-column {
-    position: sticky;
-    right: 0;
-    background: white;
-    z-index: 2;
-  }
-  /* ✅ ADD this class to enable text wrapping */
-  .wrap-text {
-    white-space: normal !important;
-    word-wrap: break-word;
-    word-break: break-word;
-    max-width: 100%;
-    line-height: 1.0; /* ✅ Reduce line height */
-    padding: 4px 8px; /* ✅ Adjust inner padding */
-    font-size: 12px;
-  }
-
   /* ✅ ADD this to make sure table doesn't scroll horizontally */
   p-table {
     overflow-x: hidden !important;
@@ -360,8 +343,10 @@
             </ng-template>
             <ng-template pTemplate="body" let-rowData>
               <tr>
-                <td>{{ rowData.date | date : "medium" }}</td>
-                <td>{{ rowData.creatorUserName }}</td>
+                <td class="wrap-text">
+                  {{ rowData.date | date : "MMM d, yyyy h:mm:ssa" }}
+                </td>
+                <td class="wrap-text">{{ rowData.creatorUserName }}</td>
                 <td [innerHTML]="rowData.record" class="wrap-text"></td>
 
                 <td class="sticky-action-column">

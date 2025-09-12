@@ -1,575 +1,699 @@
 <style>
-    ::ng-deep .ng-placeholder {
-        font-size: 16px;
-    }
+  ::ng-deep .ng-placeholder {
+    font-size: 16px;
+  }
 
-    * {
-        font-size: 11px;
-    }
+  * {
+    font-size: 11px;
+  }
 </style>
 
 <div class="row">
-    <div class="col-md-2 mt-4">
-        <app-left-client-search-nav></app-left-client-search-nav>
-    </div>
-    <div class="col-md-8 ps-0">
+  <div class="col-md-2 mt-4">
+    <app-left-client-search-nav></app-left-client-search-nav>
+  </div>
+  <div class="col-md-8 ps-0">
+    <div>
+      <div class="row mt-2">
+        <div class="col-md-4">
+          <div class="header">
+            <h1>{{ clientData.clientName }}</h1>
+          </div>
+        </div>
+        <div class="col-md-12 col-lg-8">
+          <div class="mt-3">
+            <app-client-top-nav [clientData]="clientData"></app-client-top-nav>
+          </div>
+        </div>
+        <!-- <hr class="m-0"> -->
+      </div>
 
-        <div>
+      <div class="company-info-box mx-2 mb-3">
+        <div class="section-header fw-normal p-1">General Details</div>
 
+        <div class="form-content py-0">
+          <div>
+            <span class="fw-bold">Contact</span>
+            <hr class="my-1" />
+
+            <div class="row">
+              <div class="col-md-8">
+                <!-- <span [innerHTML]="clientData.address1"></span> -->
+                <span>{{ clientData.completeAddress }}</span>
+              </div>
+              <div class="col-md-4">
+                <!-- <span> {{clientData.officeContact | phoneFormat}}</span> -->
+              </div>
+            </div>
             <div class="row mt-2">
+              <div class="col-lg-3">
+                <table class="table table-bordered mb-1">
+                  <tbody>
+                    <tr>
+                      <td rowspan="2" width="15" class="vertical_label_cover">
+                        <span class="vertical">Purchase</span>
+                      </td>
+                      <td>
+                        <strong>Contact Name :</strong>
+                        {{ clientData.purchaseContactName }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong> Contact No :</strong>
+                        {{ clientData.purchaseContact }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
 
-                <div class="col-md-4">
+              <div class="col-lg-3">
+                <table class="table table-bordered mb-1">
+                  <tbody>
+                    <tr ng-if="data.Phone1">
+                      <td>
+                        <strong>Phone No: </strong
+                        >{{ clientData.officeContact | phoneFormat }}
+                      </td>
+                    </tr>
+                    <tr ng-if="data.Website">
+                      <td>
+                        <strong>Website: </strong>
+                        <a target="_blank" [href]="clientData.website">{{
+                          clientData.website
+                        }}</a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
 
-                    <div class="header">
-                        <h1> {{clientData.clientName}}</h1>
-                    </div>
+              <div class="col-lg-3">
+                <table class="table table-bordered mb-1">
+                  <tbody>
+                    <tr>
+                      <td rowspan="2" width="15" class="vertical_label_cover">
+                        <span class="vertical">Diversity</span>
+                      </td>
+                      <td>
+                        <strong>Contact Name :</strong>
+                        {{ clientData.purchaseContactName }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong> Contact No :</strong>
+                        {{ clientData.purchaseContact }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
 
-                </div>
-                <div class="col-md-12 col-lg-8">
-                    <div class="mt-3">
-                        <app-client-top-nav [clientData]="clientData"></app-client-top-nav>
-                    </div>
-                </div>
-                <!-- <hr class="m-0"> -->
+              <div class="col-lg-3">
+                <table class="table table-bordered mb-1">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div class="d-flex">
+                          <div>
+                            <label>Registered?: </label>
+                          </div>
+                          <div class="form-check form-switch ms-3 d-flex">
+                            <input
+                              class="form-check-input fs-6"
+                              (change)="onRegisteredChange($event, clientData)"
+                              [checked]="clientData.registered"
+                              type="checkbox"
+                            />
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
 
+              <div class="col-lg-12" *ngIf="clientData.notes">
+                <table class="table table-bordered mb-1">
+                  <tbody>
+                    <tr>
+                      <td><strong>Notes :</strong> {{ clientData.notes }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
 
-            <div class="company-info-box mx-2 mb-3">
-                <div class="section-header fw-normal p-1">
-                    General Details
-                </div>
-
-                <div class="form-content py-0">
-
-                    <div>
-                        <span class="fw-bold">Contact</span>
-                        <hr class="my-1">
-
-                        <div class="row">
-
-                            <div class="col-md-8">
-                                <!-- <span [innerHTML]="clientData.address1"></span> -->
-                                <span>{{clientData.completeAddress}}</span>
-                            </div>
-                            <div class="col-md-4">
-                                <!-- <span> {{clientData.officeContact | phoneFormat}}</span> -->
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col-lg-3">
-                                <table class="table table-bordered mb-1">
-                                    <tbody>
-
-                                        <tr>
-                                            <td rowspan="2" width="15" class="vertical_label_cover"><span
-                                                    class="vertical">Purchase</span></td>
-                                            <td><strong>Contact Name :</strong> {{clientData.purchaseContactName}}</td>
-
-                                        </tr>
-                                        <tr>
-                                            <td><strong> Contact No :</strong> {{clientData.purchaseContact}} </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div class="col-lg-3">
-                                <table class="table table-bordered mb-1">
-                                    <tbody>
-                                        <tr ng-if="data.Phone1">
-                                            <td>
-                                                <strong>Phone No: </strong>{{clientData.officeContact | phoneFormat}}
-                                            </td>
-                                        </tr>
-                                        <tr ng-if="data.Website">
-                                            <td>
-                                                <strong>Website: </strong>
-                                                <a target="_blank"
-                                                    [href]="clientData.website">{{clientData.website}}</a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div class="col-lg-3">
-                                <table class="table table-bordered mb-1">
-                                    <tbody>
-                                        <tr>
-                                            <td rowspan="2" width="15" class="vertical_label_cover">
-                                                <span class="vertical">Diversity</span>
-                                            </td>
-                                            <td><strong>Contact Name :</strong> {{clientData.purchaseContactName}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong> Contact No :</strong> {{clientData.purchaseContact}}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div class="col-lg-3">
-                                <table class="table table-bordered mb-1">
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex">
-                                                    <div>
-                                                        <label>Registered?: </label>
-                                                    </div>
-                                                    <div class="form-check form-switch ms-3 d-flex">
-                                                        <input class="form-check-input fs-6"
-                                                            (change)="onRegisteredChange($event, clientData)"
-                                                            [checked]="clientData.registered" type="checkbox">
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div class="col-lg-12" *ngIf="clientData.notes">
-                                <table class="table table-bordered mb-1">
-                                    <tbody>
-                                        <tr>
-                                           <td><strong>Notes :</strong> {{clientData.notes}}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                        </div>
-
-                        <!-- <hr class="m-0">
+            <!-- <hr class="m-0">
                         <div>{{clientData.notes}}</div> -->
 
-                        <div class="d-flex mb-1">
-                            <button type="button" class=" me-1 btn btn-success">Details</button>
-                            <button type="button" class=" me-1 btn btn-success">Reqs</button>
-                            <button type="button" class=" me-1 btn btn-success">IReqs</button>
-                            <button type="button" class=" me-1 btn btn-warning">History</button>
-                            <button type="button" class=" me-1 btn btn-success">OrgChart</button>
-                            <button type="button" class=" me-1 btn btn-success"
-                                (click)="editClient(clientData);">Edit</button>
-                            <button type="button" class=" me-1 btn btn-danger">Delete</button>
+            <div class="d-flex mb-1">
+              <button type="button" class="me-1 btn btn-success">
+                Details
+              </button>
+              <button type="button" class="me-1 btn btn-success">Reqs</button>
+              <button type="button" class="me-1 btn btn-success">IReqs</button>
+              <button type="button" class="me-1 btn btn-warning">
+                History
+              </button>
+              <button type="button" class="me-1 btn btn-success">
+                OrgChart
+              </button>
+              <button
+                type="button"
+                class="me-1 btn btn-success"
+                (click)="editClient(clientData)"
+              >
+                Edit
+              </button>
+              <button type="button" class="me-1 btn btn-danger">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
-                        </div>
+      <div class="company-info-box mx-2 mb-3">
+        <div class="section-header fw-normal p-1">Call Logs</div>
 
+        <div class="card p-2">
+          <p-table
+            #dt
+            [value]="clientsList"
+            [rows]="10"
+            [globalFilterFields]="['clientName']"
+            [rowHover]="true"
+            scrollHeight="550px"
+            [style]="{ width: '100%' }"
+            columnResizeMode="expand"
+            [resizableColumns]="true"
+          >
+            <ng-template pTemplate="colgroup">
+              <colgroup>
+                <col style="width: 10%" />
+                <col style="width: 10%" />
+                <col style="width: 10%" />
+                <col style="width: 60%" />
+                <col style="width: 10%" />
+              </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header">
+              <tr>
+                <th colspan="5">
+                  <input
+                    type="text"
+                    pInputText
+                    size="50"
+                    placeholder="Global Search"
+                    (input)="
+                      dt.filterGlobal($any($event.target).value, 'contains')
+                    "
+                    style="width: 100%"
+                  />
+                </th>
+              </tr>
+              <tr>
+                <th pResizableColumn>Date/Time</th>
+                <th pResizableColumn>Manager</th>
+                <th pResizableColumn>Spoke With</th>
+                <th pResizableColumn>Call Record</th>
+                <th pResizableColumn>Action</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData>
+              <tr>
+                <td>{{ rowData.name }}</td>
+                <td>{{ rowData.status }}</td>
+                <td>{{ rowData.status }}</td>
+                <td>{{ rowData.status }}</td>
+                <td>
+                  <div class="p-0 pe-3">
+                    <span class="cursor-pointer"
+                      ><i class="fas fa-trash"></i
+                    ></span>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </div>
+
+      <div class="company-info-box mx-2 mb-3">
+        <div class="section-header fw-normal p-1">Leads</div>
+
+        <div class="card p-2">
+          <p-table
+            #dt
+            [value]="leadsList"
+            [rows]="10"
+            [globalFilterFields]="['clientName']"
+            [rowHover]="true"
+            scrollHeight="550px"
+            [style]="{ width: '100%' }"
+            columnResizeMode="expand"
+            [resizableColumns]="true"
+          >
+            <ng-template pTemplate="colgroup">
+              <colgroup>
+                <col style="width: 10%" />
+                <col style="width: 20%" />
+                <col style="width: 10%" />
+                <col style="width: 10%" />
+                <col style="width: 10%" />
+                <col style="width: 10%" />
+                <col style="width: 10%" />
+                <col style="width: 10%" />
+                <col style="width: 10%" />
+              </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header">
+              <tr>
+                <th colspan="9">
+                  <input
+                    type="text"
+                    pInputText
+                    size="50"
+                    placeholder="Global Search"
+                    (input)="
+                      dt.filterGlobal($any($event.target).value, 'contains')
+                    "
+                    style="width: 100%"
+                  />
+                </th>
+              </tr>
+              <tr>
+                <th pResizableColumn>Lead#</th>
+                <th pResizableColumn>Date Call Record Entered</th>
+                <th pResizableColumn>Manager</th>
+                <th pResizableColumn>Manager Title</th>
+                <th pResizableColumn>Lead Type</th>
+                <th pResizableColumn>Assigned To</th>
+                <th pResizableColumn>Generated By</th>
+                <th pResizableColumn>Called</th>
+                <th pResizableColumn>Action</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData>
+              <tr>
+                <td>{{ rowData.id }}</td>
+                <td>{{ rowData.reminderDateTime | date }}</td>
+                <td>{{ rowData.managerId }}</td>
+                <td>{{ rowData.managerId }}</td>
+                <td>{{ rowData.leadType }}</td>
+                <td>{{ rowData.assignedToId }}</td>
+                <td>{{ rowData.generatedById }}</td>
+                <td>
+                  <div class="form-check form-switch ms-3">
+                    <input
+                      class="form-check-input mt-2 fs-6"
+                      [checked]="rowData.called"
+                      type="checkbox"
+                    />
+                  </div>
+                </td>
+                <td>
+                  <div class="d-flex justify-content-start pt-1">
+                    <div class="p-0 pe-3">
+                      <span class="cursor-pointer" (click)="editLead(rowData)"
+                        ><i class="far fa-edit"></i
+                      ></span>
                     </div>
-                </div>
-            </div>
 
-            <div class="company-info-box mx-2 mb-3">
-                <div class="section-header fw-normal p-1">Call Logs</div>
+                    <div class="p-0 pe-3">
+                      <span
+                        class="cursor-pointer"
+                        (click)="deleteLead(rowData.id)"
+                        ><i class="fas fa-trash"></i
+                      ></span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </div>
 
-                <div class="card p-2">
+      <div class="company-info-box mx-2 mb-3">
+        <div class="section-header fw-normal p-1">Requisition Details</div>
 
-                    <p-table #dt [value]="clientsList" [rows]="10" [globalFilterFields]="['clientName']"
-                        [rowHover]="true" scrollHeight="550px" [style]="{ width: '100%' }" columnResizeMode="expand"
-                        [resizableColumns]="true">
-                        <ng-template pTemplate="colgroup">
-                            <colgroup>
-                                <col style="width: 10%" />
-                                <col style="width: 10%" />
-                                <col style="width: 10%" />
-                                <col style="width: 60%" />
-                                <col style="width: 10%" />
-                            </colgroup>
-                        </ng-template>
-                        <ng-template pTemplate="header">
+        <div class="card p-2">
+          <p-table
+            #dt
+            [value]="requisitionsList"
+            [rows]="10"
+            [globalFilterFields]="['clientName']"
+            [rowHover]="true"
+            scrollHeight="550px"
+            [style]="{ width: '100%' }"
+            columnResizeMode="expand"
+            [resizableColumns]="true"
+          >
+            <ng-template pTemplate="colgroup">
+              <colgroup>
+                <col style="width: 10%" />
+                <col style="width: 10%" />
+                <col style="width: 10%" />
+                <col style="width: 10%" />
+                <col style="width: 10%" />
+                <col style="width: 10%" />
+                <col style="width: 10%" />
+                <col style="width: 10%" />
+              </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header">
+              <tr>
+                <th colspan="10">
+                  <input
+                    type="text"
+                    pInputText
+                    size="50"
+                    placeholder="Global Search..."
+                    (input)="
+                      dt.filterGlobal($any($event.target).value, 'contains')
+                    "
+                    style="width: 100%"
+                  />
+                </th>
+              </tr>
+              <tr>
+                <th pResizableColumn>Requisition</th>
+                <th pResizableColumn>Status</th>
+                <th pResizableColumn>Manager</th>
+                <th pResizableColumn>Buzzwords</th>
+                <th pResizableColumn>Duration</th>
+                <th pResizableColumn>BillRate</th>
+                <th pResizableColumn>Date</th>
+                <th pResizableColumn>Action</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData>
+              <tr>
+                <td>
+                  <a
+                    href="javascript:void(0)"
+                    class="clientNameLink"
+                    (click)="requisitionDashboard(rowData)"
+                  >
+                    Requisition #{{ rowData.id }}
+                  </a>
+                </td>
+                <td>
+                  <div class="form-check form-switch ms-3">
+                    <input
+                      class="form-check-input mt-2 fs-6"
+                      [checked]="rowData.status"
+                      (change)="onStatusChange($event, rowData)"
+                      type="checkbox"
+                    />
+                  </div>
+                </td>
+                <td>
+                  <a
+                    href="javascript:void(0)"
+                    class="clientNameLink"
+                    (click)="goToManagerDashboard(rowData)"
+                  >
+                    {{ rowData.managerName }}
+                  </a>
+                </td>
+                <td>??</td>
+                <td>{{ rowData.duration }}</td>
+                <td>{{ rowData.billRate }}</td>
+                <td>
+                  {{ rowData.createdDate | date : "MMM d, yyyy h:mm:ssa" }}
+                </td>
 
-                            <tr>
-                                <th colspan="5">
-                                    <input type="text" pInputText size="50" placeholder="Global Search"
-                                        (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                                        style="width: 100%" />
-                                </th>
-                            </tr>
-                            <tr>
-                                <th pResizableColumn>Date/Time</th>
-                                <th pResizableColumn>Manager</th>
-                                <th pResizableColumn>Spoke With</th>
-                                <th pResizableColumn>Call Record</th>
-                                <th pResizableColumn>Action</th>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-rowData>
-                            <tr>
-                                <td>{{ rowData.name }}</td>
-                                <td>{{ rowData.status }}</td>
-                                <td>{{ rowData.status }}</td>
-                                <td>{{ rowData.status }}</td>
-                                <td>
-                                    <div class="p-0 pe-3">
-                                        <span class="cursor-pointer"><i class="fas fa-trash"></i></span>
-                                    </div>
-                                </td>
-                            </tr>
-                        </ng-template>
-                    </p-table>
-                </div>
-            </div>
+                <td>
+                  <div class="d-flex justify-content-start pt-1">
+                    <div class="p-0 pe-3">
+                      <span
+                        class="cursor-pointer"
+                        (click)="addRequisition(rowData)"
+                      >
+                        <i
+                          class="fa-regular fa-square-plus fw-bolder fs-14px"
+                        ></i>
+                      </span>
+                    </div>
+                    <div class="p-0 pe-3">
+                      <span
+                        class="cursor-pointer"
+                        (click)="editRequisition(rowData)"
+                      >
+                        <i class="far fa-edit"></i>
+                      </span>
+                    </div>
 
-            <div class="company-info-box mx-2 mb-3">
-                <div class="section-header fw-normal p-1">Leads</div>
+                    <div class="p-0 pe-3">
+                      <span
+                        class="cursor-pointer"
+                        (click)="deleteRequisition(rowData.id)"
+                      >
+                        <i class="fas fa-trash"></i>
+                      </span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </div>
 
-                <div class="card p-2">
+      <div class="company-info-box mx-2 mb-3">
+        <div class="section-header fw-normal p-1">Clients Requests</div>
 
-                    <p-table #dt [value]="leadsList" [rows]="10" [globalFilterFields]="['clientName']" [rowHover]="true"
-                        scrollHeight="550px" [style]="{ width: '100%' }" columnResizeMode="expand"
-                        [resizableColumns]="true">
-                        <ng-template pTemplate="colgroup">
-                            <colgroup>
-                                <col style="width: 10%" />
-                                <col style="width: 20%" />
-                                <col style="width: 10%" />
-                                <col style="width: 10%" />
-                                <col style="width: 10%" />
-                                <col style="width: 10%" />
-                                <col style="width: 10%" />
-                                <col style="width: 10%" />
-                                <col style="width: 10%" />
-                            </colgroup>
-                        </ng-template>
-                        <ng-template pTemplate="header">
-
-                            <tr>
-                                <th colspan="9">
-                                    <input type="text" pInputText size="50" placeholder="Global Search"
-                                        (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                                        style="width: 100%" />
-                                </th>
-                            </tr>
-                            <tr>
-                                <th pResizableColumn>Lead#</th>
-                                <th pResizableColumn>Date Call Record Entered</th>
-                                <th pResizableColumn>Manager</th>
-                                <th pResizableColumn>Manager Title</th>
-                                <th pResizableColumn>Lead Type</th>
-                                <th pResizableColumn>Assigned To</th>
-                                <th pResizableColumn>Generated By</th>
-                                <th pResizableColumn>Called</th>
-                                <th pResizableColumn>Action</th>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-rowData>
-                            <tr>
-                                <td>{{ rowData.id }}</td>
-                                <td>{{ rowData.reminderDateTime | date }}</td>
-                                <td>{{ rowData.managerId }}</td>
-                                <td>{{ rowData.managerId }}</td>
-                                <td>{{ rowData.leadType }}</td>
-                                <td>{{ rowData.assignedToId }}</td>
-                                <td>{{ rowData.generatedById }}</td>
-                                <td>
-                                    <div class="form-check form-switch ms-3">
-                                        <input class="form-check-input mt-2 fs-6" [checked]="rowData.called"
-                                            type="checkbox">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="d-flex justify-content-start pt-1">
-                                        <div class="p-0 pe-3">
-                                            <span class="cursor-pointer" (click)="editLead(rowData);"><i
-                                                    class="far fa-edit"></i></span>
-                                        </div>
-
-                                        <div class="p-0 pe-3">
-                                            <span class="cursor-pointer" (click)="deleteLead(rowData.id);"><i
-                                                    class="fas fa-trash"></i></span>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </ng-template>
-                    </p-table>
-                </div>
-            </div>
-
-            <div class="company-info-box mx-2 mb-3">
-                <div class="section-header fw-normal p-1">Requisition Details</div>
-
-                <div class="card p-2">
-
-                    <p-table #dt [value]="requisitionsList" [rows]="10" [globalFilterFields]="['clientName']"
-                        [rowHover]="true" scrollHeight="550px" [style]="{ width: '100%' }" columnResizeMode="expand"
-                        [resizableColumns]="true">
-                        <ng-template pTemplate="colgroup">
-                            <colgroup>
-                                <col style="width: 10%" />
-                                <col style="width: 10%" />
-                                <col style="width: 10%" />
-                                <col style="width: 10%" />
-                                <col style="width: 10%" />
-                                <col style="width: 10%" />
-                                <col style="width: 10%" />
-                                <col style="width: 10%" />
-                            </colgroup>
-                        </ng-template>
-                        <ng-template pTemplate="header">
-
-                            <tr>
-                            <th colspan="10">
-                                <input type="text" pInputText size="50" placeholder="Global Search..."
-                                    (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                                    style="width: 100%" />
-                            </th>
-                        </tr>
-                            <tr>
-
-                                <th pResizableColumn>Requisition</th>
-                                <th pResizableColumn>Status</th>
-                                <th pResizableColumn>Manager</th>
-                                <th pResizableColumn>Buzzwords</th>
-                                <th pResizableColumn>Duration</th>
-                                <th pResizableColumn>BillRate</th>
-                                <th pResizableColumn>Date</th>
-                                <th pResizableColumn>Action</th>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-rowData>
-                            <tr>
-                            <td>
-                                <a href="javascript:void(0)" class="clientNameLink"
-                                    (click)="requisitionDashboard(rowData)">
-                                    Requisition #{{ rowData.id }}
-                                </a>
-                            </td>
-                            <td>
-                                <div class="form-check form-switch ms-3">
-                                    <input class="form-check-input mt-2 fs-6" [checked]="rowData.status"
-                                    (change)="onStatusChange($event, rowData);"
-                                    type="checkbox">
-                                </div>
-                            </td>
-                            <td>
-                                <a href="javascript:void(0)" class="clientNameLink"
-                                    (click)="goToManagerDashboard(rowData)">
-                                    {{ rowData.managerName }}
-                                </a>
-                            </td>
-                            <td>??</td>
-                            <td>{{ rowData.duration }}</td>
-                            <td>{{ rowData.billRate }}</td>
-                            <td>{{ rowData.createdDate | date:'MM-dd-yyyy' }}</td>
-
-                            <td>
-                                <div class="d-flex justify-content-start pt-1">
-
-                                    <div class="p-0 pe-3">
-                                        <span class="cursor-pointer" (click)="addRequisition(rowData);">
-                                            <i class="fa-regular fa-square-plus fw-bolder fs-14px"></i>
-                                        </span>
-                                    </div>
-                                    <div class="p-0 pe-3">
-                                        <span class="cursor-pointer" (click)="editRequisition(rowData);">
-                                            <i class="far fa-edit"></i>
-                                        </span>
-                                    </div>
-
-                                    <div class="p-0 pe-3">
-                                        <span class="cursor-pointer" (click)="deleteRequisition(rowData.id);">
-                                            <i class="fas fa-trash"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </td>
-
-                        </tr>
-
-                        </ng-template>
-                    </p-table>
-                </div>
-            </div>
-
-            <div class="company-info-box mx-2 mb-3">
-                <div class="section-header fw-normal p-1">Clients Requests</div>
-
-                <div class="card p-2">
-
-                    <p-table #dt [value]="clientsList" [rows]="10" [globalFilterFields]="['clientName']"
-                        [rowHover]="true" scrollHeight="550px" [style]="{ width: '100%' }" columnResizeMode="expand"
-                        [resizableColumns]="true">
-                        <ng-template pTemplate="colgroup">
-                            <colgroup>
-                                <col style="width: 10%" />
-                                <col style="width: 10%" />
-                                <col style="width: 10%" />
-                                <col style="width: 10%" />
-                                <col style="width: 10%" />
-                                <col style="width: 10%" />
-                                <col style="width: 10%" />
-                                <col style="width: 10%" />
-                                <col style="width: 10%" />
-                            </colgroup>
-                        </ng-template>
-                        <ng-template pTemplate="header">
-
-                            <tr>
-                                <th colspan="10">
-                                    <input type="text" pInputText size="50" placeholder="Global Search"
-                                        (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                                        style="width: 100%" />
-                                </th>
-                            </tr>
-                            <tr>
-
-                                <th pResizableColumn>Client Request</th>
-                                <th pResizableColumn>Request Type</th>
-                                <th pResizableColumn>Category</th>
-                                <th pResizableColumn>Posting Title</th>
-                                <th pResizableColumn>Project No</th>
-                                <th pResizableColumn>Client Manager</th>
-                                <th pResizableColumn>Sales Rep</th>
-                                <th pResizableColumn>Bill Rate</th>
-                                <th pResizableColumn>Margin Target</th>
-                                <th pResizableColumn>Action</th>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-rowData>
-                            <tr>
-                                <td>{{ rowData.name }}</td>
-                                <td>{{ rowData.status }}</td>
-                                <td>{{ rowData.status }}</td>
-                                <td>{{ rowData.status }}</td>
-                                <td>{{ rowData.name }}</td>
-                                <td>{{ rowData.status }}</td>
-                                <td>{{ rowData.status }}</td>
-                                <td>{{ rowData.status }}</td>
-                                <td>{{ rowData.status }}</td>
-                                <!-- <td>
+        <div class="card p-2">
+          <p-table
+            #dt
+            [value]="clientsList"
+            [rows]="10"
+            [globalFilterFields]="['clientName']"
+            [rowHover]="true"
+            scrollHeight="550px"
+            [style]="{ width: '100%' }"
+            columnResizeMode="expand"
+            [resizableColumns]="true"
+          >
+            <ng-template pTemplate="colgroup">
+              <colgroup>
+                <col style="width: 10%" />
+                <col style="width: 10%" />
+                <col style="width: 10%" />
+                <col style="width: 10%" />
+                <col style="width: 10%" />
+                <col style="width: 10%" />
+                <col style="width: 10%" />
+                <col style="width: 10%" />
+                <col style="width: 10%" />
+              </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header">
+              <tr>
+                <th colspan="10">
+                  <input
+                    type="text"
+                    pInputText
+                    size="50"
+                    placeholder="Global Search"
+                    (input)="
+                      dt.filterGlobal($any($event.target).value, 'contains')
+                    "
+                    style="width: 100%"
+                  />
+                </th>
+              </tr>
+              <tr>
+                <th pResizableColumn>Client Request</th>
+                <th pResizableColumn>Request Type</th>
+                <th pResizableColumn>Category</th>
+                <th pResizableColumn>Posting Title</th>
+                <th pResizableColumn>Project No</th>
+                <th pResizableColumn>Client Manager</th>
+                <th pResizableColumn>Sales Rep</th>
+                <th pResizableColumn>Bill Rate</th>
+                <th pResizableColumn>Margin Target</th>
+                <th pResizableColumn>Action</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData>
+              <tr>
+                <td>{{ rowData.name }}</td>
+                <td>{{ rowData.status }}</td>
+                <td>{{ rowData.status }}</td>
+                <td>{{ rowData.status }}</td>
+                <td>{{ rowData.name }}</td>
+                <td>{{ rowData.status }}</td>
+                <td>{{ rowData.status }}</td>
+                <td>{{ rowData.status }}</td>
+                <td>{{ rowData.status }}</td>
+                <!-- <td>
                             <div class="form-check form-switch ms-3">
                                 <input class="form-check-input mt-2 fs-6" type="checkbox">
                             </div>
                         </td> -->
-                                <td>
-                                    <div class="d-flex justify-content-start pt-1">
-                                        <div class="p-0 pe-3">
-                                            <span class="cursor-pointer"><i class="far fa-edit"></i></span>
-                                        </div>
+                <td>
+                  <div class="d-flex justify-content-start pt-1">
+                    <div class="p-0 pe-3">
+                      <span class="cursor-pointer"
+                        ><i class="far fa-edit"></i
+                      ></span>
+                    </div>
 
-                                        <div class="p-0 pe-3">
-                                            <span class="cursor-pointer"><i class="fas fa-trash"></i></span>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </ng-template>
-                    </p-table>
-                </div>
+                    <div class="p-0 pe-3">
+                      <span class="cursor-pointer"
+                        ><i class="fas fa-trash"></i
+                      ></span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </div>
+
+      <div class="company-info-box mx-2 mb-3">
+        <div class="section-header fw-normal p-1">Client Documents</div>
+
+        <div class="form-content py-0">
+          <div class="row mb-2">
+            <div class="col-md-3">
+              <div>
+                <label class="form-label">Document Type</label>
+                <span class="required-label">REQUIRED</span>
+              </div>
+
+              <div class="card flex justify-content-center w-100">
+                <p-dropdown
+                  [showClear]="true"
+                  [options]="documentTypes"
+                  [(ngModel)]="documentUploadInput.documentTypeId"
+                  optionValue="id"
+                  optionLabel="documentTypeName"
+                  placeholder="--Select--"
+                />
+              </div>
             </div>
 
-            <div class="company-info-box mx-2 mb-3">
-                <div class="section-header fw-normal p-1">
-                    Client Documents
-                </div>
+            <div class="col-md-3">
+              <label class="form-label">Document Name</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Document Name"
+                [(ngModel)]="documentUploadInput.documentName"
+              />
+            </div>
 
-                <div class="form-content py-0">
-
-                    <div class="row mb-2">
-
-                        <div class="col-md-3">
-                            <div>
-                                <label class="form-label">Document Type</label>
-                                <span class="required-label">REQUIRED</span>
-                            </div>
-
-                            <div class="card flex justify-content-center w-100">
-                                <p-dropdown [showClear]="true"
-                                [options]="documentTypes" [(ngModel)]="documentUploadInput.documentTypeId"
-                                optionValue="id"
-                                optionLabel="documentTypeName"
-                                placeholder="--Select--" />
-                                </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <label class="form-label">Document Name</label>
-                            <input type="text" class="form-control" placeholder="Document Name"
-                                [(ngModel)]="documentUploadInput.documentName">
-                        </div>
-
-                        <div class="col-md-3">
-                            <label class="form-label">Upload Documents</label>
-                            <!-- <div>
+            <div class="col-md-3">
+              <label class="form-label">Upload Documents</label>
+              <!-- <div>
                         <span class="required-label">
                             Except (PDF, DOC, DOCX, TXT, RTF)
                         </span>
                     </div> -->
-                            <input type="file" class="form-control" accept=".doc,.docx,.pdf,.txt,.rtf"
-                                (change)="onFileSelected($event)">
+              <input
+                type="file"
+                class="form-control"
+                accept=".doc,.docx,.pdf,.txt,.rtf"
+                (change)="onFileSelected($event)"
+              />
+            </div>
 
-                        </div>
+            <div class="col-md-3">
+              <label></label>
+              <div>
+                <button
+                  class="btn btn-success py-0 px-2 mx-1 fs-16px"
+                  (click)="UploadDocument()"
+                >
+                  Save
+                </button>
+                <button
+                  class="btn btn btn-danger py-0 px-2 fs-16px"
+                  (click)="clearDocument()"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
 
-                        <div class="col-md-3">
-                            <label></label>
-                            <div>
-                                <button class="btn btn-success py-0 px-2 mx-1 fs-16px" (click)="UploadDocument()">
-                                    Save
-                                </button>
-                                <button class="btn btn btn-danger py-0 px-2 fs-16px"
-                                    (click)="clearDocument()">Cancel</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="form-content">
+          <p-table
+            #dt
+            [value]="documentUploadList"
+            [rows]="10"
+            [globalFilterFields]="['clientName']"
+            [rowHover]="true"
+            scrollHeight="550px"
+            [style]="{ width: '100%' }"
+            columnResizeMode="expand"
+            [resizableColumns]="true"
+          >
+            <ng-template pTemplate="colgroup">
+              <colgroup>
+                <col style="width: 30%" />
+                <col style="width: 30%" />
+                <col style="width: 30%" />
+              </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header">
+              <tr>
+                <th pResizableColumn>Document Type</th>
+                <th pResizableColumn>Document Name</th>
+                <th pResizableColumn>Download</th>
+                <th pResizableColumn></th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData>
+              <tr>
+                <td>{{ rowData.documentTypeName }}</td>
+                <td>{{ rowData.documentName }}</td>
+                <td>
+                  <div class="p-0 pe-5">
+                    <span class="cursor-pointer">
+                      <i
+                        class="far fa-circle-down"
+                        (click)="downloadFile(rowData.documentFileName)"
+                      ></i>
+                    </span>
+                  </div>
+                </td>
 
-
-                <div class="form-content">
-                    <p-table #dt [value]="documentUploadList" [rows]="10" [globalFilterFields]="['clientName']"
-                        [rowHover]="true" scrollHeight="550px" [style]="{ width: '100%' }" columnResizeMode="expand"
-                        [resizableColumns]="true">
-                        <ng-template pTemplate="colgroup">
-                            <colgroup>
-                                <col style="width: 30%" />
-                                <col style="width: 30%" />
-                                <col style="width: 30%" />
-                            </colgroup>
-                        </ng-template>
-                        <ng-template pTemplate="header">
-                            <tr>
-
-                                <th pResizableColumn>Document Type</th>
-                                <th pResizableColumn>Document Name</th>
-                                <th pResizableColumn>Download</th>
-                                <th pResizableColumn></th>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-rowData>
-                            <tr>
-                                <td>{{rowData.documentTypeName}}</td>
-                                <td>{{rowData.documentName}}</td>
-                                <td>
-                                    <div class="p-0 pe-5">
-                                        <span class="cursor-pointer">
-                                            <i class="far fa-circle-down"
-                                                (click)="downloadFile(rowData.documentFileName);"></i>
-                                        </span>
-                                    </div>
-                                </td>
-
-                                 <td>
-                                    <div class="d-flex justify-content-start pt-1">
-                                    <!-- <div class="p-0 pe-3">
+                <td>
+                  <div class="d-flex justify-content-start pt-1">
+                    <!-- <div class="p-0 pe-3">
                                         <span class="cursor-pointer"><i class="far fa-edit"></i></span>
                                     </div> -->
 
-                                    <div class="p-0 pe-3">
-                                        <span class="cursor-pointer" (click)="deleteDocument(rowData.id);">
-                                            <i class="fas fa-trash"></i></span>
-                                    </div>
-                                </div>
-                                </td>
-                            </tr>
-                        </ng-template>
-                    </p-table>
-                </div>
-            </div>
+                    <div class="p-0 pe-3">
+                      <span
+                        class="cursor-pointer"
+                        (click)="deleteDocument(rowData.id)"
+                      >
+                        <i class="fas fa-trash"></i
+                      ></span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
         </div>
+      </div>
     </div>
+  </div>
 
-    <div class="col-md-2 ms-0 mt-5">
-        <app-right-manager-search-nav [fromClientDashboard]="true" [clientManagers]="clientManagersList"></app-right-manager-search-nav>
-    </div>
+  <div class="col-md-2 ms-0 mt-5">
+    <app-right-manager-search-nav
+      [fromClientDashboard]="true"
+      [clientManagers]="clientManagersList"
+    ></app-right-manager-search-nav>
+  </div>
 </div>

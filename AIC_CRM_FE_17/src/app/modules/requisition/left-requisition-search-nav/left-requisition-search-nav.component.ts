@@ -7,26 +7,31 @@ import { RequisitionModel } from '../../../models/requisition/requisition-model'
 @Component({
   selector: 'app-left-requisition-search-nav',
   templateUrl: './left-requisition-search-nav.component.html',
-  styleUrls: ['./left-requisition-search-nav.component.css']
+  styleUrls: ['./left-requisition-search-nav.component.css'],
 })
 export class LeftRequisitionSearchNavComponent implements OnInit {
-
   requisitionsList: RequisitionModel[] = [];
   filteredRequisitions: RequisitionModel[] = [];
   pagedRequisitions: RequisitionModel[] = [];
   searchText: string = '';
 
   currentPage: number = 1;
-  pageSize: number = 15;
+  pageSize: number = 12;
   totalPages: number = 1;
 
   constructor(
     private apiService: ApiService,
     private toastr: ToastrService,
-    private router: Router,
-  ) { }
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
+    const savedPage = localStorage.getItem('requisitionListPage');
+    if (savedPage && !isNaN(+savedPage)) {
+      this.currentPage = +savedPage; // ✅ use the saved page number
+    } else {
+      this.currentPage = 1;
+    }
     this.getRequisitions();
   }
 
@@ -34,7 +39,7 @@ export class LeftRequisitionSearchNavComponent implements OnInit {
     this.apiService.getData('Client/ClientOpenRequisitionsListGet').subscribe({
       next: (response) => {
         this.requisitionsList = response?.data || [];
-        this.requisitionsList.forEach(item => {
+        this.requisitionsList.forEach((item) => {
           item.jobTitle = item.clientName + ' - ' + item.jobTitle;
         });
         this.filteredRequisitions = [...this.requisitionsList];
@@ -42,7 +47,7 @@ export class LeftRequisitionSearchNavComponent implements OnInit {
       },
       error: (err) => {
         this.toastr.error(err || 'Error loading requisitions');
-      }
+      },
     });
   }
 
@@ -50,12 +55,17 @@ export class LeftRequisitionSearchNavComponent implements OnInit {
     const query = this.searchText.toLowerCase().trim();
 
     if (!query) {
-      this.filteredRequisitions = [...this.requisitionsList];
+      // this.filteredRequisitions = [...this.requisitionsList];
+      this.getRequisitions();
     } else {
-      this.filteredRequisitions = this.requisitionsList.filter(item =>
-        (item.jobTitle?.toLowerCase().includes(query) || '') ||
-        (item.clientName?.toLowerCase().includes(query) || '') ||
-        (item.clientReqNumber?.toLowerCase().includes(query) || '')
+      this.filteredRequisitions = this.requisitionsList.filter(
+        (item) =>
+          item.jobTitle?.toLowerCase().includes(query) ||
+          '' ||
+          item.clientName?.toLowerCase().includes(query) ||
+          '' ||
+          item.clientReqNumber?.toLowerCase().includes(query) ||
+          ''
       );
     }
 
@@ -71,12 +81,16 @@ export class LeftRequisitionSearchNavComponent implements OnInit {
     });
 
     this.currentPage = 1;
-    this.totalPages = Math.ceil(this.filteredRequisitions.length / this.pageSize) || 1;
+    this.totalPages =
+      Math.ceil(this.filteredRequisitions.length / this.pageSize) || 1;
     this.updatePagedRequisitions();
   }
 
   changePage(delta: number): void {
-    this.currentPage = Math.max(1, Math.min(this.currentPage + delta, this.totalPages));
+    this.currentPage = Math.max(
+      1,
+      Math.min(this.currentPage + delta, this.totalPages)
+    );
     this.updatePagedRequisitions();
   }
 
@@ -87,6 +101,10 @@ export class LeftRequisitionSearchNavComponent implements OnInit {
   }
 
   goToDashboard(id: number): void {
+    localStorage.setItem('requisitionListPage', this.currentPage.toString());
     this.router.navigate(['/RequisitionDashboard', id]);
+  }
+  ngOnDestroy(): void {
+    localStorage.removeItem('requisitionListPage');
   }
 }

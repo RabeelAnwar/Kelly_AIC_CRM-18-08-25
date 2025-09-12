@@ -58,6 +58,7 @@ export class SearchConsultantComponent {
   // }
 
   consultantDashboard(id: number) {
+    ;
     this.router.navigate(['/consultant-dashboard', id], {
       state: { resumeSearchHighLight: this.inputSearch, fildteredConsultantsIds: this.fildteredConsultantsIds }
 

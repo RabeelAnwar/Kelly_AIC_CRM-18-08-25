@@ -15,25 +15,24 @@ import { ClientManagerModel } from '../../../models/client/client-manager-model'
 @Component({
   selector: 'app-requisition-dashboard',
   templateUrl: './requisition-dashboard.component.html',
-  styleUrl: './requisition-dashboard.component.css'
+  styleUrl: './requisition-dashboard.component.css',
 })
 export class RequisitionDashboardComponent {
-
   constructor(
     private apiService: ApiService,
     private toastr: ToastrService,
     private router: Router,
     private route: ActivatedRoute,
     private location: Location,
-    private fileDownload: FileDownload,
-  ) { }
+    private fileDownload: FileDownload
+  ) {}
 
   documentUploadList: DocumentUploadModel[] = [];
   documentUploadInput: DocumentUploadModel = new DocumentUploadModel();
   documentTypes: DocumentTypeModel[] = [];
   interviewProcessConsultantsList: any[] = [];
 
-  searchFields: string[] = []
+  searchFields: string[] = [];
 
   clientData: ClientModel = new ClientModel();
   requisitionData: RequisitionModel = new RequisitionModel();
@@ -41,7 +40,7 @@ export class RequisitionDashboardComponent {
   requisitionId: number = 0;
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       const id = +params['id']; // Convert id to number
 
       if (id > 0) {
@@ -61,65 +60,74 @@ export class RequisitionDashboardComponent {
         this.getInterviewProcessConsultantsList();
       }
     });
-
   }
 
   getSingleClient() {
-    this.apiService.getDataById('Client/SingleClientGet', { id: this.requisitionData.clientId }).subscribe({
-      next: (response) => {
-        this.clientData = response?.data || [];
-      },
-      error: (err) => {
-        this.toastr.error(err || 'Error loading clients list');
-      }
-    });
+    this.apiService
+      .getDataById('Client/SingleClientGet', {
+        id: this.requisitionData.clientId,
+      })
+      .subscribe({
+        next: (response) => {
+          this.clientData = response?.data || [];
+        },
+        error: (err) => {
+          this.toastr.error(err || 'Error loading clients list');
+        },
+      });
   }
 
   getRequisitionGetByClientId() {
-    this.apiService.getDataById('Client/ClientRequisitionGetByClientId', { id: this.requisitionData.clientId }).subscribe({
-      next: (response) => {
-        this.requisitionList = response?.data || [];
-      },
-      error: (err) => {
-        this.toastr.error(err || 'Error loading requisitions list');
-      }
-    });
+    this.apiService
+      .getDataById('Client/ClientRequisitionGetByClientId', {
+        id: this.requisitionData.clientId,
+      })
+      .subscribe({
+        next: (response) => {
+          this.requisitionList = response?.data || [];
+        },
+        error: (err) => {
+          this.toastr.error(err || 'Error loading requisitions list');
+        },
+      });
   }
 
-
   SingleRequisitionGet() {
-    this.apiService.getDataById('Client/ClientRequisitionGet', { id: this.requisitionId }).subscribe({
-      next: (response) => {
-        this.requisitionData = response?.data || [];
-        console.log('Requisition Data:', response?.data);
-        this.getSingleClient();
-        this.getRequisitionGetByClientId();
-      },
-      error: (err) => {
-        this.toastr.error(err || 'Error loading requisition');
-      }
-    });
+    this.apiService
+      .getDataById('Client/ClientRequisitionGet', { id: this.requisitionId })
+      .subscribe({
+        next: (response) => {
+          this.requisitionData = response?.data || [];
+          console.log('Requisition Data:', response?.data);
+          this.getSingleClient();
+          this.getRequisitionGetByClientId();
+        },
+        error: (err) => {
+          this.toastr.error(err || 'Error loading requisition');
+        },
+      });
   }
 
   editRequisition(requisition: RequisitionModel) {
     this.router.navigate(['/ClientITRequisition'], {
-      state: { requisition }
+      state: { requisition },
     });
-
   }
 
   deleteRequisition(id: number) {
     if (confirm('Are you sure you want to delete this requisition?')) {
-      this.apiService.deleteData('Client/ClientRequisitionDelete', { id }).subscribe({
-        next: () => {
-          this.toastr.success('Requisition deleted successfully');
-          console.log('Lead deleted successfully');
-          this.router.navigate(['/AllRequisition']);
-        },
-        error: (err) => {
-          this.toastr.error(err || 'Error deleting requisition');
-        }
-      });
+      this.apiService
+        .deleteData('Client/ClientRequisitionDelete', { id })
+        .subscribe({
+          next: () => {
+            this.toastr.success('Requisition deleted successfully');
+            console.log('Lead deleted successfully');
+            this.router.navigate(['/AllRequisition']);
+          },
+          error: (err) => {
+            this.toastr.error(err || 'Error deleting requisition');
+          },
+        });
     }
   }
 
@@ -136,10 +144,9 @@ export class RequisitionDashboardComponent {
           this.toastr.error('Failed to load document types');
         }
       },
-      error: () => this.toastr.error('Error fetching document types')
+      error: () => this.toastr.error('Error fetching document types'),
     });
   }
-
 
   UploadDocument(): void {
     this.documentUploadInput.requisitionId = this.requisitionId; // Set clientId from route parameter
@@ -160,7 +167,11 @@ export class RequisitionDashboardComponent {
     const model = this.documentUploadInput as any; // Type assertion to bypass TS7053
 
     for (const key in model) {
-      if (model.hasOwnProperty(key) && model[key] !== undefined && model[key] !== null) {
+      if (
+        model.hasOwnProperty(key) &&
+        model[key] !== undefined &&
+        model[key] !== null
+      ) {
         if (key === 'documentFile' && model[key] instanceof File) {
           formData.append('DocumentFile', model[key]); // backend expects ResumeFile
         } else {
@@ -169,20 +180,21 @@ export class RequisitionDashboardComponent {
       }
     }
 
-    this.apiService.saveFormData('Admin/DocumentAddUpdate', formData).subscribe({
-      next: (res) => {
-        if (res.succeeded) {
-          this.toastr.success('Document uploaded successfully');
-          this.clearDocument(); // Optional: reset form after success
-          this.getUploadedFiles();
-        } else {
-          this.toastr.error(res.message || 'Failed to upload document');
-        }
-      },
-      error: () => this.toastr.error('Error uploading document')
-    });
+    this.apiService
+      .saveFormData('Admin/DocumentAddUpdate', formData)
+      .subscribe({
+        next: (res) => {
+          if (res.succeeded) {
+            this.toastr.success('Document uploaded successfully');
+            this.clearDocument(); // Optional: reset form after success
+            this.getUploadedFiles();
+          } else {
+            this.toastr.error(res.message || 'Failed to upload document');
+          }
+        },
+        error: () => this.toastr.error('Error uploading document'),
+      });
   }
-
 
   onFileSelected(event: Event): void {
     const target = event.target as HTMLInputElement;
@@ -191,11 +203,9 @@ export class RequisitionDashboardComponent {
     }
   }
 
-
   clearDocument(): void {
     this.documentUploadInput = new DocumentUploadModel();
   }
-
 
   downloadFile(fileUrl?: string) {
     if (fileUrl && fileUrl.length > 0) {
@@ -204,29 +214,28 @@ export class RequisitionDashboardComponent {
   }
 
   getUploadedFiles(): void {
-
     const params = {
       clientId: 0, // replace with actual clientId
-      managerId: 0,  // optional or default
+      managerId: 0, // optional or default
       consultantId: 0, // optional or default
       requisitionId: this.requisitionId, // optional or default
-      source: 'requisition'
+      source: 'requisition',
     };
 
     this.apiService.getDataById('Admin/DocumentsListGet', params).subscribe({
       next: (res: any) => {
         if (res.succeeded) {
           this.documentUploadList = res.data;
-          this.documentUploadList.forEach(doc => {
+          this.documentUploadList.forEach((doc) => {
             if (doc.documentFileName && doc.documentFileName.length > 0) {
               doc.documentFileName = `${environment.basePath}/${doc.documentFileName}`;
             }
           });
         }
       },
-      error: err => {
+      error: (err) => {
         console.error('Error fetching documents:', err);
-      }
+      },
     });
   }
 
@@ -239,66 +248,68 @@ export class RequisitionDashboardComponent {
         },
         error: (err) => {
           this.toastr.error(err || 'Error deleting client');
-        }
+        },
       });
     }
   }
 
-
   getInterviewProcessConsultantsList(): void {
-    this.apiService.getDataById('Consultant/InterviewProcessConsultantsList', { requisitionId: this.requisitionId }).subscribe({
-      next: (response) => {
-        if (response.succeeded) {
-
-          this.interviewProcessConsultantsList = response.data;
-          this.searchFields = Object.keys(this.interviewProcessConsultantsList[0]);
-
-        } else {
-          this.toastr.error('Failed to load candidates');
-        }
-
-      },
-      error: (err) => {
-        this.toastr.error(err?.message || 'Error loading candidates');
-      }
-    });
+    this.apiService
+      .getDataById('Consultant/InterviewProcessConsultantsList', {
+        requisitionId: this.requisitionId,
+      })
+      .subscribe({
+        next: (response) => {
+          if (response.succeeded) {
+            this.interviewProcessConsultantsList = response.data;
+            this.searchFields = Object.keys(
+              this.interviewProcessConsultantsList[0]
+            );
+          } else {
+            this.toastr.error('Failed to load candidates');
+          }
+          console.log('Response >>', response);
+        },
+        error: (err) => {
+          this.toastr.error(err?.message || 'Error loading candidates');
+        },
+      });
   }
 
-
   interviewProcess(id: number, processId?: number) {
+    console.log('Clicked:', { id, processId });
+
     localStorage.setItem('activityId', id.toString());
     this.router.navigate(['/ReqConsultantInterviewProcess'], {
-      state: { requisition: this.requisitionData, processId: processId }
+      state: { requisition: this.requisitionData, processId: processId },
     });
-
   }
 
   consultantActivity() {
-
     localStorage.setItem('activityId', '');
     this.router.navigate(['/ConsultantActivity'], {
-      state: { requisition: this.requisitionData }
+      state: { requisition: this.requisitionData },
     });
   }
-
 
   onStatusChange(event: any) {
     this.requisitionData.status = event.target.checked;
 
-    this.apiService.saveData('Client/ClientRequisitionStatusUpdate', this.requisitionData).subscribe({
-      next: (res) => {
-        if (res.succeeded) {
-          this.toastr.success('saved successfully');
-        } else {
-          this.toastr.error(res.message || 'Failed to save');
-        }
-      },
-      error: (err) => {
-        this.toastr.error(err?.message || 'Error saving');
-      }
-    });
+    this.apiService
+      .saveData('Client/ClientRequisitionStatusUpdate', this.requisitionData)
+      .subscribe({
+        next: (res) => {
+          if (res.succeeded) {
+            this.toastr.success('saved successfully');
+          } else {
+            this.toastr.error(res.message || 'Failed to save');
+          }
+        },
+        error: (err) => {
+          this.toastr.error(err?.message || 'Error saving');
+        },
+      });
   }
-
 
   consultantDashboard(id: number) {
     this.router.navigate(['/consultant-dashboard', id]);
@@ -309,19 +320,24 @@ export class RequisitionDashboardComponent {
   }
 
   calculatePercentage(billRate: number, payRate: number): string {
-    if (isNaN(billRate) || isNaN(payRate) || payRate === null || billRate === null || payRate === 0) {
+    if (
+      isNaN(billRate) ||
+      isNaN(payRate) ||
+      payRate === null ||
+      billRate === null ||
+      payRate === 0
+    ) {
       return '0';
     }
     const percentage = ((billRate - payRate) / payRate) * 100;
     return percentage.toFixed(2); // you can adjust decimal places as per your need
   }
 
-
   showMore: { [key: string]: boolean } = {
     projectOverview: false,
     jobDescription: false,
     responsibilities: false,
-    qualifications: false
+    qualifications: false,
   };
 
   // Toggle function for each section
@@ -331,18 +347,19 @@ export class RequisitionDashboardComponent {
 
   deleteConsultantActivity(id: number): void {
     if (confirm('Are you sure you want to delete this activity?')) {
-      this.apiService.deleteData('Consultant/ConsultantActivityDelete', { id: id }).subscribe({
-        next: (res) => {
-          this.toastr.success('Deleted successfully');
-          this.getInterviewProcessConsultantsList();
-        },
-        error: (err) => {
-          this.toastr.error(err?.message || 'Error deleting activity');
-        }
-      });
+      this.apiService
+        .deleteData('Consultant/ConsultantActivityDelete', { id: id })
+        .subscribe({
+          next: (res) => {
+            this.toastr.success('Deleted successfully');
+            this.getInterviewProcessConsultantsList();
+          },
+          error: (err) => {
+            this.toastr.error(err?.message || 'Error deleting activity');
+          },
+        });
     }
   }
-
 
   addManager() {
     const manager = new ClientManagerModel();
@@ -356,7 +373,7 @@ export class RequisitionDashboardComponent {
     manager.zipCode = this.clientData?.zipCode;
 
     this.router.navigate(['/AddManager'], {
-      state: { manager: manager }
+      state: { manager: manager },
     });
   }
 
@@ -364,8 +381,7 @@ export class RequisitionDashboardComponent {
     const lead = new LeadModel();
     lead.clientId = this.clientData.id;
     this.router.navigate(['/add-leads'], {
-      state: { lead: lead }
+      state: { lead: lead },
     });
   }
-
 }

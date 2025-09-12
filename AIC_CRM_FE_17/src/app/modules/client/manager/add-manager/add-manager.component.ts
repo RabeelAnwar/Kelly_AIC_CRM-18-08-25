@@ -40,7 +40,7 @@ export class AddManagerComponent {
   departmentList: any[] = [];
 
   ngOnInit(): void {
-    debugger;
+    ;
     const state = this.location.getState() as { manager?: ClientManagerModel };
     if (state.manager) {
       this.managerInput = {
@@ -61,7 +61,7 @@ export class AddManagerComponent {
   getAllUsers(): void {
     this.apiService.getData('Admin/UsersListGet').subscribe((res) => {
       if (res.succeeded) {
-        debugger;
+        ;
         this.usersList = res.data;
         const temp: any[] = [];
         this.usersList.forEach((i) => {

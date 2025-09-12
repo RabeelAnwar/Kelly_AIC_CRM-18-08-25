@@ -26,7 +26,6 @@ export class DashboardComponent implements AfterViewInit,OnInit {
    TenantName: string = ''; 
  getTenentName() {
     this.TenantName = this.auth.getTenantName();
-    debugger;
     console.log('Tenant Name:', this.TenantName);
 
   }

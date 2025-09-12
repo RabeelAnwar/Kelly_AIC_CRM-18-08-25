@@ -24,8 +24,23 @@
 
           <tr>
             <th>
-              <input type="text" pInputText size="50" placeholder="Search..." [(ngModel)]="inputSearch"
-                (input)="dt.filterGlobal($any($event.target).value, 'contains')" style="width: 100%" />
+              <!-- <input type="text" pInputText size="50" placeholder="Search..." 
+              [(ngModel)]="inputSearch"
+              (input)="dt.filterGlobal($any($event.target).value, 'contains')" 
+               style="width: 100%" /> -->
+
+               <input
+                  #filterInput
+                  type="text"
+                  pInputText
+                  size="50"
+                  placeholder="Global Search..."
+                  (input)="
+                    dt.filterGlobal($any($event.target).value, 'contains')
+                  "
+                  [(ngModel)]="inputSearch"
+                  style="width: 100%"
+                />
             </th>
           </tr>
           <tr>

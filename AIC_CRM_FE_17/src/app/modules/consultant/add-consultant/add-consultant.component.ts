@@ -78,7 +78,7 @@ export class AddConsultantComponent {
             name: i.firstName + ' ' + i.lastName
           });
         });
-debugger;
+;
         this.usersList = dropdownItems;
         console.log(this.usersList);
       } else {
@@ -147,7 +147,7 @@ debugger;
   }
 
   saveConsultant(): void {
-    debugger;
+    ;
     if (!this.consultantInput.firstName || this.consultantInput.firstName.trim() === '') {
       this.toastr.warning('First Name is required');
       return;

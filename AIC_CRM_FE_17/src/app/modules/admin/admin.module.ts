@@ -3,7 +3,6 @@ import { AsyncPipe, CommonModule, DatePipe } from '@angular/common';
 import { UserMasterComponent } from './user-master/user-master.component';
 import { RouterModule } from '@angular/router';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { AppRoutingModule } from '../../app-routing.module';
 import { FormsModule, RequiredValidator } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 import { RoleBasedPermissionComponent } from './role-based-permission/role-based-permission.component';
@@ -22,7 +21,6 @@ import { EditorModule } from 'primeng/editor';
 import { SupportTicketComponent } from './support-ticket/support-ticket.component';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
-import { TopNavbarComponent } from '../navbar/top-navbar/top-navbar.component';
 import { AddConsultantComponent } from '../consultant/add-consultant/add-consultant.component';
 import { ConsultantDirectoryComponent } from '../consultant/consultant-directory/consultant-directory.component';
 import { SearchConsultantComponent } from '../consultant/search-consultant/search-consultant.component';
@@ -66,21 +64,23 @@ import { AuditRptComponent } from '../reports/audit-rpt/audit-rpt.component';
 import { ReqConsultantInterviewProcessComponent } from '../requisition/req-consultant-interview-process/req-consultant-interview-process.component';
 import { ConsultantActivityComponent } from '../requisition/consultant-activity/consultant-activity.component';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+
+import { TopNavbarComponent } from '../navbar/top-navbar/top-navbar.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-
+import { MatInputModule } from '@angular/material/input';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { CdkAriaLive } from '@angular/cdk/a11y';
 
 @NgModule({
   declarations: [
+    //TopNavbarComponent,
     UserMasterComponent,
     RoleBasedPermissionComponent,
     CountryComponent,
     StateComponent,
     CityComponent,
-    TopNavbarComponent,
     LeftClientSearchNavComponent,
     TenantMasterComponent,
     MyLeadsComponent,
@@ -127,8 +127,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     RPTOfficeMasterComponent,
     AuditRptComponent,
     ReqConsultantInterviewProcessComponent,
-    ConsultantActivityComponent
-
+    ConsultantActivityComponent,
   ],
   imports: [
     CommonModule,
@@ -139,8 +138,6 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     MatFormFieldModule,
     MatAutocompleteModule,
     AsyncPipe,
-     CKEditorModule,
-    AppRoutingModule,
     DropdownModule,
     FormsModule,
     TableModule,
@@ -149,9 +146,14 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     ToastModule,
     SharedModule,
     NgxSliderModule,
+    CKEditorModule,
     RouterModule.forChild([
+      { path: 'home', component: DashboardComponent },
       { path: 'user-master', component: UserMasterComponent },
-      { path: 'role-based-permission', component: RoleBasedPermissionComponent },
+      {
+        path: 'role-based-permission',
+        component: RoleBasedPermissionComponent,
+      },
       { path: 'country-master', component: CountryComponent },
       { path: 'state-master', component: StateComponent },
       { path: 'city-master', component: CityComponent },
@@ -172,7 +174,10 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
       { path: 'add-consultant', component: AddConsultantComponent },
       { path: 'consultant-directory', component: ConsultantDirectoryComponent },
       { path: 'search-consultant', component: SearchConsultantComponent },
-      { path: 'consultant-dashboard/:id', component: ConsultantDashboardComponent },
+      {
+        path: 'consultant-dashboard/:id',
+        component: ConsultantDashboardComponent,
+      },
       { path: 'AddPipeline', component: AddPipelineComponent },
       { path: 'AddManager', component: AddManagerComponent },
       { path: 'ConsultantReference', component: ConsultantReferenceComponent },
@@ -180,9 +185,15 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
       { path: 'SearchManagers', component: SearchManagersComponent },
       { path: 'AllClientRequests', component: AllClientRequestsComponent },
       { path: 'AllClientPipeline', component: AllClientPipelineComponent },
-      { path: 'ManagerDashboard/:id', component: ClientManagerDashboardComponent },
+      {
+        path: 'ManagerDashboard/:id',
+        component: ClientManagerDashboardComponent,
+      },
       { path: 'LeadDashboard/:id', component: LeadDashboardComponent },
-      { path: 'RequisitionDashboard/:id', component: RequisitionDashboardComponent },
+      {
+        path: 'RequisitionDashboard/:id',
+        component: RequisitionDashboardComponent,
+      },
       { path: 'AllRequisition', component: AllRequisitionComponent },
       { path: 'OpenReqs', component: OpenRequisitionComponent },
       { path: 'ClientITRequisition', component: ClientITRequisitionComponent },
@@ -191,10 +202,13 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
       { path: 'AllRecruiters', component: AllRecruitersComponent },
       { path: 'RPTOfficeMaster', component: RPTOfficeMasterComponent },
       { path: 'AllActivities', component: AuditRptComponent },
-      { path: 'ReqConsultantInterviewProcess', component: ReqConsultantInterviewProcessComponent },
+      {
+        path: 'ReqConsultantInterviewProcess',
+        component: ReqConsultantInterviewProcessComponent,
+      },
       { path: 'ConsultantActivity', component: ConsultantActivityComponent },
-
     ]),
+    CdkAriaLive,
   ],
   exports: [
     RoleBasedPermissionComponent,
@@ -202,7 +216,6 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     CountryComponent,
     StateComponent,
     CityComponent,
-    TopNavbarComponent,
     LeftClientSearchNavComponent,
     TenantMasterComponent,
     MyLeadsComponent,
@@ -248,10 +261,8 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     RPTOfficeMasterComponent,
     AuditRptComponent,
     ReqConsultantInterviewProcessComponent,
-    ConsultantActivityComponent
-
+    ConsultantActivityComponent,
   ],
   providers: [DatePipe, MessageService, provideNgxMask()],
-
 })
-export class AdminModule { }
+export class AdminModule {}

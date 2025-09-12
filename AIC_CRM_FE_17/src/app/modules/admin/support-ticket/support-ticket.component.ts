@@ -9,16 +9,15 @@ import { CkeditorConfigService } from '../../../services/CkeditorConfigService';
 @Component({
   selector: 'app-support-ticket',
   templateUrl: './support-ticket.component.html',
-  styleUrl: './support-ticket.component.css'
+  styleUrl: './support-ticket.component.css',
 })
 export class SupportTicketComponent {
-
   constructor(
     private apiService: ApiService,
     private toastr: ToastrService,
     private router: Router,
     private ckConfig: CkeditorConfigService
-  ) { }
+  ) {}
 
   public Editor = this.ckConfig.Editor;
   public config = this.ckConfig.config;
@@ -42,11 +41,7 @@ export class SupportTicketComponent {
     { name: 'Closed' },
   ];
 
-  priority: any[] = [
-    { name: 'High' },
-    { name: 'Normal' },
-    { name: 'Low' },
-  ];
+  priority: any[] = [{ name: 'High' }, { name: 'Normal' }, { name: 'Low' }];
 
   ngOnInit() {
     this.intervalSubscription = interval(1000).subscribe(() => {
@@ -61,7 +56,6 @@ export class SupportTicketComponent {
   }
 
   save() {
-
     if (!this.input.type || this.input.type.trim() === '') {
       this.toastr.warning('Type is required');
       return;
@@ -86,7 +80,11 @@ export class SupportTicketComponent {
     const model = this.input as any; // Type assertion to bypass TS7053
 
     for (const key in model) {
-      if (model.hasOwnProperty(key) && model[key] !== undefined && model[key] !== null) {
+      if (
+        model.hasOwnProperty(key) &&
+        model[key] !== undefined &&
+        model[key] !== null
+      ) {
         if (key === 'documentFile' && model[key] instanceof File) {
           formData.append('DocumentFile', model[key]); // backend expects ResumeFile
         } else {
@@ -94,20 +92,18 @@ export class SupportTicketComponent {
         }
       }
     }
-    this.apiService.saveFormData('Admin/SupportTicketAddUpdate', formData).subscribe({
-      next: (res) => {
-        if (res.succeeded) {
-          this.toastr.success('Ticked saved successfully');
-          this.input = new SupportTicketModel();
-
-        } else {
-          this.toastr.error(res.message || 'Failed to save ticked');
-        }
-      },
-      error: () => this.toastr.error('Error saving ticked')
-    });
+    this.apiService
+      .saveFormData('Admin/SupportTicketAddUpdate', formData)
+      .subscribe({
+        next: (res) => {
+          if (res.succeeded) {
+            this.toastr.success('Ticked saved successfully');
+            this.input = new SupportTicketModel();
+          } else {
+            this.toastr.error(res.message || 'Failed to save ticked');
+          }
+        },
+        error: () => this.toastr.error('Error saving ticked'),
+      });
   }
-
-
 }
-

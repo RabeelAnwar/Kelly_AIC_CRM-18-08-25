@@ -30,9 +30,6 @@ export class LeftConsultantSearchNavComponent {
   currentPage = 1;
   totalPages = 1;
 
-  // ngOnInit(): void {
-  //   this.getConsultants();
-  // }
   ngOnInit(): void {
     const savedPage = localStorage.getItem('consultantListPage');
     if (savedPage && !isNaN(+savedPage)) {
@@ -43,9 +40,9 @@ export class LeftConsultantSearchNavComponent {
 
     this.getConsultants();
   }
-  // ngOnDestroy(): void {
-  //   localStorage.removeItem('consultantListPage');
-  // }
+  ngOnDestroy(): void {
+    localStorage.removeItem('consultantListPage');
+  }
 
   ngOnChanges(): void {
 
@@ -73,9 +70,10 @@ export class LeftConsultantSearchNavComponent {
     const text = this.searchText.toLowerCase().trim();
 
     if (!text) {
-      this.consultants = [...this.allconsultants].sort((a, b) =>
-        a.name.localeCompare(b.name)
-      );
+      // this.consultants = [...this.allconsultants].sort((a, b) =>
+      //   a.name.localeCompare(b.name)
+      // );
+      this.getConsultants()
       return;
     }
 

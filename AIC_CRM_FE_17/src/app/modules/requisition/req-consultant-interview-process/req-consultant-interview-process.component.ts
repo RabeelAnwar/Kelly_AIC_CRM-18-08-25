@@ -14,60 +14,76 @@ import { CkeditorConfigService } from '../../../services/CkeditorConfigService';
 @Component({
   selector: 'app-req-consultant-interview-process',
   templateUrl: './req-consultant-interview-process.component.html',
-  styleUrl: './req-consultant-interview-process.component.css'
+  styleUrls: ['./req-consultant-interview-process.component.css'],
+  //styleUrl: './req-consultant-interview-process.component.css',
 })
 export class ReqConsultantInterviewProcessComponent {
-
   constructor(
     private apiService: ApiService,
     private toastr: ToastrService,
     private router: Router,
     private location: Location,
     private ckConfig: CkeditorConfigService
-  ) { }
+  ) {}
 
   public Editor = this.ckConfig.Editor;
   public config = this.ckConfig.config;
 
-
   usersList: DropdownItem[] = [];
-  empType: any[] = [{ name: 'Full Time', }, { name: 'Corp to Corp', }, { name: 'W2' }];
+  empType: any[] = [
+    { name: 'Full Time' },
+    { name: 'Corp to Corp' },
+    { name: 'W2' },
+  ];
 
   clientData: ClientModel = new ClientModel();
   managerData: ClientManagerModel = new ClientManagerModel();
   requisitionData: RequisitionModel = new RequisitionModel();
   interviewData: ConsultantActivityModal = new ConsultantActivityModal();
-  interviewProcessInput: ConsultantInterviewProcessModal = new ConsultantInterviewProcessModal();
+  interviewProcessInput: ConsultantInterviewProcessModal =
+    new ConsultantInterviewProcessModal();
   activityConsultants: any[] = [];
   activityConsultantsUpdate: ConsultantActivityModal[] = [];
   consultantActivityId = 0;
   consultantName = '';
   consultantId = 0;
-  searchFields: string[] = []
+  searchFields: string[] = [];
 
   scheduleInterviewDate: boolean = false;
   scheduleInterviewNotes: boolean = false;
 
   ngOnInit(): void {
-
+    localStorage.setItem;
     const activityIdStr = localStorage.getItem('activityId');
     if (activityIdStr !== null) {
-      this.consultantActivityId = parseInt(activityIdStr, 10);
+      this.consultantActivityId = activityIdStr
+        ? parseInt(activityIdStr, 10)
+        : 0;
       console.log('Parsed activityId:', this.consultantActivityId);
     }
 
-    const state = this.location.getState() as { requisition?: RequisitionModel, processId?: number };
+    const state = this.location.getState() as {
+      requisition?: RequisitionModel;
+      processId?: number;
+    };
     if (state.requisition) {
       this.requisitionData = state.requisition;
 
-      this.interviewData.clientId = this.requisitionData.clientId
-      this.interviewData.managerId = this.requisitionData.managerId
-      this.interviewData.requisitionId = this.requisitionData.id
+      this.interviewData.clientId = this.requisitionData.clientId;
+      this.interviewData.managerId = this.requisitionData.managerId;
+      this.interviewData.requisitionId = this.requisitionData.id;
     }
 
     this.getAllUsers();
     this.getSingleClient();
     this.getClientManager();
+    // if (this.consultantActivityId > 0) {
+    //   this.getInterviewProcessConsultantsList();
+    // } else {
+    //   console.warn(
+    //     'No valid consultantActivityId found, skipping consultant list call'
+    //   );
+    // }
     this.getInterviewProcessConsultantsList();
     this.defaultValues();
 
@@ -77,132 +93,163 @@ export class ReqConsultantInterviewProcessComponent {
   }
 
   updateConsultantActivity(data: ConsultantActivityModal): void {
-
-    this.apiService.saveData('Consultant/ConsultantActivityAddUpdate', data).subscribe({
-      next: (res) => {
-        if (res.succeeded) {
-          if (res.data.id > 0) {
-            this.getInterviewProcessConsultantsList();
+    this.apiService
+      .saveData('Consultant/ConsultantActivityAddUpdate', data)
+      .subscribe({
+        next: (res) => {
+          if (res.succeeded) {
+            if (res.data.id > 0) {
+              this.getInterviewProcessConsultantsList();
+            }
+            this.toastr.success('Consultant activity saved successfully');
+          } else {
+            this.toastr.error(
+              res.message || 'Failed to save consultant activity'
+            );
           }
-          this.toastr.success('Consultant activity saved successfully');
-        } else {
-          this.toastr.error(res.message || 'Failed to save consultant activity');
-        }
-      },
-      error: (err) => {
-        this.toastr.error(err?.message || 'Error saving consultant activity');
-      }
-    });
+        },
+        error: (err) => {
+          this.toastr.error(err?.message || 'Error saving consultant activity');
+        },
+      });
   }
 
-
   getInterviewProcessConsultantsList(): void {
-    this.apiService.getData('Consultant/InterviewProcessConsultantsList').subscribe({
-      next: (response) => {
-        if (response.succeeded) {
-          debugger;
-
-          const dropdownItems: any[] = [];
-          response?.data.forEach((i: any) => {
-            dropdownItems.push({
-              id: i.consultantId,
-              name: i.consultantName,
-              consultantActivityId: i.id
+    console.log(this.requisitionData);
+    this.apiService
+      .getData('Consultant/InterviewProcessConsultantsList', {
+        requisitionId: this.requisitionData.id,
+      })
+      .subscribe({
+        next: (response) => {
+          console.log('API raw response', response); // <-- add this
+          if (response.succeeded) {
+            const dropdownItems: any[] = [];
+            response?.data.forEach((i: any) => {
+              dropdownItems.push({
+                id: i.consultantId,
+                name: i.consultantName,
+                consultantActivityId: i.id,
+              });
             });
-          });
-          this.activityConsultants = dropdownItems;
+            this.activityConsultants = dropdownItems;
 
-          if (this.consultantActivityId > 0) {
-            this.activityConsultantsUpdate = response?.data?.filter(
-              (x: any) => x.id === this.consultantActivityId
-            );
-            this.searchFields = Object.keys(this.activityConsultantsUpdate[0]);
-            this.consultantName = this.activityConsultantsUpdate[0].consultantName!;
-            this.consultantId = this.activityConsultantsUpdate[0].consultantId;
+            console.log('Dropdown items', this.activityConsultants); // <-- add this
+            if (this.consultantActivityId > 0) {
+              this.activityConsultantsUpdate = response?.data?.filter(
+                (x: any) => x.id === this.consultantActivityId
+              );
+              this.searchFields = Object.keys(
+                this.activityConsultantsUpdate[0]
+              );
+              this.consultantName =
+                this.activityConsultantsUpdate[0].consultantName!;
+              this.consultantId =
+                this.activityConsultantsUpdate[0].consultantId;
+            }
+          } else {
+            this.toastr.error('Failed to load');
           }
-
-        } else {
-          this.toastr.error('Failed to load');
-        }
-
-      },
-      error: (err) => {
-        this.toastr.error(err?.message || 'Error loading data');
-      }
-    });
+        },
+        error: (err) => {
+          this.toastr.error(err?.message || 'Error loading data');
+        },
+      });
   }
 
   getInterviewProcessDetails(processId: number): void {
-    this.apiService.getDataById('Consultant/InterviewProcessDetails', { interviewProcessId: processId }).subscribe({
-      next: (response) => {
-        if (response.succeeded) {
-          this.interviewProcessInput = response?.data || new ConsultantInterviewProcessModal();
-          this.interviewProcessInput = {
-            ...this.interviewProcessInput,
-            date: new Date(this.interviewProcessInput.date),
-            expectedStartDate: this.interviewProcessInput.expectedStartDate ? new Date(this.interviewProcessInput.expectedStartDate) : undefined,
-            endDate: this.interviewProcessInput.endDate ? new Date(this.interviewProcessInput.endDate) : undefined,
+    this.apiService
+      .getDataById('Consultant/InterviewProcessDetails', {
+        interviewProcessId: processId,
+      })
+      .subscribe({
+        next: (response) => {
+          if (response.succeeded) {
+            this.interviewProcessInput =
+              response?.data || new ConsultantInterviewProcessModal();
+            this.interviewProcessInput = {
+              ...this.interviewProcessInput,
+              date: new Date(this.interviewProcessInput.date),
+              expectedStartDate: this.interviewProcessInput.expectedStartDate
+                ? new Date(this.interviewProcessInput.expectedStartDate)
+                : undefined,
+              endDate: this.interviewProcessInput.endDate
+                ? new Date(this.interviewProcessInput.endDate)
+                : undefined,
+            };
+            console.log('interviewProcessInput', this.interviewProcessInput);
           }
-          console.log('interviewProcessInput', this.interviewProcessInput);
-        }
-      },
-      error: (err) => {
-        this.toastr.error(err?.message || 'Error loading data');
-      }
-    });
+        },
+        error: (err) => {
+          this.toastr.error(err?.message || 'Error loading data');
+        },
+      });
   }
 
-
   getSingleClient(): void {
-    this.apiService.getDataById('Client/SingleClientGet', { id: this.interviewData.clientId }).subscribe({
-      next: (response) => {
-        this.clientData = response?.data || new ClientModel();
-      },
-      error: (err) => {
-        this.toastr.error(err?.message || 'Error loading client data');
-      }
-    });
+    this.apiService
+      .getDataById('Client/SingleClientGet', {
+        id: this.interviewData.clientId,
+      })
+      .subscribe({
+        next: (response) => {
+          this.clientData = response?.data || new ClientModel();
+        },
+        error: (err) => {
+          this.toastr.error(err?.message || 'Error loading client data');
+        },
+      });
   }
 
   getClientManager(): void {
-    this.apiService.getDataById('Client/ClientManagerGet', { id: this.interviewData.managerId }).subscribe({
-      next: (response) => {
-        this.managerData = response?.data || new ClientManagerModel();
-      },
-      error: (err) => {
-        this.toastr.error(err?.message || 'Error loading client data');
-      }
-    });
+    this.apiService
+      .getDataById('Client/ClientManagerGet', {
+        id: this.interviewData.managerId,
+      })
+      .subscribe({
+        next: (response) => {
+          this.managerData = response?.data || new ClientManagerModel();
+        },
+        error: (err) => {
+          this.toastr.error(err?.message || 'Error loading client data');
+        },
+      });
   }
 
   onDropdownChange(event: any) {
     if (event) {
-      const consultantActivityId = this.activityConsultants.find((item: any) => item.id === event.value).consultantActivityId;
-      this.apiService.getDataById('Consultant/InterviewProcessConsultantSingle', { id: consultantActivityId }).subscribe({
-        next: (response) => {
-          if (response.succeeded) {
-            this.activityConsultantsUpdate = [];
-            this.activityConsultantsUpdate.push(response?.data);
+      const consultantActivityId = this.activityConsultants.find(
+        (item: any) => item.id === event.value
+      ).consultantActivityId;
+      this.apiService
+        .getDataById('Consultant/InterviewProcessConsultantSingle', {
+          id: consultantActivityId,
+        })
+        .subscribe({
+          next: (response) => {
+            if (response.succeeded) {
+              this.activityConsultantsUpdate = [];
+              this.activityConsultantsUpdate.push(response?.data);
 
-            this.searchFields = Object.keys(this.activityConsultantsUpdate[0]);
+              this.searchFields = Object.keys(
+                this.activityConsultantsUpdate[0]
+              );
 
-            this.consultantName = this.activityConsultantsUpdate[0].consultantName!;
-            this.consultantId = this.activityConsultantsUpdate[0].consultantId;
-            this.consultantActivityId = this.activityConsultantsUpdate[0].id;
-
-          } else {
-            this.toastr.error('Failed to load');
-          }
-
-        },
-        error: (err) => {
-          this.toastr.error(err?.message || 'Error loading data');
-        }
-      });
-
+              this.consultantName =
+                this.activityConsultantsUpdate[0].consultantName!;
+              this.consultantId =
+                this.activityConsultantsUpdate[0].consultantId;
+              this.consultantActivityId = this.activityConsultantsUpdate[0].id;
+            } else {
+              this.toastr.error('Failed to load');
+            }
+          },
+          error: (err) => {
+            this.toastr.error(err?.message || 'Error loading data');
+          },
+        });
     }
   }
-
 
   getAllUsers(): void {
     this.apiService.getData('Admin/UsersListGet').subscribe({
@@ -212,7 +259,7 @@ export class ReqConsultantInterviewProcessComponent {
           res?.data.forEach((i: any) => {
             dropdownItems.push({
               id: i.id,
-              name: i.firstName + ' ' + i.lastName
+              name: i.firstName + ' ' + i.lastName,
             });
           });
           this.usersList = dropdownItems;
@@ -220,7 +267,7 @@ export class ReqConsultantInterviewProcessComponent {
           this.toastr.error('Failed to load users');
         }
       },
-      error: () => this.toastr.error('Error fetching users')
+      error: () => this.toastr.error('Error fetching users'),
     });
   }
 
@@ -241,39 +288,71 @@ export class ReqConsultantInterviewProcessComponent {
   }
 
   saveInterviewProcess() {
+    // if (!this.interviewProcessInput.date) {
+    //   this.toastr.warning('Date is required');
+    //   return;
+    // }
     this.interviewProcessInput.consultantActivityId = this.consultantActivityId;
+    // this.interviewProcessInput.notesDetail =
+    //   this.interviewProcessInput.notesDetail;
+    if (
+      this.interviewProcessInput.notesDetail &&
+      this.interviewProcessInput.notesDetail.trim() !== ''
+    ) {
+      // agar notesDetail me data h to usko notes me assign kro
+      this.interviewProcessInput.notes = this.interviewProcessInput.notesDetail;
+    } else if (
+      this.interviewProcessInput.notes &&
+      this.interviewProcessInput.notes.trim() !== ''
+    ) {
+      // agar notesDetail empty h aur notes me data h to wahi save kro
+      this.interviewProcessInput.notes = this.interviewProcessInput.notes;
+    } else {
+      // dono empty h to null ya empty string save kr do
+      this.interviewProcessInput.notes = '';
+    }
+    //
+    console.log('interviewProcessInput', this.interviewProcessInput);
 
-    if (this.interviewProcessInput.startCandidate) {
+    if (
+      this.interviewProcessInput.startCandidate &&
+      this.activityConsultantsUpdate.length > 0
+    ) {
       const activityUpdate = this.activityConsultantsUpdate[0];
       activityUpdate.billRate = this.interviewProcessInput.billRate;
       activityUpdate.payRate = this.interviewProcessInput.hourlyRate;
       this.updateConsultantActivity(activityUpdate);
     }
 
-
-    this.apiService.saveData('Consultant/InterviewProcessAddUpdate', this.interviewProcessInput).subscribe({
-      next: (res) => {
-        if (res.succeeded) {
-          if (res.data.id > 0) {
-            if (res.data.salary > 0 || res.data.hourlyRate > 0) {
-              this.requisitionDashboard();
+    this.apiService
+      .saveData(
+        'Consultant/InterviewProcessAddUpdate',
+        this.interviewProcessInput
+      )
+      .subscribe({
+        next: (res) => {
+          if (res.succeeded) {
+            if (res.data.id > 0) {
+              if (res.data.salary > 0 || res.data.hourlyRate > 0) {
+                this.requisitionDashboard();
+              }
+              this.getInterviewProcessConsultantsList();
             }
-            this.getInterviewProcessConsultantsList();
+            this.toastr.success('Saved successfully');
+            // Clear the notes here after successful save
+            this.interviewProcessInput.notes = '';
+            this.router.navigate(['/RequisitionDashboard']);
+          } else {
+            this.toastr.error(res.message || 'Failed to Save');
           }
-          this.toastr.success('Saved successfully');
-        } else {
-          this.toastr.error(res.message || 'Failed to Save');
-        }
-      },
-      error: (err) => {
-        this.toastr.error(err?.message || 'Error saving');
-      }
-    });
-
+        },
+        error: (err) => {
+          this.toastr.error(err?.message || 'Error saving');
+        },
+      });
   }
 
   defaultValues() {
-
     const today = new Date();
     today.setHours(12, 0, 0, 0); // Set time to 12:00:00.000 PM
     this.interviewProcessInput.date = today;
@@ -282,28 +361,27 @@ export class ReqConsultantInterviewProcessComponent {
     this.interviewProcessInput.endDate = new Date();
     this.interviewProcessInput.expenses = 0;
     this.interviewProcessInput.billRate = 0;
-    this.interviewProcessInput.markup = 0.00;
-
+    this.interviewProcessInput.markup = 0.0;
   }
 
   onStartCandidateChange(event: any) {
     this.interviewProcessInput.startCandidate = event.target.checked;
 
-    this.scheduleInterviewDate = this.interviewProcessInput.startCandidate || false;
-    this.scheduleInterviewNotes = this.interviewProcessInput.startCandidate || false;
+    this.scheduleInterviewDate =
+      this.interviewProcessInput.startCandidate || false;
+    this.scheduleInterviewNotes =
+      this.interviewProcessInput.startCandidate || false;
   }
 
   hasSelectedStatus(statusList: string[]): boolean {
     return statusList.includes('Selected');
   }
 
-
   consultantActivity() {
     this.router.navigate(['/ConsultantActivity'], {
-      state: { requisition: this.requisitionData }
+      state: { requisition: this.requisitionData },
     });
   }
-
 
   // Flags to track original bill rate
   flgBillRateSAL = true;
@@ -318,13 +396,6 @@ export class ReqConsultantInterviewProcessComponent {
 
   ///////////////////////// SALARY ///////////////////////////
   changeSalary(salary: number): void {
-
-
-
-
-
-
-
     if (salary > 0) {
       this.disabledHourlyRate = true;
       this.interviewProcessInput.hourlyRate = 0;
@@ -335,10 +406,12 @@ export class ReqConsultantInterviewProcessComponent {
 
       // Corp to Corp Loaded Rate Condition
       if (this.interviewProcessInput.employmentType != 'Corp to Corp') {
-        this.interviewProcessInput.loadedRate = +(benefit + +this.interviewProcessInput.expenses).toFixed(2);
-      }
-      else {
-        this.interviewProcessInput.loadedRate = this.interviewProcessInput.hourlyRate
+        this.interviewProcessInput.loadedRate = +(
+          benefit + +this.interviewProcessInput.expenses
+        ).toFixed(2);
+      } else {
+        this.interviewProcessInput.loadedRate =
+          this.interviewProcessInput.hourlyRate;
       }
 
       if (this.flgBillRateSAL) {
@@ -361,18 +434,19 @@ export class ReqConsultantInterviewProcessComponent {
 
   ///////////////////////// HOURLY RATE ///////////////////////////
   changeHourlyRate(hourlyRate: number): void {
-
-    const benefit = this.interviewProcessInput.salary > 0
-      ? hourlyRate * 1.25
-      : hourlyRate * 1.1;
-
+    const benefit =
+      this.interviewProcessInput.salary > 0
+        ? hourlyRate * 1.25
+        : hourlyRate * 1.1;
 
     // Corp to Corp Loaded Rate Condition
     if (this.interviewProcessInput.employmentType != 'Corp to Corp') {
-      this.interviewProcessInput.loadedRate = +(benefit + +this.interviewProcessInput.expenses).toFixed(2);
-    }
-    else {
-      this.interviewProcessInput.loadedRate = this.interviewProcessInput.hourlyRate
+      this.interviewProcessInput.loadedRate = +(
+        benefit + +this.interviewProcessInput.expenses
+      ).toFixed(2);
+    } else {
+      this.interviewProcessInput.loadedRate =
+        this.interviewProcessInput.hourlyRate;
     }
 
     if (this.flgBillRateHR) {
@@ -393,16 +467,17 @@ export class ReqConsultantInterviewProcessComponent {
     }
 
     const hourlyRate = this.interviewProcessInput.hourlyRate;
-    const benefit = this.interviewProcessInput.salary > 0
-      ? hourlyRate * 1.25
-      : hourlyRate * 1.1;
+    const benefit =
+      this.interviewProcessInput.salary > 0
+        ? hourlyRate * 1.25
+        : hourlyRate * 1.1;
 
     // Corp to Corp Loaded Rate Condition
     if (this.interviewProcessInput.employmentType != 'Corp to Corp') {
       this.interviewProcessInput.loadedRate = +(benefit + +expense).toFixed(2);
-    }
-    else {
-      this.interviewProcessInput.loadedRate = this.interviewProcessInput.hourlyRate
+    } else {
+      this.interviewProcessInput.loadedRate =
+        this.interviewProcessInput.hourlyRate;
     }
 
     this.interviewProcessInput.billRate = 0;
@@ -434,7 +509,10 @@ export class ReqConsultantInterviewProcessComponent {
     }
 
     if (input.billRate > input.hourlyRate) {
-      input.markup = +(((input.billRate - input.hourlyRate) / input.hourlyRate) * 100).toFixed(2);
+      input.markup = +(
+        ((input.billRate - input.hourlyRate) / input.hourlyRate) *
+        100
+      ).toFixed(2);
     }
   }
 
@@ -457,8 +535,9 @@ export class ReqConsultantInterviewProcessComponent {
       billRate = +(this.finalBillRate - billRate).toFixed(2);
     }
 
-    input.markup = +(((billRate - input.hourlyRate) / input.hourlyRate) * 100).toFixed(2);
+    input.markup = +(
+      ((billRate - input.hourlyRate) / input.hourlyRate) *
+      100
+    ).toFixed(2);
   }
-
-
 }

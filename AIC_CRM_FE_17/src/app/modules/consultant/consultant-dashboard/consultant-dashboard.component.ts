@@ -427,7 +427,7 @@ export class ConsultantDashboardComponent {
           if (res.succeeded) {
             this.getCallLogs();
             this.toastr.success('Saved successfully');
-            debugger;
+            ;
             this.clearCallRecord();
           } else {
             this.toastr.error(res.message || 'Failed to save');
@@ -440,7 +440,7 @@ export class ConsultantDashboardComponent {
   @ViewChild('editor') editor: any;
 
   clearCallRecord(): void {
-    debugger;
+    ;
     this.callLogsInput.record = undefined;
     this.callLogsInput = new CallRecordModel();
 

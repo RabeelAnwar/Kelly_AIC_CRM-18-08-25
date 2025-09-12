@@ -164,7 +164,7 @@ export class ClientITRequisitionComponent {
       .subscribe({
         next: (response) => {
           this.clientData = response?.data || new ClientModel();
-          debugger;
+          ;
         },
         error: (err) => {
           this.toastr.error(err?.message || 'Error loading client data');
@@ -220,7 +220,7 @@ export class ClientITRequisitionComponent {
     this.requisitionInput.analysisValue = this.analysisValue;
     this.requisitionInput.testingValue = this.testingValue;
     this.requisitionInput.otherValue = this.otherValue;
-    debugger;
+    ;
     const input = {
       TenantId: this.requisitionInput?.id ,
       Id: this.requisitionInput?.id || 0,
@@ -275,15 +275,15 @@ export class ClientITRequisitionComponent {
     };
     // Save or update requisition
     console.log(input);
-    debugger;
+    ;
     this.apiService
       .saveData('Client/ClientRequisitionAddUpdate', input)
       .subscribe({
         next: (res) => {
           console.log(res);
-          debugger
+          
           if (res.succeeded) {
-            debugger;
+            ;
             this.toastr.success('Requisition saved successfully');
             this.router.navigate(['/RequisitionDashboard', res.data.id], {
               state: { requisition: res.data },
@@ -294,7 +294,7 @@ export class ClientITRequisitionComponent {
         },
         error: (err) => {
           console.log(err);
-          debugger;
+          ;
           this.toastr.error(err?.message || 'Error saving requisition');
         },
       });

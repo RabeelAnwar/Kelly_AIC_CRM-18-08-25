@@ -1,36 +1,54 @@
-<!-- <div class="container p-1 bg-white rounded shadow-sm"> -->
+<!-- <div class="w-full p-1 bg-white rounded shadow-sm"> -->
 <div class="input-group">
-    <input type="text" class="form-control" [(ngModel)]="searchText" placeholder="search..." (input)="onSearch()">
-    <span class="input-group-text height-26px cursor-pointer" (keyup.enter)="onSearch()">
-        <i class="fa fa-search" style="color: #555;"></i>
-    </span>
+  <input
+    type="text"
+    class="form-control"
+    [(ngModel)]="searchText"
+    placeholder="search..."
+    (input)="onSearch()"
+  />
+  <span
+    class="input-group-text height-26px cursor-pointer"
+    (keyup.enter)="onSearch()"
+  >
+    <i class="fa fa-search" style="color: #555"></i>
+  </span>
 </div>
 
 <div class="d-flex justify-content-center my-1">
-    <button class="btn btn-warning me-1" [disabled]="currentPage === 1" (click)="changePage(-1)">
-        &lt;
-    </button>
-    {{ currentPage }}/{{ totalPages }}
-    <button class="btn btn-warning ms-1" [disabled]="currentPage === totalPages" (click)="changePage(1)">
-        &gt;
-    </button>
+  <button
+    class="btn btn-warning me-1"
+    [disabled]="currentPage === 1"
+    (click)="changePage(-1)"
+  >
+    &lt;
+  </button>
+  {{ currentPage }}/{{ totalPages }}
+  <button
+    class="btn btn-warning ms-1"
+    [disabled]="currentPage === totalPages"
+    (click)="changePage(1)"
+  >
+    &gt;
+  </button>
 </div>
 
-<div class="text-danger  fw-bold fs-20px">
-    Open Reqs
-</div>
+<div class="text-danger fw-bold fs-20px">Open Reqs</div>
 <div>
-    <ul class="no-marker">
-        <li *ngFor="let item of pagedRequisitions">
-            <div class="cursor-pointer" (click)="goToDashboard(item.id)">
-                <i class="fas fa-user"></i>
-                {{ item.jobTitle }}
-            </div>
-        </li>
-    </ul>
+  <ul class="no-marker">
+    <li *ngFor="let item of pagedRequisitions">
+      <div class="cursor-pointer" (click)="goToDashboard(item.id)">
+        <i class="fas fa-user"></i>
+        {{ item.jobTitle }}
+      </div>
+    </li>
+  </ul>
 </div>
 
-<div *ngIf="!pagedRequisitions.length && searchText" class="text-muted text-center mt-3">
-    No requisitions found.
+<div
+  *ngIf="!pagedRequisitions.length && searchText"
+  class="text-muted text-center mt-3"
+>
+  No requisitions found.
 </div>
 <!-- </div> -->

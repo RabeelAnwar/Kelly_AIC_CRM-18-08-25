@@ -1,104 +1,137 @@
 <style>
-    ::ng-deep p-calendar .p-inputtext {
-        padding: 2px;
-        padding-left: 10px;
-        width: 610px;
-    }
+  ::ng-deep p-calendar .p-inputtext {
+    padding: 2px;
+    padding-left: 10px;
+    width: 610px;
+  }
 
-    ::ng-deep .ng-placeholder {
-        font-size: 16px;
-    }
+  ::ng-deep .ng-placeholder {
+    font-size: 16px;
+  }
 </style>
 
 <div class="row">
-    <div class="col-md-2 mt-4">
-        <app-left-requisition-search-nav></app-left-requisition-search-nav>
+  <div class="col-md-2 mt-4">
+    <app-left-requisition-search-nav></app-left-requisition-search-nav>
+  </div>
+  <div class="col-md-10">
+    <div class="row my-3">
+      <div class="col-lg-8">
+        <div class="fw-bolder">
+          Client Name :
+          <span>
+            <a (click)="clientDashboard()">{{ clientData.clientName }}</a>
+          </span>
+        </div>
+        <div>
+          Manager Name :
+          <span>
+            <a (click)="goToManagerDashboard()">{{
+              managerData.lastName + " " + managerData.firstName
+            }}</a>
+          </span>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="fw-bolder">
+          <a (click)="requisitionDashboard()">
+            Requisition #{{ requisitionData.id }} IT
+          </a>
+        </div>
+        <div>{{ requisitionData.jobTitle }}</div>
+        <div>
+          Client Req # : <span>{{ requisitionData.clientReqNumber }}</span>
+        </div>
+        <div>
+          <span
+            >Start Date :
+            {{
+              requisitionData.startDate | date : "MMM d, yyyy h:mm:ssa"
+            }}</span
+          >
+          Fill by date:
+          <span>{{
+            requisitionData.createdDate | date : "MMM d, yyyy h:mm:ssa"
+          }}</span>
+        </div>
+      </div>
     </div>
-    <div class="col-md-10">
 
-        <div class="row my-3">
-            <div class="col-lg-8">
+    <hr />
 
-                <div class="fw-bolder">Client Name :
-                    <span>
-                        <a (click)="clientDashboard();">{{clientData.clientName}}</a>
-                    </span>
-                </div>
-                <div>Manager Name :
-                    <span>
-                        <a (click)="goToManagerDashboard();">{{managerData.lastName + ' '+ managerData.firstName}}</a>
-                    </span>
-                </div>
+    <div class="row mb-3">
+      <div class="col-lg-4">
+        <label> </label>
+        <div class="d-flex justify-content-start">
+          <div class="ms-2">
+            <button
+              type="button"
+              class="btn btn-danger py-0 fs-16px"
+              (click)="reqConsultantInterviewProcess()"
+            >
+              <i class="fa-solid fa-arrow-left"></i>Back To Consultant Activity
+            </button>
+          </div>
+        </div>
+      </div>
 
-            </div>
+      <div class="col-lg-5">
+        <div class="mb-3">
+          <label class="form-label">Assigned To</label>
 
-            <div class="col-lg-4">
-                <div class="fw-bolder"><a (click)="requisitionDashboard();"> Requisition #{{requisitionData.id}} IT </a>
-                </div>
-                <div>{{requisitionData.jobTitle}}</div>
-                <div>Client Req # : <span>{{requisitionData.clientReqNumber}}</span></div>
-                <div><span>Start Date : {{ requisitionData.startDate | date:'MM-dd-yyyy' }}</span> Fill by date:
-                    <span>{{requisitionData.createdDate | date:'MM-dd-yyyy' }}</span>
-                </div>
-            </div>
-
+          <div class="card flex justify-content-center">
+            <p-dropdown
+              [showClear]="true"
+              [options]="usersList"
+              [(ngModel)]="activityData.assignedToId"
+              optionValue="id"
+              optionLabel="name"
+              placeholder="--Select--"
+            />
+          </div>
         </div>
 
-        <hr>
-
-        <div class="row mb-3">
-
-            <div class="col-lg-4">
-                <label> </label>
-                <div class="d-flex justify-content-start">
-                    <div class="ms-2">
-                        <button type="button" class="btn btn-danger py-0  fs-16px"
-                            (click)="reqConsultantInterviewProcess();"> <i class="fa-solid fa-arrow-left"></i>Back To
-                            Consultant Activity</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-5">
-                <div class="mb-3">
-                    <label class="form-label">Assigned To</label>
-                
-                    <div class="card flex justify-content-center">
-                                <p-dropdown [showClear]="true"
-                                [options]="usersList" [(ngModel)]="activityData.assignedToId"
-                                optionValue="id"
-                                optionLabel="name"
-                                placeholder="--Select--" />
-                            </div>
-                </div>
-
-                <div>
-                    <label class="form-label">Search for consultants to assign to this requsition</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" [(ngModel)]="searchString"
-                            (keydown.enter)="searchConsultantsForActivity()" placeholder="search...">
-                        <span class="input-group-text height-26px cursor-pointer"
-                            (click)="searchConsultantsForActivity();">
-                            <i class="fa fa-search" style="color: #555;"></i>
-                        </span>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="col-lg-3">
-            </div>
-
+        <div>
+          <label class="form-label"
+            >Search for consultants to assign to this requsition</label
+          >
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="searchString"
+              (keydown.enter)="searchConsultantsForActivity()"
+              placeholder="search..."
+            />
+            <span
+              class="input-group-text height-26px cursor-pointer"
+              (click)="searchConsultantsForActivity()"
+            >
+              <i class="fa fa-search" style="color: #555"></i>
+            </span>
+          </div>
         </div>
+      </div>
 
-        <div class="row">
-            <div class="col-lg-9">
-                <div class="card p-2">
-                    <p-table #dt [value]="activitySearchedData" [rows]="10" [globalFilterFields]="[]" [rowHover]="true"
-                        scrollHeight="550px" [style]="{ width: '100%' }" columnResizeMode="expand"
-                        [resizableColumns]="true">
-                        <!-- <ng-template pTemplate="colgroup">
+      <div class="col-lg-3"></div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-9">
+        <div class="card p-2">
+          <p-table
+            #dt
+            [value]="activitySearchedData"
+            [rows]="10"
+            [globalFilterFields]="[]"
+            [rowHover]="true"
+            scrollHeight="550px"
+            [style]="{ width: '100%' }"
+            columnResizeMode="expand"
+            [resizableColumns]="true"
+          >
+            <!-- <ng-template pTemplate="colgroup">
                                     <colgroup>
                                         <col style="width: 10%" />
                                         <col style="width: 10%" />
@@ -107,80 +140,110 @@
                                         <col style="width: 10%" />
                                     </colgroup>
                                 </ng-template> -->
-                        <ng-template pTemplate="header">
-                            <tr>
-                                <th pResizableColumn>Consultant Name</th>
-                                <th pResizableColumn>Bill Rate</th>
-                                <th pResizableColumn>Pay Rate</th>
-                                <th pResizableColumn>Last Contacted</th>
-                                <th pResizableColumn>Resume</th>
-                                <!-- <th pResizableColumn>Already Assigned</th> -->
-                                <th pResizableColumn>Add Consultant</th>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-rowData>
-                            <tr>
-                                <td><span class="cursor-pointer" (click)="consultantDashboard(rowData.consultantId);">{{
-                                        rowData.consultantName }}</span></td>
+            <ng-template pTemplate="header">
+              <tr>
+                <th pResizableColumn>Consultant Name</th>
+                <th pResizableColumn>Bill Rate</th>
+                <th pResizableColumn>Pay Rate</th>
+                <th pResizableColumn>Last Contacted</th>
+                <th pResizableColumn>Resume</th>
+                <!-- <th pResizableColumn>Already Assigned</th> -->
+                <th pResizableColumn>Add Consultant</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData>
+              <tr>
+                <td>
+                  <span
+                    class="cursor-pointer"
+                    (click)="consultantDashboard(rowData.consultantId)"
+                    >{{ rowData.consultantName }}</span
+                  >
+                </td>
 
-                                <td> <input type="text" class="w-100" [(ngModel)]="rowData.billRate"> </td>
-                                <td> <input type="text" class="w-100" [(ngModel)]="rowData.payRate"> </td>
-                                <td><span class="cursor-pointer" (click)="consultantDashboard(rowData.consultantId);">{{
-                                        rowData.lastContact | date:'MM-dd-yyyy' }}</span></td>
-                                <td>Resume</td>
-                                <td>
-                                    <button type="button" class="btn btn-success py-0 " [disabled]="rowData.disabled"
-                                        (click)="saveConsultantActivity(rowData);">Add</button>
-                                </td>
-                            </tr>
-                        </ng-template>
-                    </p-table>
+                <td>
+                  <input
+                    type="text"
+                    class="w-100"
+                    [(ngModel)]="rowData.billRate"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    class="w-100"
+                    [(ngModel)]="rowData.payRate"
+                  />
+                </td>
+                <td>
+                  <span
+                    class="cursor-pointer"
+                    (click)="consultantDashboard(rowData.consultantId)"
+                    >{{
+                      rowData.lastContact | date : "MMM d, yyyy h:mm:ssa"
+                    }}</span
+                  >
+                </td>
+                <td>Resume</td>
+                <td>
+                  <button
+                    type="button"
+                    class="btn btn-success py-0"
+                    [disabled]="rowData.disabled"
+                    (click)="saveConsultantActivity(rowData)"
+                  >
+                    Add
+                  </button>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </div>
+
+      <div class="col-lg-3">
+        <div
+          class="manager-side-head p-2"
+          style="background: #fcf8e3; color: #8a6d3b"
+        >
+          Consultants Submitted
+        </div>
+
+        <div style="border: 1px solid #faebcc">
+          <div class="ms-2 mb-2">
+            <ul class="ps-0">
+              <li
+                *ngFor="let item of activityConsultantSideList"
+                class="d-flex justify-content-between align-items-center cursor-pointer"
+              >
+                <div class="" (click)="consultantDashboard(item.consultantId)">
+                  <span style="color: #4949a2"
+                    ><i class="fas fa-user"></i> {{ item.consultantName }}</span
+                  >
+                  <div style="color: #8a6d3b" class="fs-12px">
+                    Added
+                    {{ item.creationTime | date : "dd MMM yyyy HH:mm" }}
+                  </div>
                 </div>
-            </div>
-
-            <div class="col-lg-3">
-
-                <div class="manager-side-head p-2" style="background: #fcf8e3; color: #8a6d3b;">
-                    Consultants Submitted
+                <div>
+                  <i
+                    class="fas fa-trash pe-3 text-danger cursor-pointer"
+                    (click)="deleteConsultantActivity(item.id)"
+                  ></i>
                 </div>
+              </li>
+            </ul>
 
-                <div style="border: 1px solid #faebcc;">
-                    <div class="ms-2 mb-2">
-
-                        <ul class=" ps-0">
-
-                            <li *ngFor="let item of activityConsultantSideList"
-                                class="d-flex justify-content-between align-items-center cursor-pointer">
-                                <div class="" (click)="consultantDashboard(item.consultantId);"> <span
-                                        style="color: #4949A2;"><i class="fas fa-user"></i>
-                                        {{item.consultantName}}</span>
-                                    <div style="color: #8a6d3b;" class="fs-12px">
-                                        Added
-                                        {{ item.creationTime | date:'dd MMM yyyy HH:mm' }}
-
-                                    </div>
-                                </div>
-                                <div>
-                                    <i class="fas fa-trash pe-3 text-danger cursor-pointer"
-                                        (click)="deleteConsultantActivity(item.id);"></i>
-                                </div>
-                            </li>
-
-                        </ul>
-
-                        <!-- <ul class="no-marker">
+            <!-- <ul class="no-marker">
                             <li *ngFor="let item of clientsList">
                                 <div class="cursor-pointer"><i class="fas fa-user"></i>
                                     {{ item.name }}
                                 </div>
                             </li>
                         </ul> -->
-                    </div>
-                </div>
-
-            </div>
-
+          </div>
         </div>
-
+      </div>
     </div>
+  </div>
 </div>

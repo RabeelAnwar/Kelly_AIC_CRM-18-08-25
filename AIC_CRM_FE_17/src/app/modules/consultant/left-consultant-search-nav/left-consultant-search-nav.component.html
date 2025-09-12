@@ -1,57 +1,130 @@
-<div class="container p-1 bg-white rounded shadow-sm">
-
-<div class="input-group">
-    <input type="text" class="form-control" [(ngModel)]="searchText" placeholder="search..." (input)="onSearch()">
-    <span class="input-group-text height-26px cursor-pointer" (keyup.enter)="onSearch()">
-        <i class="fa fa-search" style="color: #555;"></i>
+<div class="w-full p-1 bg-white rounded shadow-sm">
+  <div class="input-group">
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="searchText"
+      placeholder="search..."
+      (input)="onSearch()"
+    />
+    <span
+      class="input-group-text height-26px cursor-pointer"
+      (keyup.enter)="onSearch()"
+    >
+      <i class="fa fa-search" style="color: #555"></i>
     </span>
-</div>
+  </div>
 
-<div class="mt-2 mb-1 d-flex cursor-pointer add-new-client" routerLink="/add-consultant">
-    <i class="fa fa-plus fw-blod mt-1 me-2" style="color: #555; font-size: 14px;"></i>
-    <p class="mb-0" style="font-size: 14px;"> Add New Consultant </p>
-</div>
+  <div
+    class="mt-2 mb-1 d-flex cursor-pointer add-new-client"
+    routerLink="/add-consultant"
+  >
+    <i
+      class="fa fa-plus fw-blod mt-1 me-2"
+      style="color: #555; font-size: 14px"
+    ></i>
+    <p class="mb-0" style="font-size: 14px">Add New Consultant</p>
+  </div>
 
-<div class="d-flex justify-content-center">
-    <button class="btn btn-info me-1"> <i class="fw-bold fa-solid fa-chevron-down"></i>&nbsp; Expand All</button>
-    <button class="btn btn-info ms-1"> <i class="fw-bold fa-solid fa-chevron-up"></i>&nbsp; Collapse All</button>
-</div>
+  <div class="d-flex justify-content-center">
+    <button class="btn btn-info me-1">
+      <i class="fw-bold fa-solid fa-chevron-down"></i>&nbsp; Expand All
+    </button>
+    <button class="btn btn-info ms-1">
+      <i class="fw-bold fa-solid fa-chevron-up"></i>&nbsp; Collapse All
+    </button>
+  </div>
 
-<div class="row my-2">
+  <div class="row my-2">
     <div class="col-12">
-
-        <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('All')">All</button>
-        <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('#')">#</button>
-        <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('A')">A</button>
-        <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('B')">B</button>
-        <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('C')">C</button>
-        <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('D')">D</button>
-        <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('E')">E</button>
-        <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('F')">F</button>
-        <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('G')">G</button>
-        <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('H')">H</button>
-        <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('I')">I</button>
-        <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('J')">J</button>
-        <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('K')">K</button>
-        <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('L')">L</button>
-        <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('M')">M</button>
-        <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('N')">N</button>
-        <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('O')">O</button>
-        <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('P')">P</button>
-        <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('Q')">Q</button>
-        <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('R')">R</button>
-        <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('S')">S</button>
-        <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('T')">T</button>
-        <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('U')">U</button>
-        <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('V')">V</button>
-        <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('W')">W</button>
-        <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('X')">X</button>
-        <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('Y')">Y</button>
-        <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('Z')">Z</button>
+      <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('All')">
+        All
+      </button>
+      <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('#')">
+        #
+      </button>
+      <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('A')">
+        A
+      </button>
+      <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('B')">
+        B
+      </button>
+      <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('C')">
+        C
+      </button>
+      <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('D')">
+        D
+      </button>
+      <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('E')">
+        E
+      </button>
+      <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('F')">
+        F
+      </button>
+      <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('G')">
+        G
+      </button>
+      <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('H')">
+        H
+      </button>
+      <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('I')">
+        I
+      </button>
+      <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('J')">
+        J
+      </button>
+      <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('K')">
+        K
+      </button>
+      <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('L')">
+        L
+      </button>
+      <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('M')">
+        M
+      </button>
+      <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('N')">
+        N
+      </button>
+      <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('O')">
+        O
+      </button>
+      <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('P')">
+        P
+      </button>
+      <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('Q')">
+        Q
+      </button>
+      <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('R')">
+        R
+      </button>
+      <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('S')">
+        S
+      </button>
+      <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('T')">
+        T
+      </button>
+      <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('U')">
+        U
+      </button>
+      <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('V')">
+        V
+      </button>
+      <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('W')">
+        W
+      </button>
+      <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('X')">
+        X
+      </button>
+      <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('Y')">
+        Y
+      </button>
+      <button class="btn mb-1 atoz_btn" (click)="onAlphabetFilter('Z')">
+        Z
+      </button>
     </div>
-</div>
+  </div>
 
-<!-- <div class="d-flex justify-content-center  my-1">
+  <!-- <div class="d-flex justify-content-center  my-1">
     <button class="btn btn-warning me-1"> &lt;</button>
     1/1
     <button class="btn btn-warning ms-1"> &gt;</button>
@@ -66,29 +139,35 @@
         </li>
     </ul>
 </div> -->
-<!-- Pagination Controls rr -->
-<div class="d-flex justify-content-center my-1 align-items-center">
-  <button 
-    class="btn btn-warning me-1 text-white" 
-    (click)="setPage(currentPage - 1)" 
-    [disabled]="currentPage === 1">&lt;</button>
+  <!-- Pagination Controls rr -->
+  <div class="d-flex justify-content-center my-1 align-items-center">
+    <button
+      class="btn btn-warning me-1 text-white"
+      (click)="setPage(currentPage - 1)"
+      [disabled]="currentPage === 1"
+    >
+      &lt;
+    </button>
 
-  <span>{{ currentPage }}/{{ totalPages }}</span>
+    <span>{{ currentPage }}/{{ totalPages }}</span>
 
-  <button 
-    class="btn btn-warning ms-1 text-white" 
-    (click)="setPage(currentPage + 1)" 
-    [disabled]="currentPage === totalPages">&gt;</button>
-</div>
+    <button
+      class="btn btn-warning ms-1 text-white"
+      (click)="setPage(currentPage + 1)"
+      [disabled]="currentPage === totalPages"
+    >
+      &gt;
+    </button>
+  </div>
 
-<!-- consultant List -->
-<div>
-  <ul class="no-marker">
-    <li *ngFor="let item of consultants">
-      <div class="cursor-pointer" (click)="goToDashboard(item.id)">
-        <i class="fas fa-building"></i> {{ item.name }}
-      </div>
-    </li>
-  </ul>
-</div>
+  <!-- consultant List -->
+  <div>
+    <ul class="no-marker">
+      <li *ngFor="let item of consultants">
+        <div class="cursor-pointer" (click)="goToDashboard(item.id)">
+          <i class="fas fa-building"></i> {{ item.name }}
+        </div>
+      </li>
+    </ul>
+  </div>
 </div>

@@ -1,312 +1,336 @@
 <style>
-    ::ng-deep p-calendar .p-inputtext {
-        padding: 0 10px;
-    }
+  ::ng-deep p-calendar .p-inputtext {
+    padding: 0 10px;
+  }
 
-    ::ng-deep p-calendar span {
-        width: 100% !important;
-    }
+  ::ng-deep p-calendar span {
+    width: 100% !important;
+  }
 </style>
 
 <div>
-    <div class="header">
-        <h1>Master Office Report</h1>
-    </div>
+  <div class="header">
+    <h1>Master Office Report</h1>
+  </div>
 
-    <div class="company-info-box mx-2 mb-3">
-        <div class="form-content py-0">
-
-            <div class="row py-2">
-
-                <div class="col-md-2">
-                    <label class="form-label">From Date</label>
-                    <div class="flex justify-content-center">
-                        <p-calendar [(ngModel)]="input.fromDate" [iconDisplay]="'input'" [showIcon]="true" />
-                    </div>
-                </div>
-
-                <div class="col-md-2">
-                    <label class="form-label">To Date</label>
-                    <div class="flex justify-content-center">
-                        <p-calendar [(ngModel)]="input.toDate" [iconDisplay]="'input'" [showIcon]="true" />
-                    </div>
-                </div>
-
-                <div class="col-md-1">
-                    <label> </label>
-                    <div class="d-flex justify-content-start">
-                        <div class="mt-1">
-                            <button class="btn btn-primary py-0 px-2 " (click)="showRpt();">
-                                Show
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-7">
-
-                    <label> </label>
-                    <div class="d-flex justify-content-start">
-                        <label class="form-label">Quick Tabs</label>
-
-                        <div class="ms-2">
-                            <button type="button" class="btn btn-primary py-0" (click)="setToday()">Today</button>
-                        </div>
-
-                        <div class="ms-2">
-                            <button type="button" class="btn btn-warning py-0" (click)="setThisWeek()">This
-                                Week</button>
-                        </div>
-
-                        <div class="ms-2">
-                            <button type="button" class="btn btn-danger py-0" (click)="setThisMonth()">This
-                                Month</button>
-                        </div>
-
-                        <div class="ms-2">
-                            <button type="button" class="btn btn-secondary py-0"
-                                (click)="setYesterday()">Yesterday</button>
-                        </div>
-
-                        <div class="ms-2">
-                            <button type="button" class="btn btn-info py-0" (click)="setLastWeek()">Last Week</button>
-                        </div>
-
-                        <div class="ms-2">
-                            <button type="button" class="btn btn-success py-0" (click)="setLastMonth()">Last
-                                Month</button>
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="company-info-box mx-2 mb-3">
-        <div class="section-header fw-normal p-1">
-            Office Master Report
+  <div class="company-info-box mx-2 mb-3">
+    <div class="form-content py-0">
+      <div class="row py-2">
+        <div class="col-md-2">
+          <label class="form-label">From Date</label>
+          <div class="flex justify-content-center">
+            <p-calendar
+              [(ngModel)]="input.fromDate"
+              [iconDisplay]="'input'"
+              [showIcon]="true"
+            />
+          </div>
         </div>
 
-        <div class="form-content py-0">
-
-            <div class="row">
-                <div class="col-lg-12">
-
-                    <div class="fw-bolder">Office Totals</div>
-
-                    <table class="table my-1 text-center">
-                        <tr>
-                            <th colspan="6" class="text-start"> Projects Won</th>
-                        </tr>
-                        <tr>
-                            <th>No of Projects Won</th>
-                            <th>FTE Conversion</th>
-                            <th>No of Interviews</th>
-                            <th>No of Submittals</th>
-                            <th>Submit/Interview Ratio</th>
-                            <th>Interview/Start Ratio</th>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>0</td>
-                            <td>14</td>
-                            <td>5</td>
-                            <td>0.36</td>
-                            <td>7.00</td>
-                        </tr>
-                    </table>
-
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-lg-12">
-                    <table class="table">
-                        <tbody>
-
-                            <tr>
-                                <th>Entered</th>
-                                <th>Sales Rep</th>
-                                <th>Recruiter</th>
-                                <th>Consultant Name</th>
-                                <th>Company</th>
-                                <th>Requisition</th>
-                                <th>Start Date</th>
-                                <th>Bill Rate</th>
-                                <th>Hourly Rate</th>
-                                <th>Markup(%)</th>
-                            </tr>
-                            <tr *ngFor="let item of report.requisitionInterviews">
-
-                                <td>{{item.enteredDate| date:'MM-dd-yyyy'}}</td>
-                                <td>{{item.salesRep}}</td>
-                                <td>{{item.recruiter}}</td>
-                                <td>{{item.consultantName}}</td>
-                                <td>{{item.clientName}}</td>
-                                <td>{{item.requisition}}</td>
-                                <td>{{item.startDate| date:'MM-dd-yyyy'}}</td>
-                                <td>{{item.billRate}}</td>
-                                <td>{{item.hourlyRate}}</td>
-                                <td>
-                                     {{ ((item.billRate - item.hourlyRate) / item.hourlyRate) * 100 |
-                                number:'1.2-2' }}%
-                                </td>
-
-                            </tr>
-                        </tbody>
-
-                        <tfoot>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>Office Totals</td>
-                            <td>{{totalBillRate()}}</td>
-                            <td>{{totalHourlyRate()}}</td>
-                            <td>{{totalMarkup()}}</td>
-                        </tfoot>
-                    </table>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-lg-9">
-
-                    <div class="fw-bolder">Office Sales Numbers</div>
-
-                    <table class="table">
-                        <tr>
-                            <th>Reqs Added</th>
-                            <th>New Positions</th>
-                            <th>Open Reqs</th>
-                            <th>Sales Meeting</th>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>17</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <th>Companies Added</th>
-                            <th>Managers Added</th>
-                            <th>Manager Calls</th>
-                            <th>Deletions</th>
-                        </tr>
-                        <tr>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>1</td>
-                        </tr>
-                    </table>
-
-                </div>
-                <div class="col-lg-3">
-
-                    <div class="fw-bolder">Recruiting Summary</div>
-
-                    <table class="table">
-                        <tr>
-                            <th>Consultant Added</th>
-                            <th>Consultant Calls</th>
-                        </tr>
-                        <tr>
-                            <td>8</td>
-                            <td>19</td>
-                        </tr>
-
-                        <tr>
-                            <th>Consultant Emails</th>
-                            <th>Deletions</th>
-                        </tr>
-                        <tr>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                    </table>
-
-                </div>
-
-
-            </div>
-
-            <hr>
-            <div class="row">
-                <div class="col-lg-12">
-
-                    <table class="table">
-                        <tr>
-                            <th class="fs-16px" colspan="2">Client Meetings</th>
-                            <th>No of Manager Calls : 0</th>
-                            <th>No of Consultant Calls : 19</th>
-                        </tr>
-                        <tr>
-                            <th>Entered</th>
-                            <th>Sales Person</th>
-                            <th>Manager Name</th>
-                            <th>Sales Meeting Notes</th>
-                        </tr>
-
-                    </table>
-
-
-
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-lg-12">
-
-                    <table class="table">
-                        <tr>
-                            <th class="fs-16px" colspan="8">Requisition Activity</th>
-                            <th>New Requisition : 0</th>
-                            <th>New Positions : 19</th>
-                            <th>Open Requisitions : 19</th>
-                        </tr>
-                        <tr>
-                            <th>Created Date</th>
-                            <th>Coordinator</th>
-                            <th>Client Name</th>
-                            <th>Req Name</th>
-                            <th>Manager Name</th>
-                            <th>Submittals</th>
-                            <th>Interviews</th>
-                            <th>Starts</th>
-                            <th>No Of Position</th>
-                            <th>Bill Rate</th>
-                            <th>Duration</th>
-                        </tr>
-
-                        <tr *ngFor="let item of report.requisitionActivities">
-                            <td>{{item.createdDate | date:'MM-dd-yyyy'}}</td>
-                            <td>{{item.coordinator}}</td>
-                            <td class="clientNameLink cursor-pointer" (click)="goToManagerDashboard(item.clientId)">
-                                {{ item.clientName }}
-                            </td>
-                            <td class="clientNameLink cursor-pointer" (click)="goToManagerDashboard(item.reqId)">
-                                {{ item.reqName }}
-                            </td>
-                            <td class="clientNameLink cursor-pointer" (click)="goToManagerDashboard(item.managerId)">
-                                {{ item.managerName }}
-                            </td>
-                            <td>{{item.submittals}}</td>
-                            <td>{{item.interviews}}</td>
-                            <td>{{item.starts}}</td>
-                            <td>{{item.noOfPosition}}</td>
-                            <td>{{item.billRate}}</td>
-                            <td>{{item.duration}}</td>
-                        </tr>
-
-                    </table>
-
-                </div>
-            </div>
+        <div class="col-md-2">
+          <label class="form-label">To Date</label>
+          <div class="flex justify-content-center">
+            <p-calendar
+              [(ngModel)]="input.toDate"
+              [iconDisplay]="'input'"
+              [showIcon]="true"
+            />
+          </div>
         </div>
+
+        <div class="col-md-1">
+          <label> </label>
+          <div class="d-flex justify-content-start">
+            <div class="mt-1">
+              <button class="btn btn-primary py-0 px-2" (click)="showRpt()">
+                Show
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-7">
+          <label> </label>
+          <div class="d-flex justify-content-start">
+            <label class="form-label">Quick Tabs</label>
+
+            <div class="ms-2">
+              <button
+                type="button"
+                class="btn btn-primary py-0"
+                (click)="setToday()"
+              >
+                Today
+              </button>
+            </div>
+
+            <div class="ms-2">
+              <button
+                type="button"
+                class="btn btn-warning py-0"
+                (click)="setThisWeek()"
+              >
+                This Week
+              </button>
+            </div>
+
+            <div class="ms-2">
+              <button
+                type="button"
+                class="btn btn-danger py-0"
+                (click)="setThisMonth()"
+              >
+                This Month
+              </button>
+            </div>
+
+            <div class="ms-2">
+              <button
+                type="button"
+                class="btn btn-secondary py-0"
+                (click)="setYesterday()"
+              >
+                Yesterday
+              </button>
+            </div>
+
+            <div class="ms-2">
+              <button
+                type="button"
+                class="btn btn-info py-0"
+                (click)="setLastWeek()"
+              >
+                Last Week
+              </button>
+            </div>
+
+            <div class="ms-2">
+              <button
+                type="button"
+                class="btn btn-success py-0"
+                (click)="setLastMonth()"
+              >
+                Last Month
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+
+  <div class="company-info-box mx-2 mb-3">
+    <div class="section-header fw-normal p-1">Office Master Report</div>
+
+    <div class="form-content py-0">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="fw-bolder">Office Totals</div>
+
+          <table class="table my-1 text-center">
+            <tr>
+              <th colspan="6" class="text-start">Projects Won</th>
+            </tr>
+            <tr>
+              <th>No of Projects Won</th>
+              <th>FTE Conversion</th>
+              <th>No of Interviews</th>
+              <th>No of Submittals</th>
+              <th>Submit/Interview Ratio</th>
+              <th>Interview/Start Ratio</th>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>0</td>
+              <td>14</td>
+              <td>5</td>
+              <td>0.36</td>
+              <td>7.00</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="col-lg-12">
+          <table class="table">
+            <tbody>
+              <tr>
+                <th>Entered</th>
+                <th>Sales Rep</th>
+                <th>Recruiter</th>
+                <th>Consultant Name</th>
+                <th>Company</th>
+                <th>Requisition</th>
+                <th>Start Date</th>
+                <th>Bill Rate</th>
+                <th>Hourly Rate</th>
+                <th>Markup(%)</th>
+              </tr>
+              <tr *ngFor="let item of report.requisitionInterviews">
+                <td>{{ item.enteredDate | date : "MMM d, yyyy h:mm:ssa" }}</td>
+                <td>{{ item.salesRep }}</td>
+                <td>{{ item.recruiter }}</td>
+                <td>{{ item.consultantName }}</td>
+                <td>{{ item.clientName }}</td>
+                <td>{{ item.requisition }}</td>
+                <td>{{ item.startDate | date : "MMM d, yyyy h:mm:ssa" }}</td>
+                <td>{{ item.billRate }}</td>
+                <td>{{ item.hourlyRate }}</td>
+                <td>
+                  {{
+                    ((item.billRate - item.hourlyRate) / item.hourlyRate) * 100
+                      | number : "1.2-2"
+                  }}%
+                </td>
+              </tr>
+            </tbody>
+
+            <tfoot>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>Office Totals</td>
+              <td>{{ totalBillRate() }}</td>
+              <td>{{ totalHourlyRate() }}</td>
+              <td>{{ totalMarkup() }}</td>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="col-lg-9">
+          <div class="fw-bolder">Office Sales Numbers</div>
+
+          <table class="table">
+            <tr>
+              <th>Reqs Added</th>
+              <th>New Positions</th>
+              <th>Open Reqs</th>
+              <th>Sales Meeting</th>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>2</td>
+              <td>17</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <th>Companies Added</th>
+              <th>Managers Added</th>
+              <th>Manager Calls</th>
+              <th>Deletions</th>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>1</td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-lg-3">
+          <div class="fw-bolder">Recruiting Summary</div>
+
+          <table class="table">
+            <tr>
+              <th>Consultant Added</th>
+              <th>Consultant Calls</th>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td>19</td>
+            </tr>
+
+            <tr>
+              <th>Consultant Emails</th>
+              <th>Deletions</th>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <hr />
+      <div class="row">
+        <div class="col-lg-12">
+          <table class="table">
+            <tr>
+              <th class="fs-16px" colspan="2">Client Meetings</th>
+              <th>No of Manager Calls : 0</th>
+              <th>No of Consultant Calls : 19</th>
+            </tr>
+            <tr>
+              <th>Entered</th>
+              <th>Sales Person</th>
+              <th>Manager Name</th>
+              <th>Sales Meeting Notes</th>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="col-lg-12">
+          <table class="table">
+            <tr>
+              <th class="fs-16px" colspan="8">Requisition Activity</th>
+              <th>New Requisition : 0</th>
+              <th>New Positions : 19</th>
+              <th>Open Requisitions : 19</th>
+            </tr>
+            <tr>
+              <th>Created Date</th>
+              <th>Coordinator</th>
+              <th>Client Name</th>
+              <th>Req Name</th>
+              <th>Manager Name</th>
+              <th>Submittals</th>
+              <th>Interviews</th>
+              <th>Starts</th>
+              <th>No Of Position</th>
+              <th>Bill Rate</th>
+              <th>Duration</th>
+            </tr>
+
+            <tr *ngFor="let item of report.requisitionActivities">
+              <td>{{ item.createdDate | date : "MMM d, yyyy h:mm:ssa" }}</td>
+              <td>{{ item.coordinator }}</td>
+              <td
+                class="clientNameLink cursor-pointer"
+                (click)="goToManagerDashboard(item.clientId)"
+              >
+                {{ item.clientName }}
+              </td>
+              <td
+                class="clientNameLink cursor-pointer"
+                (click)="goToManagerDashboard(item.reqId)"
+              >
+                {{ item.reqName }}
+              </td>
+              <td
+                class="clientNameLink cursor-pointer"
+                (click)="goToManagerDashboard(item.managerId)"
+              >
+                {{ item.managerName }}
+              </td>
+              <td>{{ item.submittals }}</td>
+              <td>{{ item.interviews }}</td>
+              <td>{{ item.starts }}</td>
+              <td>{{ item.noOfPosition }}</td>
+              <td>{{ item.billRate }}</td>
+              <td>{{ item.duration }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

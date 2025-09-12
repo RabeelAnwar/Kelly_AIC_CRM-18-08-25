@@ -77,7 +77,7 @@ export class OpenRequisitionComponent {
 
   addRequisition(data: RequisitionModel) {
     const requisition = new RequisitionModel();
-    debugger;
+    ;
     requisition.clientId = data?.clientId;
     requisition.salesRepId = this.authService.getUserId();
     requisition.internalReqCoordinatorId = this.authService.getUserId();

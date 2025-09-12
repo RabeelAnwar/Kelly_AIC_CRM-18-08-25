@@ -1,207 +1,299 @@
 <style>
-    ::ng-deep .ng-placeholder {
-        font-size: 16px;
-    }
+  ::ng-deep .ng-placeholder {
+    font-size: 16px;
+  }
 </style>
 
 <div>
-    <div class="header">
-        <h1>Company Master</h1>
-        <div>
-            <button class="btn btn-success py-0 px-2 mx-1" (click)="saveCompany();">{{saveButtonText}}</button>
-            <button *ngIf="!showIsActive" class="btn btn btn-danger py-0 px-2" routerLink="/login">Close</button>
-            <button *ngIf="showIsActive" class="btn btn btn-danger py-0 px-2" routerLink="/home">Close</button>
-        </div>
+  <div class="header">
+    <h1>Company Master</h1>
+    <div>
+      <button class="btn btn-success py-0 px-2 mx-1" (click)="saveCompany()">
+        {{ saveButtonText }}
+      </button>
+      <button
+        *ngIf="!showIsActive"
+        class="btn btn btn-danger py-0 px-2"
+        routerLink="/login"
+      >
+        Close
+      </button>
+      <button
+        *ngIf="showIsActive"
+        class="btn btn btn-danger py-0 px-2"
+        routerLink="/home"
+      >
+        Close
+      </button>
     </div>
+  </div>
 
+  <!-- Tenant Information Section -->
+  <div class="company-info-box mx-2 mb-3">
+    <div class="section-header fw-normal p-1">Tenant Information</div>
 
-    <!-- Tenant Information Section -->
-    <div class="company-info-box mx-2 mb-3">
-        <div class="section-header fw-normal p-1">
-            Tenant Information
+    <div class="form-content py-0">
+      <div class="row mb-2">
+        <div class="col-9">
+          <div>
+            <label class="form-label">Tenant Name</label>
+            <span
+              class="required-label"
+              *ngIf="!company.companyName || company.companyName.trim() === ''"
+              >REQUIRED</span
+            >
+          </div>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Tenant name"
+            [(ngModel)]="company.companyName"
+          />
         </div>
 
-        <div class="form-content py-0">
-            <div class="row mb-2">
-                <div class="col-9">
-                    <div>
-                        <label class="form-label">Tenant Name</label>
-                        <span class="required-label"
-                            *ngIf="!company.companyName || company.companyName.trim() === ''">REQUIRED</span>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Tenant name" [(ngModel)]="company.companyName">
-                </div>
-
-                <div class="col-3" *ngIf="showIsActive">
-                    <div class="mt-1">
-                        <label class="form-label">IsActive</label>
-                        <br>
-                        <input type="checkbox" [(ngModel)]="company.activeStatus">
-                    </div>
-                </div>
-            </div>
-
-            <div class="row mb-2">
-                <div class="col-md-6">
-                    <label class="form-label">Address 1</label>
-                    <input type="text" class="form-control" placeholder="Address" [(ngModel)]="company.address1">
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label">Address 2</label>
-                    <input type="text" class="form-control" placeholder="Address" [(ngModel)]="company.address2">
-                </div>
-            </div>
-
-            <div class="row mb-2">
-                <div class="col-md-3">
-                    <label class="form-label">Country</label>
-                    <div class="card flex justify-content-center">
-                                <p-dropdown [showClear]="true"
-                                [options]="countries" [(ngModel)]="company.country"
-                                (onChange)="onCountryChange(company.country)" 
-                                optionValue="name"
-                                optionLabel="name"
-                                (onClear)="company.state = undefined; company.city = undefined; cities = []; states = [];"
-                                placeholder="--Select Country--" />
-                            </div>
-
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label">State</label>
-                     <div class="card flex justify-content-center">
-                                <p-dropdown [showClear]="true"
-                                [options]="states" [(ngModel)]="company.state"
-                                (onChange)="getCities(company.state)" 
-                                optionValue="name"
-                                optionLabel="name"
-                                (onClear)="company.city = undefined; cities = [];"
-                                placeholder="--Select State--" />
-                            </div>
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label">City</label>
-                    <div class="card flex justify-content-center">
-                                <p-dropdown [showClear]="true"
-                                [options]="cities" [(ngModel)]="company.city"
-                                optionValue="name"
-                                optionLabel="name"
-                                placeholder="--Select city--" />
-                                </div>
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label">ZipCode</label>
-                    <input type="text" class="form-control" placeholder="Zipcode" [(ngModel)]="company.zipCode">
-                </div>
-            </div>
-
-            <div class="row mb-2">
-
-                <div class="col-md-6">
-                    <label class="form-label">Phone No 1</label>
-                    <div class="input-group">
-                        <span class="input-group-text height-26px">
-                            <i class="fa fa-phone" style="color: #555;"></i>
-                        </span>
-                        <input type="text" class="form-control" placeholder="Phone Number" mask="(000) 000-0000"
-                            [(ngModel)]="company.phoneNo1" maxlength="15" minlength="10" phoneValid />
-                    </div>
-
-                    <p *ngIf="!(company.phoneNo1 | phoneValid)" class="text-danger">
-                        Must be at least 10 and max 15 digits.
-                    </p>
-
-                </div>
-
-                <div class="col-md-6">
-                    <label class="form-label">Phone No 2</label>
-                    <div class="input-group">
-                        <span class="input-group-text height-26px">
-                            <i class="fa fa-phone" style="color: #555;"></i>
-                        </span>
-                        <input type="text" class="form-control" placeholder="Phone Number" phoneValid
-                            mask="(000) 000-0000" [(ngModel)]="company.phoneNo2" maxlength="15">
-                    </div>
-                    <p *ngIf="!(company.phoneNo2 | phoneValid)" class="text-danger">
-                        Must be at least 10 and max 15 digits.
-                    </p>
-                </div>
-            </div>
-
-            <div class="row mb-2">
-                <div class="col-md-6">
-                    <label class="form-label">Alternate Phone no</label>
-
-
-                    <div class="input-group">
-                        <span class="input-group-text height-26px">
-                            <i class="fa fa-phone" style="color: #555;"></i>
-                        </span>
-                        <input type="text" class="form-control" placeholder="Alternate Phone no" phoneValid
-                            mask="(000) 000-0000" [(ngModel)]="company.alternatePhoneNo">
-                    </div>
-                    <p *ngIf="!(company.alternatePhoneNo | phoneValid)" class="text-danger">
-                        Must be at least 10 and max 15 digits.
-                    </p>
-
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label">Work Email-Id</label>
-                    <div class="input-group">
-                        <span class="input-group-text height-26px"> <i class="fa fa-envelope"
-                                style="color: #555;"></i></span>
-                        <input type="email" class="form-control" placeholder="Work Email"
-                            [(ngModel)]="company.workEmailId">
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="row mb-2">
-                <div class="col-md-6">
-                    <label class="form-label">Personal Email-Id</label>
-                    <div class="input-group">
-                        <span class="input-group-text height-26px"> <i class="fa fa-envelope"
-                                style="color: #555;"></i></span>
-                        <input type="email" class="form-control" placeholder="Personal Email"
-                            [(ngModel)]="company.personalEmailId">
-                    </div>
-
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label">MS Teams ID</label>
-                    <div class="input-group">
-                        <span class="input-group-text height-26px">
-                            <i class="fa fa-comment" style="color: #5056AA;"></i></span>
-                        <input type="text" class="form-control" placeholder="Teams ID" [(ngModel)]="company.skypeId">
-
-                    </div>
-                </div>
-            </div>
+        <div class="col-3" *ngIf="showIsActive">
+          <div class="mt-1">
+            <label class="form-label">IsActive</label>
+            <br />
+            <input type="checkbox" [(ngModel)]="company.activeStatus" />
+          </div>
         </div>
+      </div>
+
+      <div class="row mb-2">
+        <div class="col-md-6">
+          <label class="form-label">Address 1</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Address"
+            [(ngModel)]="company.address1"
+          />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Address 2</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Address"
+            [(ngModel)]="company.address2"
+          />
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <div class="col-md-3">
+          <label class="form-label">Country</label>
+          <div class="card flex justify-content-center">
+            <p-dropdown
+              [showClear]="true"
+              [options]="countries"
+              [(ngModel)]="company.country"
+              (onChange)="onCountryChange(company.country)"
+              optionValue="name"
+              optionLabel="name"
+              (onClear)="
+                company.state = undefined;
+                company.city = undefined;
+                cities = [];
+                states = []
+              "
+              placeholder="--Select Country--"
+            />
+          </div>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">State</label>
+          <div class="card flex justify-content-center">
+            <p-dropdown
+              [showClear]="true"
+              [options]="states"
+              [(ngModel)]="company.state"
+              (onChange)="getCities(company.state)"
+              optionValue="name"
+              optionLabel="name"
+              (onClear)="company.city = undefined; cities = []"
+              placeholder="--Select State--"
+            />
+          </div>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">City</label>
+          <div class="card flex justify-content-center">
+            <p-dropdown
+              [showClear]="true"
+              [options]="cities"
+              [(ngModel)]="company.city"
+              optionValue="name"
+              optionLabel="name"
+              placeholder="--Select city--"
+            />
+          </div>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">ZipCode</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Zipcode"
+            [(ngModel)]="company.zipCode"
+          />
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <div class="col-md-6">
+          <label class="form-label">Phone No 1</label>
+          <div class="input-group">
+            <span class="input-group-text height-26px">
+              <i class="fa fa-phone" style="color: #555"></i>
+            </span>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Phone Number"
+              mask="(000) 000-0000"
+              [(ngModel)]="company.phoneNo1"
+              maxlength="15"
+              minlength="10"
+              phoneValid
+            />
+          </div>
+
+          <p *ngIf="!(company.phoneNo1 | phoneValid)" class="text-danger">
+            Must be at least 10 and max 15 digits.
+          </p>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Phone No 2</label>
+          <div class="input-group">
+            <span class="input-group-text height-26px">
+              <i class="fa fa-phone" style="color: #555"></i>
+            </span>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Phone Number"
+              phoneValid
+              mask="(000) 000-0000"
+              [(ngModel)]="company.phoneNo2"
+              maxlength="15"
+            />
+          </div>
+          <p *ngIf="!(company.phoneNo2 | phoneValid)" class="text-danger">
+            Must be at least 10 and max 15 digits.
+          </p>
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <div class="col-md-6">
+          <label class="form-label">Alternate Phone no</label>
+
+          <div class="input-group">
+            <span class="input-group-text height-26px">
+              <i class="fa fa-phone" style="color: #555"></i>
+            </span>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Alternate Phone no"
+              phoneValid
+              mask="(000) 000-0000"
+              [(ngModel)]="company.alternatePhoneNo"
+            />
+          </div>
+          <p
+            *ngIf="!(company.alternatePhoneNo | phoneValid)"
+            class="text-danger"
+          >
+            Must be at least 10 and max 15 digits.
+          </p>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Work Email-Id</label>
+          <div class="input-group">
+            <span class="input-group-text height-26px">
+              <i class="fa fa-envelope" style="color: #555"></i
+            ></span>
+            <input
+              type="email"
+              class="form-control"
+              placeholder="Work Email"
+              [(ngModel)]="company.workEmailId"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <div class="col-md-6">
+          <label class="form-label">Personal Email-Id</label>
+          <div class="input-group">
+            <span class="input-group-text height-26px">
+              <i class="fa fa-envelope" style="color: #555"></i
+            ></span>
+            <input
+              type="email"
+              class="form-control"
+              placeholder="Personal Email"
+              [(ngModel)]="company.personalEmailId"
+            />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">MS Teams ID</label>
+          <div class="input-group">
+            <span class="input-group-text height-26px">
+              <i class="fa fa-comment" style="color: #5056aa"></i
+            ></span>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Teams ID"
+              [(ngModel)]="company.skypeId"
+            />
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <!-- Primary Contact Detail Section -->
-    <div class="company-info-box mx-2 mb-3">
-        <div class="section-header fw-normal p-1">
-            Primary Contact Detail
-        </div>
+  <!-- Primary Contact Detail Section -->
+  <div class="company-info-box mx-2 mb-3">
+    <div class="section-header fw-normal p-1">Primary Contact Detail</div>
 
-        <div class="form-content py-0">
-            <div class="row mb-2">
-                <div class="col-md-4">
-                    <label class="form-label">First Name</label>
-                    <input type="text" class="form-control" placeholder="First Name" [(ngModel)]="company.firstName">
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label">Middle Name</label>
-                    <input type="text" class="form-control" placeholder="Middle Name" [(ngModel)]="company.middleName">
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label">Last Name</label>
-                    <input type="text" class="form-control" placeholder="Last Name" [(ngModel)]="company.lastName">
-                </div>
-            </div>
+    <div class="form-content py-0">
+      <div class="row mb-2">
+        <div class="col-md-4">
+          <label class="form-label">First Name</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="First Name"
+            [(ngModel)]="company.firstName"
+          />
         </div>
+        <div class="col-md-4">
+          <label class="form-label">Middle Name</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Middle Name"
+            [(ngModel)]="company.middleName"
+          />
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Last Name</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Last Name"
+            [(ngModel)]="company.lastName"
+          />
+        </div>
+      </div>
     </div>
-
+  </div>
 </div>

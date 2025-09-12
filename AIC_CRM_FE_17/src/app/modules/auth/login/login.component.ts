@@ -31,7 +31,7 @@ export class LoginComponent {
       return;
     }
     if (this.loginModel.userName === '' || this.loginModel.password === '') {
-      this.toastr.error('Please Enter Email and Password');
+      this.toastr.error('Please Enter UserName and Password');
       return;
     }
 
@@ -61,7 +61,6 @@ export class LoginComponent {
     //   this.apiService
     //     .saveData('Auth/Login', this.loginModel)
     //     .subscribe((result: any) => {
-    //       debugger
     //       this.router.navigate(['/home']);
     //       this.toastr.success('Login Successfully');
 

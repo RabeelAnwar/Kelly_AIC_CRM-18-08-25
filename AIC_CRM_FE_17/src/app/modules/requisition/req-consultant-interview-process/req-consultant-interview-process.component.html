@@ -1,99 +1,128 @@
 <style>
-    ::ng-deep .ng-placeholder {
-        font-size: 16px;
-    }
+  ::ng-deep .ng-placeholder {
+    font-size: 16px;
+  }
 
-    * {
-        font-size: 14px;
-    }
+  * {
+    font-size: 14px;
+  }
 </style>
-<div class="container p-1 bg-white rounded shadow-sm">
-<div class="row">
+<div class="w-full p-1 bg-white rounded shadow-sm">
+  <div class="row">
     <div class="col-md-2 mt-4">
-        <app-left-requisition-search-nav></app-left-requisition-search-nav>
+      <app-left-requisition-search-nav></app-left-requisition-search-nav>
     </div>
     <div class="col-md-10 ps-0">
-
-        <div class="row my-3">
-            <div class="col-lg-8">
-
-                <div class="fw-bolder">Client Name :
-                    <span>
-                        <a (click)="clientDashboard();">{{clientData.clientName}}</a>
-                    </span>
-                </div>
-                <div>Manager Name :
-                    <span>
-                        <a (click)="goToManagerDashboard();">{{managerData.lastName + ' '+ managerData.firstName}}</a>
-                    </span>
-                </div>
-
-            </div>
-
-            <div class="col-lg-4">
-                <div class="fw-bolder"><a (click)="requisitionDashboard();"> Requisition #{{requisitionData.id}} IT </a>
-                </div>
-                <div>{{requisitionData.jobTitle}}</div>
-                <div>Client Req # : <span>{{requisitionData.clientReqNumber}}</span></div>
-                <div><span>Start Date : {{ requisitionData.startDate | date:'MM-dd-yyyy' }}</span> Fill by date:
-                    <span>{{requisitionData.startDate | date:'MM-dd-yyyy'}}</span>
-                </div>
-            </div>
-
+      <div class="row my-3">
+        <div class="col-lg-8">
+          <div class="fw-bolder">
+            Client Name :
+            <span>
+              <a (click)="clientDashboard()">{{ clientData.clientName }}</a>
+            </span>
+          </div>
+          <div>
+            Manager Name :
+            <span>
+              <a (click)="goToManagerDashboard()">{{
+                managerData.lastName + " " + managerData.firstName
+              }}</a>
+            </span>
+          </div>
         </div>
 
-        <hr>
+        <div class="col-lg-4">
+          <div class="fw-bolder">
+            <a (click)="requisitionDashboard()">
+              Requisition #{{ requisitionData.id }} IT
+            </a>
+          </div>
+          <div>{{ requisitionData.jobTitle }}</div>
+          <div>
+            Client Req # : <span>{{ requisitionData.clientReqNumber }}</span>
+          </div>
+          <div>
+            <span
+              >Start Date :
+              {{
+                requisitionData.startDate | date : "MMM d, yyyy h:mm:ssa"
+              }}</span
+            >
+            Fill by date:
+            <span>{{
+              requisitionData.startDate | date : "MMM d, yyyy h:mm:ssa"
+            }}</span>
+          </div>
+        </div>
+      </div>
 
-        <div class="row mb-3">
+      <hr />
 
-            <div class="col-lg-4">
-                <label> </label>
-                <div class="d-flex justify-content-start">
-                    <div class="ms-2">
-                        <button type="button" class="btn btn-danger py-0  fs-16px" (click)="requisitionDashboard();"> <i
-                                class="fa-solid fa-arrow-left"></i> Back to Requisition</button>
-                    </div>
-                </div>
+      <div class="row mb-3">
+        <div class="col-lg-4">
+          <label> </label>
+          <div class="d-flex justify-content-start">
+            <div class="ms-2">
+              <button
+                type="button"
+                class="btn btn-danger py-0 fs-16px"
+                (click)="requisitionDashboard()"
+              >
+                <i class="fa-solid fa-arrow-left"></i> Back to Requisition
+              </button>
             </div>
-
-            <div class="col-lg-5">
-                <label class="form-label">Other Submittals on this REQ</label>
-                <div class="card flex justify-content-center">
-                                <p-dropdown [showClear]="true"
-                                [options]="activityConsultants" 
-                                optionValue="id"
-                                optionLabel="name"
-                                (onChange)="onDropdownChange($event)"
-                                placeholder="--select other consultants--" />
-                            </div>
-            </div>
-
-            <div class="col-lg-3">
-                <label> </label>
-                <div class="d-flex justify-content-start">
-                    <div class="ms-2">
-                        <button type="button" class="btn btn-warning py-0 fs-16px" (click)="consultantActivity();"><i
-                                class="fa-solid fa-plus"></i> Add
-                            Contsultant To Requisition</button>
-                    </div>
-                </div>
-            </div>
-
+          </div>
         </div>
 
-        <div>
+        <div class="col-lg-5">
+          <label class="form-label">Other Submittals on this REQ</label>
+          <div class="card flex justify-content-center">
+            <p-dropdown
+              [showClear]="true"
+              [options]="activityConsultants"
+              optionValue="id"
+              optionLabel="name"
+              (onChange)="onDropdownChange($event)"
+              placeholder="--select other consultants--"
+            />
+          </div>
+        </div>
 
-            <div class="row">
-                <div class="col-12">
+        <div class="col-lg-3">
+          <label> </label>
+          <div class="d-flex justify-content-start">
+            <div class="ms-2">
+              <button
+                type="button"
+                class="btn btn-warning py-0 fs-16px"
+                (click)="consultantActivity()"
+              >
+                <i class="fa-solid fa-plus"></i> Add Contsultant To Requisition
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
 
-                    <div class="company-info-box mx-2 mb-3">
-                        <div class="section-header fw-normal p-1">Interviews</div>
+      <div>
+        <div class="row">
+          <div class="col-12">
+            <div class="company-info-box mx-2 mb-3">
+              <div class="section-header fw-normal p-1">Interviews</div>
 
-                        <div class="card p-2">
-                            <p-table #dt [value]="activityConsultantsUpdate" [rows]="10"
-                                [globalFilterFields]="searchFields" [rowHover]="true" scrollHeight="550px"
-                                [style]="{ width: '100%' }" columnResizeMode="expand" [resizableColumns]="true">
-                                <!-- <ng-template pTemplate="colgroup">
+              <div class="card p-2">
+                <p-table
+                  #dt
+                  [value]="activityConsultantsUpdate"
+                  [rows]="10"
+                  [globalFilterFields]="searchFields"
+                  [rowHover]="true"
+                  scrollHeight="550px"
+                  [style]="{ width: '100%' }"
+                  columnResizeMode="expand"
+                  [resizableColumns]="true"
+                >
+                  <!-- <ng-template pTemplate="colgroup">
                                     <colgroup>
                                         <col style="width: 10%" />
                                         <col style="width: 10%" />
@@ -102,265 +131,411 @@
                                         <col style="width: 10%" />
                                     </colgroup>
                                 </ng-template> -->
-                                <ng-template pTemplate="header">
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th colspan="7">
+                        <input
+                          type="text"
+                          pInputText
+                          size="50"
+                          placeholder="Global Search"
+                          (input)="
+                            dt.filterGlobal(
+                              $any($event.target).value,
+                              'contains'
+                            )
+                          "
+                          style="width: 100%"
+                        />
+                      </th>
+                    </tr>
+                    <tr>
+                      <th pResizableColumn>Date/Time</th>
+                      <th pResizableColumn>Consultant Name</th>
+                      <th pResizableColumn>Bill Rate</th>
+                      <th pResizableColumn>Pay Rate</th>
+                      <th pResizableColumn>Interview Date/Time</th>
+                      <th pResizableColumn>Interview Status</th>
+                      <th pResizableColumn>Action</th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-rowData>
+                    <tr>
+                      <td>{{ rowData.creationTime | date }}</td>
+                      <td>
+                        <span
+                          class="cursor-pointer"
+                          (click)="consultantDashboard(rowData.consultantId)"
+                        >
+                          {{ rowData.consultantName }}
+                        </span>
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          class="w-100"
+                          [(ngModel)]="rowData.billRate"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          class="w-100"
+                          [(ngModel)]="rowData.payRate"
+                        />
+                      </td>
 
-                                    <tr>
-                                        <th colspan="7">
-                                            <input type="text" pInputText size="50" placeholder="Global Search"
-                                                (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                                                style="width: 100%" />
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th pResizableColumn>Date/Time</th>
-                                        <th pResizableColumn>Consultant Name</th>
-                                        <th pResizableColumn>Bill Rate</th>
-                                        <th pResizableColumn>Pay Rate</th>
-                                        <th pResizableColumn>Interview Date/Time</th>
-                                        <th pResizableColumn>Interview Status</th>
-                                        <th pResizableColumn>Action</th>
-                                    </tr>
-                                </ng-template>
-                                <ng-template pTemplate="body" let-rowData>
-                                    <tr>
-                                        <td>{{ rowData.creationTime | date }}</td>
-                                        <td>
-                                            <span class="cursor-pointer"
-                                                (click)="consultantDashboard(rowData.consultantId);">
-                                                {{rowData.consultantName }}
-                                            </span>
-                                        </td>
-                                        <td> <input type="text" class="w-100" [(ngModel)]="rowData.billRate"> </td>
-                                        <td> <input type="text" class="w-100" [(ngModel)]="rowData.payRate"> </td>
-
-                                        <td>
-                                            <div *ngFor="let date of rowData.interviewDateTime; let i = index">
-                                                <span class="cursor-pointer text-decoration-underline"
-                                                    (click)="getInterviewProcessDetails(rowData.processId[i]);">
-                                                    {{ date | date:'MM-dd-yyyy' }}
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div *ngFor="let status of rowData.interviewStatus">
-                                                <span *ngIf="status == 'Submitted'" class="req-candidate-submitted">{{ status }}</span>
-                                                        <span *ngIf="status == 'Interview'" class="req-candidate-interview">{{ status }}</span>
-                                                        <span *ngIf="status == 'Selected'"  class="req-candidate-selected">{{ status }}</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="p-0 pe-3">
-                                                <button type="button" class="btn btn-success py-0"
-                                                    (click)="updateConsultantActivity(rowData);">Update</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </ng-template>
-                            </p-table>
+                      <td>
+                        <div
+                          *ngFor="
+                            let date of rowData.interviewDateTime;
+                            let i = index
+                          "
+                        >
+                          <span
+                            class="cursor-pointer text-decoration-underline"
+                            (click)="
+                              getInterviewProcessDetails(rowData.processId[i])
+                            "
+                          >
+                            {{ date | date : "MMM d, yyyy h:mm:ssa" }}
+                          </span>
                         </div>
-                    </div>
-
-                    <div class="company-info-box mx-2 mb-3" style="border-color: #d9534f !important;">
-                        <div class="section-header p-1" style="background: #d9534f !important;">Interviews
-                            Process</div>
-                        <div class="card p-2">
-
-                            <div class="header mb-2">
-                                <h1 class="text-danger fw-bolder" (click)="consultantDashboard(consultantId);"><i
-                                        class="fas fa-user" style="font-size: 22px !important;"></i>
-                                    {{consultantName}}</h1>
-                                <div>
-                                    <button class="btn btn-success py-0 px-2 mx-1 fs-16px"
-                                        (click)="saveInterviewProcess();">
-                                        Save
-                                    </button>
-                                    <button class="btn btn-danger py-0 px-2 fs-16px"
-                                        (click)="requisitionDashboard();">Cancel</button>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-lg-6 px-1">
-                                    <div class="company-info-box mx-2 mb-3">
-                                        <div
-                                            class="section-header fw-normal p-1 d-flex justify-content-between align-items-center">
-                                            <h6 class="mb-0 text-white fs-16px ">Schedule Interview</h6>
-                                            <div>
-                                                    <div class="d-flex">
-                                                        <label class="form-label mt-1">Start Candidate?</label>
-                                                    
-                                                        <div class="form-check form-switch ms-3">
-                                                            <input class="form-check-input mt-2 fs-6" [checked]="interviewProcessInput.startCandidate"
-                                                            (change)="onStartCandidateChange($event);"
-                                                            type="checkbox">
-                                                        </div>
-                                                    </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-content py-0">
-
-                                            <div class="row">
-                                                <div class="col-lg-6">
-                                                    <label class="form-label">Date</label>
-                                                    <div class="flex justify-content-center mb-2">
-                                                        <p-calendar [iconDisplay]="'input'" [showTime]="true"
-                                                        [disabled]="scheduleInterviewDate"
-                                                            [hourFormat]="'12'" [(ngModel)]="interviewProcessInput.date"
-                                                            [showIcon]="true" [style]="{ width: '100%' }" />
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-lg-12 mb-2">
-                                                    <label class="form-label">Notes</label>
-                                                    <ckeditor [editor]="Editor" [config]="config"
-                                                    data="interviewProcessInput.notes" [(ngModel)]="interviewProcessInput.notes"
-                                                    [disabled]="scheduleInterviewNotes"></ckeditor>
-
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6 px-1" *ngIf="interviewProcessInput.startCandidate">
-
-                                    <div class="company-info-box mx-2 mb-3" style="border-color: #5CB85C !important;">
-                                        <div class="section-header fw-normal p-1 d-flex justify-content-between align-items-center"
-                                            style="background: #5CB85C !important;">
-                                            <h6 class="mb-0 text-white fs-16px ">Start Details</h6>
-                                            <div>
-                                                <div class="mt-1">
-                                                    <label class="form-label">.</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-content py-0">
-
-                                            <div class="row">
-
-                                                <div class="col-lg-6 mb-2">
-                                                    <label class="form-label">Expected Start Date</label>
-                                                    <div class="flex justify-content-center">
-                                                        <p-calendar [iconDisplay]="'input'"
-                                                            [(ngModel)]="interviewProcessInput.date"
-                                                            [style]="{ width: '100%' }"
-                                                            [showIcon]="true" />
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-lg-6 mb-2">
-                                                    <label class="form-label">End Date</label>
-                                                    <div class="flex justify-content-center">
-                                                        <p-calendar [iconDisplay]="'input'"
-                                                            [style]="{ width: '100%' }"
-                                                            [(ngModel)]="interviewProcessInput.endDate"
-                                                            [showIcon]="true" />
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-lg-12 mb-2">
-                                                    <label class="form-label">Type Of Employment</label>
-                                                    <div class="card flex justify-content-center">
-                                                        <p-dropdown [showClear]="true"
-                                                        [options]="empType" [(ngModel)]="interviewProcessInput.employmentType"
-                                                        optionValue="name"
-                                                        optionLabel="name"
-                                                        placeholder="--Select--" />
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-lg-4 mb-2">
-                                                    <label class="form-label">Salary</label>
-                                                    <input type="text" class="form-control" placeholder="salary"
-                                                        (input)="changeSalary(interviewProcessInput.salary)"
-                                                        [(ngModel)]="interviewProcessInput.salary">
-                                                </div>
-
-                                                <div class="col-lg-4 mb-2">
-                                                    <label class="form-label">Hourly Rate</label>
-                                                    <input type="text" class="form-control" placeholder="hourly rate"
-                                                        (input)="changeHourlyRate(interviewProcessInput.hourlyRate)"
-                                                        [(ngModel)]="interviewProcessInput.hourlyRate">
-                                                </div>
-
-                                                <div class="col-lg-4 mb-2">
-                                                    <label class="form-label">Expenses</label>
-                                                    <input type="text" class="form-control" placeholder=""
-                                                        (input)="changeExpenses(interviewProcessInput.expenses)"
-                                                        [(ngModel)]="interviewProcessInput.expenses">
-                                                </div>
-
-                                                <div class="col-lg-4 mb-2">
-                                                    <label class="form-label">Loaded Rate</label>
-                                                    <input type="text" class="form-control" placeholder="loaded rate"
-                                                        [disabled]="true"
-                                                        [(ngModel)]="interviewProcessInput.loadedRate">
-                                                </div>
-
-                                                <div class="col-lg-4 mb-2">
-                                                    <label class="form-label">Bill Rate <span
-                                                            class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" placeholder=""
-                                                        (input)="changeBillRate(interviewProcessInput.billRate)"
-                                                        [(ngModel)]="interviewProcessInput.billRate">
-                                                </div>
-
-                                                <div class="col-lg-4 mb-2">
-                                                    <label class="form-label">VOP</label>
-                                                    <input type="text" class="form-control" placeholder="VOP"
-                                                        (input)="changeVOP(interviewProcessInput.vop)"
-                                                        [(ngModel)]="interviewProcessInput.vop">
-                                                </div>
-
-                                                <div class="col-lg-4 mb-2">
-                                                    <label class="form-label">Markup (%)</label>
-                                                    <input type="text" class="form-control" placeholder="0.00"
-                                                        [disabled]="true" [(ngModel)]="interviewProcessInput.markup">
-                                                </div>
-
-                                                <div class="col-lg-4 mb-2">
-                                                    <label class="form-label">Recruiter Assigned</label>
-                                                    <div class="card flex justify-content-center">
-                                                        <p-dropdown [showClear]="true"
-                                                        [options]="usersList" [(ngModel)]="interviewProcessInput.recruiterAssigned"
-                                                        optionValue="id"
-                                                        optionLabel="name"
-                                                        placeholder="--Select--" />
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-lg-4 mb-2">
-                                                    <label class="form-label">Sales Rep</label>
-                                                    <div class="card flex justify-content-center">
-                                                        <p-dropdown [showClear]="true"
-                                                        [options]="usersList" [(ngModel)]="interviewProcessInput.salesRep"
-                                                        optionValue="id"
-                                                        optionLabel="name"
-                                                        placeholder="--Select--" />
-                                                    </div>
-                                                </div>
-
-                                                <div class="mb-2">
-                                                    <label class="form-label">Notes</label>
-                                                    <textarea class="form-control"
-                                                        [(ngModel)]="interviewProcessInput.notesDetail"
-                                                        placeholder="Detail..." style="height: 70px;"></textarea>
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                      </td>
+                      <td>
+                        <div *ngFor="let status of rowData.interviewStatus">
+                          <span
+                            *ngIf="status == 'Submitted'"
+                            class="req-candidate-submitted"
+                            >{{ status }}</span
+                          >
+                          <span
+                            *ngIf="status == 'Interview'"
+                            class="req-candidate-interview"
+                            >{{ status }}</span
+                          >
+                          <span
+                            *ngIf="status == 'Selected'"
+                            class="req-candidate-selected"
+                            >{{ status }}</span
+                          >
                         </div>
-                    </div>
+                      </td>
+                      <td>
+                        <div class="p-0 pe-3">
+                          <button
+                            type="button"
+                            class="btn btn-success py-0"
+                            (click)="updateConsultantActivity(rowData)"
+                          >
+                            Update
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </div>
+            </div>
+
+            <div
+              class="company-info-box mx-2 mb-3"
+              style="border-color: #d9534f !important"
+            >
+              <div
+                class="section-header p-1"
+                style="background: #d9534f !important"
+              >
+                Interviews Process
+              </div>
+              <div class="card p-2">
+                <div class="header mb-2">
+                  <h1
+                    class="text-danger fw-bolder"
+                    (click)="consultantDashboard(consultantId)"
+                  >
+                    <i
+                      class="fas fa-user"
+                      style="font-size: 22px !important"
+                    ></i>
+                    {{ consultantName }}
+                  </h1>
+                  <div>
+                    <button
+                      class="btn btn-success py-0 px-2 mx-1 fs-16px"
+                      (click)="saveInterviewProcess()"
+                    >
+                      Save
+                    </button>
+                    <button
+                      class="btn btn-danger py-0 px-2 fs-16px"
+                      (click)="requisitionDashboard()"
+                    >
+                      Cancel
+                    </button>
+                  </div>
                 </div>
 
+                <div class="row">
+                  <div class="col-lg-6 px-1">
+                    <div class="company-info-box mx-2 mb-3">
+                      <div
+                        class="section-header fw-normal p-1 d-flex justify-content-between align-items-center"
+                      >
+                        <h6 class="mb-0 text-white fs-16px">
+                          Schedule Interview
+                        </h6>
+                        <div>
+                          <div class="d-flex">
+                            <label class="form-label mt-1"
+                              >Start Candidate?</label
+                            >
+
+                            <div class="form-check form-switch ms-3">
+                              <input
+                                class="form-check-input mt-2 fs-6"
+                                [checked]="interviewProcessInput.startCandidate"
+                                (change)="onStartCandidateChange($event)"
+                                type="checkbox"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-content py-0">
+                        <div class="row">
+                          <div class="col-lg-6">
+                            <label class="form-label">Date</label>
+                            <div class="flex justify-content-center mb-2">
+                              <p-calendar
+                                [iconDisplay]="'input'"
+                                [showTime]="true"
+                                [disabled]="scheduleInterviewDate"
+                                [hourFormat]="'12'"
+                                [(ngModel)]="interviewProcessInput.date"
+                                [showIcon]="true"
+                                [style]="{ width: '70%' }"
+                              />
+                            </div>
+                          </div>
+
+                          <div class="col-lg-12 mb-2">
+                            <label class="form-label">Notes</label>
+                            <ckeditor
+                              [editor]="Editor"
+                              [config]="config"
+                              data="interviewProcessInput.notes"
+                              [(ngModel)]="interviewProcessInput.notes"
+                              [disabled]="scheduleInterviewNotes"
+                            ></ckeditor>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="col-lg-6 px-1"
+                    *ngIf="interviewProcessInput.startCandidate"
+                  >
+                    <div
+                      class="company-info-box mx-2 mb-3"
+                      style="border-color: #5cb85c !important"
+                    >
+                      <div
+                        class="section-header fw-normal p-1 d-flex justify-content-between align-items-center"
+                        style="background: #5cb85c !important"
+                      >
+                        <h6 class="mb-0 text-white fs-16px">Start Details</h6>
+                        <div>
+                          <div class="mt-1">
+                            <label class="form-label">.</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-content py-0">
+                        <div class="row">
+                          <div class="col-lg-6 mb-2">
+                            <label class="form-label"
+                              >Expected Start Date</label
+                            >
+                            <div class="flex justify-content-center">
+                              <p-calendar
+                                [iconDisplay]="'input'"
+                                [(ngModel)]="interviewProcessInput.date"
+                                [style]="{ width: '100%' }"
+                                [showIcon]="true"
+                              />
+                            </div>
+                          </div>
+
+                          <div class="col-lg-6 mb-2">
+                            <label class="form-label">End Date</label>
+                            <div class="flex justify-content-center">
+                              <p-calendar
+                                [iconDisplay]="'input'"
+                                [style]="{ width: '100%' }"
+                                [(ngModel)]="interviewProcessInput.endDate"
+                                [showIcon]="true"
+                              />
+                            </div>
+                          </div>
+
+                          <div class="col-lg-12 mb-2">
+                            <label class="form-label">Type Of Employment</label>
+                            <div class="card flex justify-content-center">
+                              <p-dropdown
+                                [showClear]="true"
+                                [options]="empType"
+                                [(ngModel)]="
+                                  interviewProcessInput.employmentType
+                                "
+                                optionValue="name"
+                                optionLabel="name"
+                                placeholder="--Select--"
+                              />
+                            </div>
+                          </div>
+
+                          <div class="col-lg-4 mb-2">
+                            <label class="form-label">Salary</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder="salary"
+                              (input)="
+                                changeSalary(interviewProcessInput.salary)
+                              "
+                              [(ngModel)]="interviewProcessInput.salary"
+                            />
+                          </div>
+
+                          <div class="col-lg-4 mb-2">
+                            <label class="form-label">Hourly Rate</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder="hourly rate"
+                              (input)="
+                                changeHourlyRate(
+                                  interviewProcessInput.hourlyRate
+                                )
+                              "
+                              [(ngModel)]="interviewProcessInput.hourlyRate"
+                            />
+                          </div>
+
+                          <div class="col-lg-4 mb-2">
+                            <label class="form-label">Expenses</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder=""
+                              (input)="
+                                changeExpenses(interviewProcessInput.expenses)
+                              "
+                              [(ngModel)]="interviewProcessInput.expenses"
+                            />
+                          </div>
+
+                          <div class="col-lg-4 mb-2">
+                            <label class="form-label">Loaded Rate</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder="loaded rate"
+                              [disabled]="true"
+                              [(ngModel)]="interviewProcessInput.loadedRate"
+                            />
+                          </div>
+
+                          <div class="col-lg-4 mb-2">
+                            <label class="form-label"
+                              >Bill Rate
+                              <span class="text-danger">*</span></label
+                            >
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder=""
+                              (input)="
+                                changeBillRate(interviewProcessInput.billRate)
+                              "
+                              [(ngModel)]="interviewProcessInput.billRate"
+                            />
+                          </div>
+
+                          <div class="col-lg-4 mb-2">
+                            <label class="form-label">VOP</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder="VOP"
+                              (input)="changeVOP(interviewProcessInput.vop)"
+                              [(ngModel)]="interviewProcessInput.vop"
+                            />
+                          </div>
+
+                          <div class="col-lg-4 mb-2">
+                            <label class="form-label">Markup (%)</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder="0.00"
+                              [disabled]="true"
+                              [(ngModel)]="interviewProcessInput.markup"
+                            />
+                          </div>
+
+                          <div class="col-lg-4 mb-2">
+                            <label class="form-label">Recruiter Assigned</label>
+                            <div class="card flex justify-content-center">
+                              <p-dropdown
+                                [showClear]="true"
+                                [options]="usersList"
+                                [(ngModel)]="
+                                  interviewProcessInput.recruiterAssigned
+                                "
+                                optionValue="id"
+                                optionLabel="name"
+                                placeholder="--Select--"
+                              />
+                            </div>
+                          </div>
+
+                          <div class="col-lg-4 mb-2">
+                            <label class="form-label">Sales Rep</label>
+                            <div class="card flex justify-content-center">
+                              <p-dropdown
+                                [showClear]="true"
+                                [options]="usersList"
+                                [(ngModel)]="interviewProcessInput.salesRep"
+                                optionValue="id"
+                                optionLabel="name"
+                                placeholder="--Select--"
+                              />
+                            </div>
+                          </div>
+
+                          <div class="mb-2">
+                            <label class="form-label">Notes</label>
+                            <textarea
+                              class="form-control"
+                              [(ngModel)]="interviewProcessInput.notesDetail"
+                              placeholder="Detail..."
+                              style="height: 70px"
+                            ></textarea>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
+  </div>
 </div>

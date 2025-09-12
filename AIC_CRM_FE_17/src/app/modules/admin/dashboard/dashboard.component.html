@@ -1,818 +1,1039 @@
 <style>
-    li {
-        font-size: 15px;
-        background-color: #fff;
-        transition: background-color 0.3s ease;
-        cursor: pointer;
-        border: 1px solid #dee2e6;
-    }
+  li {
+    font-size: 15px;
+    background-color: #fff;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    border: 1px solid #dee2e6;
+  }
 
-    li:hover,
-    li:focus {
-        background-color: #f5f5f5;
-        color: #fff;
-    }
+  li:hover,
+  li:focus {
+    background-color: #f5f5f5;
+    color: #fff;
+  }
 
-    li.active {
-        background-color: #f5f5f5 !important;
-        color: #fff !important;
-    }
+  li.active {
+    background-color: #f5f5f5 !important;
+    color: #fff !important;
+  }
 
-    li .badge {
-        background-color: transparent;
-    }
+  li .badge {
+    background-color: transparent;
+  }
 
+  li {
+    font-size: 15px;
+    background-color: #fff;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    border: 1px solid #dee2e6;
+  }
 
-    li {
-        font-size: 15px;
-        background-color: #fff;
-        transition: background-color 0.3s ease;
-        cursor: pointer;
-        border: 1px solid #dee2e6;
-    }
+  li:hover,
+  li:focus,
+  li.active {
+    background-color: #f5f5f5 !important;
+    color: #000 !important;
+  }
 
-    li:hover,
-    li:focus,
-    li.active {
-        background-color: #f5f5f5 !important;
-        color: #000 !important;
-    }
-
-    li:hover i,
-    li:focus i,
-    li.active i,
-    li:hover span:not(.badge),
-    li:focus span:not(.badge),
-    li.active span:not(.badge) {
-        color: #000 !important;
-    }
+  li:hover i,
+  li:focus i,
+  li.active i,
+  li:hover span:not(.badge),
+  li:focus span:not(.badge),
+  li.active span:not(.badge) {
+    color: #000 !important;
+  }
 </style>
 
 <div class="container-fluid p-0">
+  <div class="row">
+    <div class="col-md-2 mt-4">
+      <app-left-client-search-nav></app-left-client-search-nav>
+    </div>
 
-    <div class="row">
+    <div class="col-md-10 ps-0">
+      <!-- Top Bar -->
+      <div class="row m-0 border-bottom">
+        <div
+          class="col-md-12 p-0 d-flex justify-content-between align-items-center"
+        >
+          <h4 class="m-2 text-secondary fw-normal">
+            Welcome to {{ TenantName }} - Health Analytics DASHBOARD
+          </h4>
+          <div class="notification-icon me-3">
+            <img
+              (click)="raiseTicket()"
+              class="cursor-pointer m-2"
+              src="/assets/icons/raiseticket.png"
+              alt="Notification"
+              width="40"
+            />
+          </div>
+        </div>
+      </div>
 
-        <div class="col-md-2 mt-4">
-            <app-left-client-search-nav></app-left-client-search-nav>
+      <div class="row my-2">
+        <!-- Recent Client Call Records -->
+        <div class="col-lg-2 col-md-6 col-sm-6">
+          <div class="card card-custom panel-primary">
+            <div class="card-header">
+              <div class="row align-items-center">
+                <div class="col-3">
+                  <i class="fas fa-comments icon-large"></i>
+                </div>
+                <div class="col-9 text-right">
+                  <div class="huge">
+                    {{ dashboardData.recentClientCallRecords }}
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 text-right">
+                  <div class="fs-10px">Recent Client Call Records!</div>
+                </div>
+              </div>
+            </div>
+            <a class="card-footer" (click)="selectBox('boxRecentClientCall')">
+              <span class="float-start">View Details</span>
+              <span class="float-end"
+                ><i class="fas fa-arrow-circle-right"></i
+              ></span>
+              <div class="clearfix"></div>
+            </a>
+          </div>
         </div>
 
-        <div class="col-md-10 ps-0">
-
-
-            <!-- Top Bar -->
-            <div class="row m-0 border-bottom">
-                <div class="col-md-12 p-0 d-flex justify-content-between align-items-center">
-                    <h4 class="m-2 text-secondary fw-normal">Welcome to {{TenantName}} - Health Analytics DASHBOARD</h4>
-                    <div class="notification-icon me-3">
-                        <img (click)="raiseTicket();" class="cursor-pointer m-2" src="/assets/icons/raiseticket.png"
-                            alt="Notification" width="40">
-                    </div>
+        <!-- Recent Consultant Call Record -->
+        <div class="col-lg-2 col-md-6 col-sm-6">
+          <div class="card card-custom panel-green">
+            <div class="card-header">
+              <div class="row align-items-center">
+                <div class="col-3"><i class="fas fa-tasks icon-large"></i></div>
+                <div class="col-9 text-right">
+                  <div class="huge">
+                    {{ dashboardData.recentConsultantCallRecords }}
+                  </div>
                 </div>
+              </div>
+              <div class="row">
+                <div class="col-12 text-right">
+                  <div class="fs-10px">Recent Consultant Call Record!</div>
+                </div>
+              </div>
+            </div>
+            <a
+              class="card-footer"
+              (click)="selectBox('boxRecentConsultantCall')"
+            >
+              <span class="float-start">View Details</span>
+              <span class="float-end"
+                ><i class="fas fa-arrow-circle-right"></i
+              ></span>
+              <div class="clearfix"></div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Activities -->
+        <div class="col-lg-2 col-md-6 col-sm-6">
+          <div class="card card-custom panel-warning">
+            <div class="card-header">
+              <div class="row align-items-center">
+                <div class="col-3"><i class="fas fa-bell icon-large"></i></div>
+                <div class="col-9 text-right">
+                  <div class="huge">{{ dashboardData.activities }}</div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 text-right">
+                  <div class="fs-10px">Activities!</div>
+                </div>
+              </div>
             </div>
 
-            <div class="row my-2">
-                <!-- Recent Client Call Records -->
-                <div class="col-lg-2 col-md-6 col-sm-6">
-                    <div class="card card-custom panel-primary">
-                        <div class="card-header">
-                            <div class="row align-items-center">
-                                <div class="col-3"><i class="fas fa-comments icon-large"></i></div>
-                                <div class="col-9 text-right">
-                                    <div class="huge">{{dashboardData.recentClientCallRecords}}</div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 text-right">
-                                    <div class="fs-10px">Recent Client Call Records!</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a class="card-footer" (click)="selectBox('boxRecentClientCall')">
-                            <span class="float-start">View Details</span>
-                            <span class="float-end"><i class="fas fa-arrow-circle-right"></i></span>
-                            <div class="clearfix"></div>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Recent Consultant Call Record -->
-                <div class="col-lg-2 col-md-6 col-sm-6">
-                    <div class="card card-custom panel-green">
-                        <div class="card-header">
-                            <div class="row align-items-center">
-                                <div class="col-3"><i class="fas fa-tasks icon-large"></i></div>
-                                <div class="col-9 text-right">
-                                    <div class="huge">{{dashboardData.recentConsultantCallRecords}}</div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 text-right">
-                                    <div class="fs-10px">Recent Consultant Call Record!</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a class="card-footer" (click)="selectBox('boxRecentConsultantCall')">
-                            <span class="float-start">View Details</span>
-                            <span class="float-end"><i class="fas fa-arrow-circle-right"></i></span>
-                            <div class="clearfix"></div>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Activities -->
-                <div class="col-lg-2 col-md-6 col-sm-6">
-                    <div class="card card-custom panel-warning">
-                        <div class="card-header">
-                            <div class="row align-items-center">
-                                <div class="col-3"><i class="fas fa-bell icon-large"></i></div>
-                                <div class="col-9 text-right">
-                                    <div class="huge">{{dashboardData.activities}}</div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 text-right">
-                                    <div class="fs-10px">Activities!</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <a class="card-footer" (click)="selectBox('boxActivities')">
-                            <span class="float-start">View Details</span>
-                            <span class="float-end"><i class="fas fa-arrow-circle-right"></i></span>
-                            <div class="clearfix"></div>
-                        </a>
-                        <!-- <a class="card-footer" (click)="selectBox('boxActivities')">
+            <a class="card-footer" (click)="selectBox('boxActivities')">
+              <span class="float-start">View Details</span>
+              <span class="float-end"
+                ><i class="fas fa-arrow-circle-right"></i
+              ></span>
+              <div class="clearfix"></div>
+            </a>
+            <!-- <a class="card-footer" (click)="selectBox('boxActivities')">
                     <span class="float-start">View Details</span>
                     <span class="float-end"><i class="fas fa-arrow-circle-right"></i></span>
                     <div class="clearfix"></div>
                 </a> -->
-                    </div>
-                </div>
+          </div>
+        </div>
 
-                <!-- Recent Requisitions -->
-                <div class="col-lg-2 col-md-6 col-sm-6">
-                    <div class="card card-custom panel-yellow">
-                        <div class="card-header">
-                            <div class="row align-items-center">
-                                <div class="col-3"><i class="fas fa-shopping-cart icon-large"></i></div>
-                                <div class="col-9 text-right">
-                                    <div class="huge">{{dashboardData.recentRequisitions}}</div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 text-right">
-                                    <div class="fs-10px">Recent Requisitions!</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a class="card-footer" (click)="selectBox('boxRecentRequisitions')">
-                            <span class="float-start">View Details</span>
-                            <span class="float-end"><i class="fas fa-arrow-circle-right"></i></span>
-                            <div class="clearfix"></div>
-                        </a>
-                    </div>
+        <!-- Recent Requisitions -->
+        <div class="col-lg-2 col-md-6 col-sm-6">
+          <div class="card card-custom panel-yellow">
+            <div class="card-header">
+              <div class="row align-items-center">
+                <div class="col-3">
+                  <i class="fas fa-shopping-cart icon-large"></i>
                 </div>
-
-                <!-- My Leads -->
-                <div class="col-lg-2 col-md-6 col-sm-6">
-                    <div class="card card-custom panel-info">
-                        <div class="card-header">
-                            <div class="row align-items-center">
-                                <div class="col-3"><i class="fas fa-users icon-large"></i></div>
-                                <div class="col-9 text-right">
-                                    <div class="huge">{{dashboardData.myLeads}}</div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 text-right">
-                                    <div class="fs-10px">My Leads!</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a class="card-footer" (click)="selectBox('boxLeads')">
-                            <span class="float-start">View Details</span>
-                            <span class="float-end"><i class="fas fa-arrow-circle-right"></i></span>
-                            <div class="clearfix"></div>
-                        </a>
-                    </div>
+                <div class="col-9 text-right">
+                  <div class="huge">{{ dashboardData.recentRequisitions }}</div>
                 </div>
-
-                <!-- Reminder Calls -->
-                <div class="col-lg-2 col-md-6 col-sm-6">
-                    <div class="card card-custom panel-red">
-                        <div class="card-header">
-                            <div class="row align-items-center">
-                                <div class="col-3"><i class="fas fa-bell icon-large"></i></div>
-                                <div class="col-9 text-right">
-                                    <div class="huge">{{dashboardData.reminderCalls}}</div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 text-right">
-                                    <div class="fs-10px">Reminder Calls!</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a class="card-footer" (click)="selectBox('boxReminderCalls')">
-                            <span class="float-start">View Details</span>
-                            <span class="float-end"><i class="fas fa-arrow-circle-right"></i></span>
-                            <div class="clearfix"></div>
-                        </a>
-                    </div>
+              </div>
+              <div class="row">
+                <div class="col-12 text-right">
+                  <div class="fs-10px">Recent Requisitions!</div>
                 </div>
-
-                <!-- Support Tickets -->
-                <div class="col-lg-2 col-md-6 col-sm-6">
-                    <div class="card card-custom panel-gold">
-                        <div class="card-header">
-                            <div class="row align-items-center">
-                                <div class="col-3"><i class="fas fa-ticket icon-large"></i></div>
-                                <div class="col-9 text-right">
-                                    <div class="huge">{{dashboardData.supportTickets}}</div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 text-right">
-                                    <div class="fs-10px">Support Tickets!</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a class="card-footer" (click)="selectBox('boxTickets')">
-                            <span class="float-start">View Details</span>
-                            <span class="float-end"><i class="fas fa-arrow-circle-right"></i></span>
-                            <div class="clearfix"></div>
-                        </a>
-                    </div>
-                </div>
+              </div>
             </div>
+            <a class="card-footer" (click)="selectBox('boxRecentRequisitions')">
+              <span class="float-start">View Details</span>
+              <span class="float-end"
+                ><i class="fas fa-arrow-circle-right"></i
+              ></span>
+              <div class="clearfix"></div>
+            </a>
+          </div>
+        </div>
 
-            <div class="row">
-                <div class="col-md-12" *ngIf="boxes.boxRecentClientCall">
-                    <div class="company-info-box mx-2 mb-3">
-                        <div class="section-header fw-normal p-1">Past 48 hrs Manager Call Logs</div>
-                        <div class="card p-2">
+        <!-- My Leads -->
+        <div class="col-lg-2 col-md-6 col-sm-6">
+          <div class="card card-custom panel-info">
+            <div class="card-header">
+              <div class="row align-items-center">
+                <div class="col-3"><i class="fas fa-users icon-large"></i></div>
+                <div class="col-9 text-right">
+                  <div class="huge">{{ dashboardData.myLeads }}</div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 text-right">
+                  <div class="fs-10px">My Leads!</div>
+                </div>
+              </div>
+            </div>
+            <a class="card-footer" (click)="selectBox('boxLeads')">
+              <span class="float-start">View Details</span>
+              <span class="float-end"
+                ><i class="fas fa-arrow-circle-right"></i
+              ></span>
+              <div class="clearfix"></div>
+            </a>
+          </div>
+        </div>
 
-                            <p-table #dt [value]="recentClientCallList" [rows]="10"
-                                [globalFilterFields]="searchFieldRecentClientCall" [rowHover]="true"
-                                scrollHeight="550px" [style]="{ width: '100%' }" columnResizeMode="expand"
-                                [resizableColumns]="true">
-                                <!-- <ng-template pTemplate="colgroup">
+        <!-- Reminder Calls -->
+        <div class="col-lg-2 col-md-6 col-sm-6">
+          <div class="card card-custom panel-red">
+            <div class="card-header">
+              <div class="row align-items-center">
+                <div class="col-3"><i class="fas fa-bell icon-large"></i></div>
+                <div class="col-9 text-right">
+                  <div class="huge">{{ dashboardData.reminderCalls }}</div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 text-right">
+                  <div class="fs-10px">Reminder Calls!</div>
+                </div>
+              </div>
+            </div>
+            <a class="card-footer" (click)="selectBox('boxReminderCalls')">
+              <span class="float-start">View Details</span>
+              <span class="float-end"
+                ><i class="fas fa-arrow-circle-right"></i
+              ></span>
+              <div class="clearfix"></div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Support Tickets -->
+        <div class="col-lg-2 col-md-6 col-sm-6">
+          <div class="card card-custom panel-gold">
+            <div class="card-header">
+              <div class="row align-items-center">
+                <div class="col-3">
+                  <i class="fas fa-ticket icon-large"></i>
+                </div>
+                <div class="col-9 text-right">
+                  <div class="huge">{{ dashboardData.supportTickets }}</div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 text-right">
+                  <div class="fs-10px">Support Tickets!</div>
+                </div>
+              </div>
+            </div>
+            <a class="card-footer" (click)="selectBox('boxTickets')">
+              <span class="float-start">View Details</span>
+              <span class="float-end"
+                ><i class="fas fa-arrow-circle-right"></i
+              ></span>
+              <div class="clearfix"></div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12" *ngIf="boxes.boxRecentClientCall">
+          <div class="company-info-box mx-2 mb-3">
+            <div class="section-header fw-normal p-1">
+              Past 48 hrs Manager Call Logs
+            </div>
+            <div class="card p-2">
+              <p-table
+                #dt
+                [value]="recentClientCallList"
+                [rows]="10"
+                [globalFilterFields]="searchFieldRecentClientCall"
+                [rowHover]="true"
+                scrollHeight="550px"
+                [style]="{ width: '100%' }"
+                columnResizeMode="expand"
+                [resizableColumns]="true"
+              >
+                <!-- <ng-template pTemplate="colgroup">
                             <colgroup>
                                 <col style="width: 10%" />
                                 <col style="width: 20%" />
                             </colgroup>
                         </ng-template> -->
-                                <ng-template pTemplate="header">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th colspan="10">
+                      <input
+                        type="text"
+                        pInputText
+                        size="50"
+                        placeholder="Global Search"
+                        (input)="
+                          dt.filterGlobal($any($event.target).value, 'contains')
+                        "
+                        style="width: 100%"
+                      />
+                    </th>
+                  </tr>
+                  <tr>
+                    <th pResizableColumn>Sr. No</th>
+                    <th pResizableColumn>Date/Time</th>
+                    <th pResizableColumn>Manager</th>
+                    <th pResizableColumn>Spoke With</th>
+                    <th pResizableColumn>Call Record</th>
+                  </tr>
+                </ng-template>
+                <ng-template
+                  pTemplate="body"
+                  let-rowData
+                  let-rowIndex="rowIndex"
+                >
+                  <tr>
+                    <td>{{ rowIndex + 1 }}</td>
+                    <td>
+                      {{ rowData.datetime | date : "MMM d, yyyy h:mm:ssa" }}
+                    </td>
+                    <td>{{ rowData.managerName }}</td>
+                    <td>{{ rowData.spokeWith }}</td>
+                    <td [innerHTML]="rowData.callRecord"></td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+        </div>
 
-                                    <tr>
-                                        <th colspan="10">
-                                            <input type="text" pInputText size="50" placeholder="Global Search"
-                                                (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                                                style="width: 100%" />
-                                        </th>
-                                    </tr>
-                                    <tr>
-
-                                        <th pResizableColumn>Sr. No</th>
-                                        <th pResizableColumn>Date/Time</th>
-                                        <th pResizableColumn>Manager</th>
-                                        <th pResizableColumn>Spoke With</th>
-                                        <th pResizableColumn>Call Record</th>
-                                    </tr>
-                                </ng-template>
-                                <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
-                                    <tr>
-                                        <td>{{ rowIndex + 1 }}</td>
-                                        <td>{{ rowData.datetime | date:'MM-dd-yyyy' }}</td>
-                                        <td>{{rowData.managerName}}</td>
-                                        <td>{{rowData.spokeWith}}</td>
-                                        <td [innerHTML]="rowData.callRecord"></td>
-                                    </tr>
-                                </ng-template>
-                            </p-table>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="col-md-12" *ngIf="boxes.boxRecentConsultantCall">
-                    <div class="company-info-box mx-2 mb-3" style="border-color: #28A745;">
-                        <div class="section-header fw-normal p-1" style="background: #28A745 !important;">Past 48 hrs
-                            Consultant
-                            Call Logs</div>
-                        <div class="card p-2">
-
-                            <p-table #dt [value]="recentConsultantCallList" [rows]="10"
-                                [globalFilterFields]="searchFieldRecentConsultantCall" [rowHover]="true"
-                                scrollHeight="550px" [style]="{ width: '100%' }" columnResizeMode="expand"
-                                [resizableColumns]="true">
-                                <!-- <ng-template pTemplate="colgroup">
+        <div class="col-md-12" *ngIf="boxes.boxRecentConsultantCall">
+          <div class="company-info-box mx-2 mb-3" style="border-color: #28a745">
+            <div
+              class="section-header fw-normal p-1"
+              style="background: #28a745 !important"
+            >
+              Past 48 hrs Consultant Call Logs
+            </div>
+            <div class="card p-2">
+              <p-table
+                #dt
+                [value]="recentConsultantCallList"
+                [rows]="10"
+                [globalFilterFields]="searchFieldRecentConsultantCall"
+                [rowHover]="true"
+                scrollHeight="550px"
+                [style]="{ width: '100%' }"
+                columnResizeMode="expand"
+                [resizableColumns]="true"
+              >
+                <!-- <ng-template pTemplate="colgroup">
                             <colgroup>
                                 <col style="width: 10%" />
                                 <col style="width: 20%" />
                             </colgroup>
                         </ng-template> -->
-                                <ng-template pTemplate="header">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th colspan="10">
+                      <input
+                        type="text"
+                        pInputText
+                        size="50"
+                        placeholder="Global Search"
+                        (input)="
+                          dt.filterGlobal($any($event.target).value, 'contains')
+                        "
+                        style="width: 100%"
+                      />
+                    </th>
+                  </tr>
+                  <tr>
+                    <th pResizableColumn>Sr. No</th>
+                    <th pResizableColumn>Date/Time</th>
+                    <th pResizableColumn>Consultant</th>
+                    <th pResizableColumn>Spoke With</th>
+                    <th pResizableColumn>Call Record</th>
+                  </tr>
+                </ng-template>
+                <ng-template
+                  pTemplate="body"
+                  let-rowData
+                  let-rowIndex="rowIndex"
+                >
+                  <tr>
+                    <td>{{ rowIndex + 1 }}</td>
+                    <td>
+                      {{ rowData.datetime | date : "MMM d, yyyy h:mm:ssa" }}
+                    </td>
+                    <td>{{ rowData.consultantName }}</td>
+                    <td>{{ rowData.spokeWith }}</td>
+                    <td [innerHTML]="rowData.callRecord"></td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+        </div>
 
-                                    <tr>
-                                        <th colspan="10">
-                                            <input type="text" pInputText size="50" placeholder="Global Search"
-                                                (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                                                style="width: 100%" />
-                                        </th>
-                                    </tr>
-                                    <tr>
-
-                                        <th pResizableColumn>Sr. No</th>
-                                        <th pResizableColumn>Date/Time</th>
-                                        <th pResizableColumn>Consultant</th>
-                                        <th pResizableColumn>Spoke With</th>
-                                        <th pResizableColumn>Call Record</th>
-                                    </tr>
-                                </ng-template>
-                                <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
-                                    <tr>
-                                        <td>{{ rowIndex + 1 }}</td>
-                                        <td>{{ rowData.datetime | date:'MM-dd-yyyy' }}</td>
-                                        <td>{{rowData.consultantName}}</td>
-                                        <td>{{rowData.spokeWith}}</td>
-                                        <td [innerHTML]="rowData.callRecord"></td>
-                                    </tr>
-                                </ng-template>
-                            </p-table>
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- <div class="col-md-6" *ngIf="boxes.boxActivities">
+        <!-- <div class="col-md-6" *ngIf="boxes.boxActivities">
                     <div class="company-info-box mx-2 mb-3">
                         <div class="section-header fw-normal p-1">Net Report</div>
                     </div>
                 </div> -->
 
-
-                <div class="col-md-12" *ngIf="boxes.boxActivities">
-                    <div class="company-info-box mx-2 mb-3" style="border-color: #c97b06;">
-                        <div class="section-header fw-normal p-1 d-flex justify-content-between align-items-center"
-                            style="background: #c97b06 !important;">
-
-                            <h6 class="mb-0 text-white"><i class="fas fa-bell me-2"></i>Recent Activities
-                            </h6>
-                            <button class="btn btn-sm btn-outline-secondary" (click)="getActivities();"
-                                style="border-color: #fff;"><i class="fas fa-sync text-white"></i></button>
-
-                        </div>
-                        <!-- <i class="fas fa-bell me-2"></i> Recent Activities -->
-
-                        <div class="form-content py-0">
-                            <div class="mt-1">
-                                <p-table #dt [value]="recentActivitiesList" [paginator]="true" [rows]="25"
-                                    [rowHover]="true" [scrollable]="true" scrollHeight="550px"
-                                    [style]="{ width: '100%' }" columnResizeMode="expand" [resizableColumns]="true">
-
-                                    <ng-template pTemplate="header">
-                                        <tr>
-                                            <th class="w-25"></th>
-                                            <th></th>
-                                            <th></th>
-                                        </tr>
-                                    </ng-template>
-                                    <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
-                                        <tr>
-                                            <td class="fw-bolder">{{ rowData.creatorName }}</td>
-                                            <td>{{ rowData.message }}</td>
-                                            <td class="text-end">
-                                                <span><i class="fa-regular fa-clock"></i></span>
-                                                {{ rowData.creationTime | timeAgoDetailed }}
-                                                <span><i class="fa-solid fa-calendar-days mx-1"></i></span>
-                                                {{ rowData.creationTime | date: 'MM-dd-yyyy' }}
-                                            </td>
-                                        </tr>
-                                    </ng-template>
-                                </p-table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="col-md-12" *ngIf="boxes.boxRecentRequisitions">
-                    <div class="company-info-box mx-2 mb-3" style="border-color: #FFCA28;">
-                        <div class="section-header fw-normal p-1" style="background: #FFCA28 !important;">Past 48 hrs
-                            Requisition</div>
-                        <div class="card p-2">
-
-                            <p-table #dt [value]="recentRequisitionsList" [rows]="10"
-                                [globalFilterFields]="searchFieldRecentRequisitions" [rowHover]="true"
-                                scrollHeight="550px" [style]="{ width: '100%' }" columnResizeMode="expand"
-                                [resizableColumns]="true">
-                                <!-- <ng-template pTemplate="colgroup">
-                            <colgroup>
-                                <col style="width: 10%" />
-                                <col style="width: 20%" />
-                            </colgroup>
-                        </ng-template> -->
-                                <ng-template pTemplate="header">
-
-                                    <tr>
-                                        <th colspan="10">
-                                            <input type="text" pInputText size="50" placeholder="Global Search"
-                                                (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                                                style="width: 100%" />
-                                        </th>
-                                    </tr>
-                                    <tr>
-
-                                        <th pResizableColumn>Sr. No</th>
-                                        <th pResizableColumn>Requisition</th>
-                                        <th pResizableColumn>Requisition Type</th>
-                                        <th pResizableColumn>ClientName</th>
-                                        <th pResizableColumn>Manager</th>
-                                        <th pResizableColumn>Buzzwords</th>
-                                        <th pResizableColumn>Duration</th>
-                                        <th pResizableColumn>BillRate</th>
-                                        <th pResizableColumn>CreatedDatetime</th>
-                                    </tr>
-                                </ng-template>
-                                <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
-                                    <tr>
-
-                                        <td>{{ rowIndex + 1 }}</td>
-                                        <td>{{rowData.requisition}}</td>
-                                        <td>{{rowData.type}}</td>
-                                        <td>{{rowData.clientName}}</td>
-                                        <td>{{rowData.managerName}}</td>
-                                        <td>{{rowData.buzzwords}}</td>
-                                        <td>{{rowData.duration}}</td>
-                                        <td>{{rowData.billRate}}</td>
-                                        <td>{{ rowData.createdDatetime | date:'MM-dd-yyyy' }}</td>
-                                    </tr>
-                                </ng-template>
-                            </p-table>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="col-md-12" *ngIf="boxes.boxLeads">
-                    <div class="company-info-box mx-2 mb-3" style="border-color: #17A2B8;">
-                        <div class="section-header fw-normal p-1" style="background: #17A2B8 !important;">Lead Details
-                        </div>
-                        <div class="card p-2">
-
-                            <p-table #dt [value]="leadsList" [rows]="10" [globalFilterFields]="searchFieldLeads"
-                                [rowHover]="true" scrollHeight="550px" [style]="{ width: '100%' }"
-                                columnResizeMode="expand" [resizableColumns]="true">
-                                <!-- <ng-template pTemplate="colgroup">
-                            <colgroup>
-                                <col style="width: 10%" />
-                                <col style="width: 20%" />
-                            </colgroup>
-                        </ng-template> -->
-                                <ng-template pTemplate="header">
-
-                                    <tr>
-                                        <th colspan="10">
-                                            <input type="text" pInputText size="50" placeholder="Global Search"
-                                                (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                                                style="width: 100%" />
-                                        </th>
-                                    </tr>
-                                    <tr>
-
-                                        <th pResizableColumn>Client Name</th>
-                                        <th pResizableColumn>Date</th>
-                                        <th pResizableColumn>Manager Name</th>
-                                        <th pResizableColumn>Manager Contact</th>
-                                        <th pResizableColumn>Amount</th>
-                                        <th pResizableColumn>Details</th>
-                                        <!-- <th pResizableColumn>Called</th> -->
-                                    </tr>
-                                </ng-template>
-                                <ng-template pTemplate="body" let-rowData>
-                                    <tr>
-                                        <td>{{rowData.clientName}}</td>
-                                        <td>{{ rowData.date | date:'MM-dd-yyyy' }}</td>
-                                        <td>{{rowData.managerName}}</td>
-                                        <td>{{rowData.managerContact}}</td>
-                                        <td>{{rowData.amount}}</td>
-                                        <td>{{rowData.details}}</td>
-                                    </tr>
-                                </ng-template>
-                            </p-table>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="col-md-6" *ngIf="boxes.boxReminderCalls">
-                    <div class="company-info-box mx-2 mb-3" style="border-color: #DC3545;">
-                        <div class="section-header fw-normal p-1" style="background: #DC3545 !important;">Reminder Call
-                            Logs
-                            (Manager)</div>
-                        <div class="card p-2">
-
-                            <p-table #dt [value]="reminderManagerCallsList" [rows]="10"
-                                [globalFilterFields]="searchFieldReminderManagerCalls" [rowHover]="true"
-                                scrollHeight="550px" [style]="{ width: '100%' }" columnResizeMode="expand"
-                                [resizableColumns]="true">
-                                <!-- <ng-template pTemplate="colgroup">
-                            <colgroup>
-                                <col style="width: 10%" />
-                                <col style="width: 20%" />
-                            </colgroup>
-                        </ng-template> -->
-                                <ng-template pTemplate="header">
-
-                                    <tr>
-                                        <th colspan="10">
-                                            <input type="text" pInputText size="50" placeholder="Global Search"
-                                                (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                                                style="width: 100%" />
-                                        </th>
-                                    </tr>
-                                    <tr>
-
-                                        <th pResizableColumn>Sr. No</th>
-                                        <th pResizableColumn>Date/Time</th>
-                                        <th pResizableColumn>Manager</th>
-                                        <th pResizableColumn>Spoke With</th>
-                                        <th pResizableColumn>Call Record</th>
-                                    </tr>
-                                </ng-template>
-                                <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
-                                    <tr>
-
-                                        <td>{{ rowIndex + 1 }}</td>
-                                        <td>{{ rowData.datetime | date:'MM-dd-yyyy' }}</td>
-                                        <td>{{rowData.managerName}}</td>
-                                        <td>{{rowData.spokeWith}}</td>
-                                        <td [innerHTML]="rowData.callRecord"></td>
-                                    </tr>
-                                </ng-template>
-                            </p-table>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="col-md-6" *ngIf="boxes.boxReminderCalls">
-                    <div class="company-info-box mx-2 mb-3" style="border-color: #60934b;">
-                        <div class="section-header fw-normal p-1" style="background: #60934b !important;">Reminder Call
-                            Logs
-                            (Consultant)</div>
-                        <div class="card p-2">
-
-                            <p-table #dt [value]="reminderConsultantCallsList" [rows]="10"
-                                [globalFilterFields]="searchFieldReminderConsultantCalls" [rowHover]="true"
-                                scrollHeight="550px" [style]="{ width: '100%' }" columnResizeMode="expand"
-                                [resizableColumns]="true">
-                                <!-- <ng-template pTemplate="colgroup">
-                            <colgroup>
-                                <col style="width: 10%" />
-                                <col style="width: 20%" />
-                            </colgroup>
-                        </ng-template> -->
-                                <ng-template pTemplate="header">
-
-                                    <tr>
-                                        <th colspan="10">
-                                            <input type="text" pInputText size="50" placeholder="Global Search"
-                                                (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                                                style="width: 100%" />
-                                        </th>
-                                    </tr>
-                                    <tr>
-
-                                        <th pResizableColumn>Sr. No</th>
-                                        <th pResizableColumn>Date/Time</th>
-                                        <th pResizableColumn>Consultant</th>
-                                        <th pResizableColumn>Spoke With</th>
-                                        <th pResizableColumn>Call Record</th>
-                                    </tr>
-                                </ng-template>
-                                <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
-                                    <tr>
-
-                                        <td>{{ rowIndex + 1 }}</td>
-                                        <td>{{ rowData.datetime | date:'MM-dd-yyyy' }}</td>
-                                        <td>{{rowData.consultantName}}</td>
-                                        <td>{{rowData.spokeWith}}</td>
-                                        <td [innerHTML]="rowData.callRecord"></td>
-                                    </tr>
-                                </ng-template>
-                            </p-table>
-                        </div>
-
-                    </div>
-                </div>
-
-
-                <div class="col-md-12" *ngIf="boxes.boxTickets">
-                    <div class="company-info-box mx-2 mb-3" style="border-color: #D4A017;">
-                        <div class="section-header fw-normal p-1" style="background: #D4A017 !important;"> Tickets</div>
-                        <div class="card p-2">
-
-                            <p-table #dt [value]="ticketsList" [rows]="10" [globalFilterFields]="searchFieldTickets"
-                                [rowHover]="true" scrollHeight="550px" [style]="{ width: '100%' }"
-                                columnResizeMode="expand" [resizableColumns]="true">
-                                <!-- <ng-template pTemplate="colgroup">
-                            <colgroup>
-                                <col style="width: 10%" />
-                                <col style="width: 20%" />
-                            </colgroup>
-                        </ng-template> -->
-                                <ng-template pTemplate="header">
-
-                                    <tr>
-                                        <th colspan="10">
-                                            <input type="text" pInputText size="50" placeholder="Global Search"
-                                                (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                                                style="width: 100%" />
-                                        </th>
-                                    </tr>
-                                    <tr>
-
-                                        <th pResizableColumn>Sr. No</th>
-                                        <th pResizableColumn>Ticket Id</th>
-                                        <th pResizableColumn>Date/Time</th>
-                                        <th pResizableColumn>Type</th>
-                                        <th pResizableColumn>Status</th>
-                                        <th pResizableColumn>Priority</th>
-                                        <th pResizableColumn>Raised By</th>
-                                        <th pResizableColumn>Subject</th>
-                                        <th pResizableColumn>Description</th>
-                                    </tr>
-                                </ng-template>
-                                <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
-                                    <tr>
-                                        <td>{{ rowIndex + 1 }}</td>
-                                        <td>{{rowData.id}}</td>
-                                        <td>{{ rowData.datetime | date:'MM-dd-yyyy' }}</td>
-                                        <td>{{rowData.type}}</td>
-                                        <td>{{rowData.status}}</td>
-                                        <td>{{rowData.priority}}</td>
-                                        <td>{{rowData.raisedBy}}</td>
-                                        <td>{{rowData.subject}}</td>
-                                        <td [innerHTML]="rowData.description"></td>
-
-                                    </tr>
-                                </ng-template>
-                            </p-table>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="col-xs-8 col-md-8" *ngIf="defaultContent">
-
-                    <div class="company-info-box mx-2 mb-3">
-                        <div class="section-header fw-normal p-1">Interviews</div>
-
-                        <div class="card p-2">
-
-                            <p-table #dt [value]="interviewsList" [rows]="10"
-                                [globalFilterFields]="searchFieldInterview" [rowHover]="true" scrollHeight="550px"
-                                [style]="{ width: '100%' }" columnResizeMode="expand" [resizableColumns]="true">
-                                <!-- <ng-template pTemplate="colgroup">
-                            <colgroup>
-                                <col style="width: 10%" />
-                                <col style="width: 20%" />
-                                <col style="width: 10%" />
-                                <col style="width: 10%" />
-                                <col style="width: 10%" />
-                                <col style="width: 10%" />
-                                <col style="width: 10%" />
-                                <col style="width: 10%" />
-                                <col style="width: 10%" />
-                            </colgroup>
-                        </ng-template> -->
-                                <ng-template pTemplate="header">
-
-                                    <tr>
-                                        <th colspan="10">
-                                            <input type="text" pInputText size="50" placeholder="Global Search"
-                                                (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                                                style="width: 100%" />
-                                        </th>
-                                    </tr>
-                                    <tr>
-
-                                        <th pResizableColumn>No</th>
-                                        <th pResizableColumn>Name</th>
-                                        <th pResizableColumn>Client</th>
-                                        <th pResizableColumn>Req#</th>
-                                        <th pResizableColumn>B.R</th>
-                                        <th pResizableColumn>P.R</th>
-                                        <th pResizableColumn>M/U</th>
-                                        <th pResizableColumn>Date/Time of Interview</th>
-                                        <th pResizableColumn>Date of Submission</th>
-                                        <th pResizableColumn>Notes</th>
-                                    </tr>
-                                </ng-template>
-                                <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
-                                    <tr>
-                                        <td>{{ rowIndex + 1 }}</td>
-                                        <td>
-                                            <a href="javascript:void(0)" class="clientNameLink"
-                                                (click)="goToConsultantDashboard(rowData.consultantId)">
-                                                {{ rowData.consultantName }}
-                                            </a>
-                                        </td>
-                                        <!-- <td>{{rowData.consultantName}}</td> -->
-                                        <!-- <td>{{rowData.client}}</td> -->
-                                        <td>
-                                            <a href="javascript:void(0)" class="clientNameLink"
-                                                (click)="goToclientDashboard(rowData.clientId)">
-                                                {{ rowData.client }}
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="javascript:void(0)" class="clientNameLink"
-                                                (click)="requisitionDashboard(rowData.reqId)">
-                                                Requisition #{{ rowData.reqId }}
-                                            </a>
-                                        </td>
-                                        <td>{{rowData.billRate}}</td>
-                                        <td>{{rowData.payRate}}</td>
-
-                                        <td>
-                                            {{ calculatePercentage(rowData.billRate, rowData.payRate) }}%
-                                        </td>
-                                        <td>{{ rowData.interviewTime | date:'MM-dd-yyyy' }}</td>
-                                        <td>{{ rowData.submissionDate | date:'MM-dd-yyyy' }}</td>
-                                        <td [innerHTML]="rowData.notes"></td>
-                                    </tr>
-                                </ng-template>
-                            </p-table>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col-xs-4 col-md-4" *ngIf="defaultContent">
-
-                    <div class="card border" style="border-color: #D4AF37 !important;">
-                        <div class="card-header  d-flex justify-content-between align-items-center"
-                            style=" background: #D4AF37 !important;">
-                            <h6 class="mb-0 text-white"><i class="fas fa-cog"></i> Production</h6>
-                            <button class="btn btn-sm btn-outline-secondary" style="border-color: #fff;"><i
-                                    class="fas fa-sync text-white"></i></button>
-                        </div>
-                        <div class="card-body">
-
-                            <div>
-
-                                <ul class=" ps-0">
-                                    <li class="d-flex justify-content-between align-items-center">
-                                        <span class="text-warning ms-3"><i class="fas fa-phone text-warning"></i> Total
-                                            Call
-                                            Records
-                                            Today</span>
-                                        <span class="badge  text-dark">{{dashboardData.todayCallRecords}}</span>
-                                    </li>
-                                    <li class="d-flex justify-content-between align-items-center">
-                                        <span class="text-warning ms-3"><i class="fas fa-envelope text-warning"></i>
-                                            Total
-                                            Emails
-                                            Today</span>
-                                        <span class="badge  text-dark">0</span>
-                                    </li>
-                                    <li class="d-flex justify-content-between align-items-center">
-                                        <span class="text-warning ms-3"><i class="fas fa-star text-warning"></i> Total
-                                            Requisitions
-                                            Today</span>
-                                        <span class="badge  text-dark">{{dashboardData.todayRequisitionsTotal}}</span>
-                                    </li>
-                                    <li class="d-flex justify-content-between align-items-center">
-                                        <span class="text-warning ms-3"><i class="fas fa-paper-plane text-warning"></i>
-                                            Total
-                                            Submittals Today</span>
-                                        <span class="badge  text-dark">{{dashboardData.todaySubmitalsTotal}}</span>
-                                    </li>
-                                    <li class="d-flex justify-content-between align-items-center">
-                                        <span class="text-warning ms-3"><i class="fas fa-chart-line text-warning"></i>
-                                            Your
-                                            Quota For
-                                            This Year</span>
-                                        <span class="badge  text-dark">$0</span>
-                                    </li>
-                                    <li class="d-flex justify-content-between align-items-center">
-                                        <span class="text-warning ms-3"><i class="fas fa-trophy text-warning"></i> You
-                                            have
-                                            achieved
-                                            so far</span>
-                                        <span class="badge text-dark">0</span>
-                                    </li>
-                                </ul>
-
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
+        <div class="col-md-12" *ngIf="boxes.boxActivities">
+          <div class="company-info-box mx-2 mb-3" style="border-color: #c97b06">
+            <div
+              class="section-header fw-normal p-1 d-flex justify-content-between align-items-center"
+              style="background: #c97b06 !important"
+            >
+              <h6 class="mb-0 text-white">
+                <i class="fas fa-bell me-2"></i>Recent Activities
+              </h6>
+              <button
+                class="btn btn-sm btn-outline-secondary"
+                (click)="getActivities()"
+                style="border-color: #fff"
+              >
+                <i class="fas fa-sync text-white"></i>
+              </button>
             </div>
+            <!-- <i class="fas fa-bell me-2"></i> Recent Activities -->
+
+            <div class="form-content py-0">
+              <div class="mt-1">
+                <p-table
+                  #dt
+                  [value]="recentActivitiesList"
+                  [paginator]="true"
+                  [rows]="25"
+                  [rowHover]="true"
+                  [scrollable]="true"
+                  scrollHeight="550px"
+                  [style]="{ width: '100%' }"
+                  columnResizeMode="expand"
+                  [resizableColumns]="true"
+                >
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th class="w-25"></th>
+                      <th></th>
+                      <th></th>
+                    </tr>
+                  </ng-template>
+                  <ng-template
+                    pTemplate="body"
+                    let-rowData
+                    let-rowIndex="rowIndex"
+                  >
+                    <tr>
+                      <td class="fw-bolder">{{ rowData.creatorName }}</td>
+                      <td>{{ rowData.message }}</td>
+                      <td class="text-end">
+                        <span><i class="fa-regular fa-clock"></i></span>
+                        {{ rowData.creationTime | timeAgoDetailed }}
+                        <span
+                          ><i class="fa-solid fa-calendar-days mx-1"></i
+                        ></span>
+                        {{ rowData.creationTime | date : "MM-dd-yyyy" }}
+                      </td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </div>
+            </div>
+          </div>
         </div>
 
+        <div class="col-md-12" *ngIf="boxes.boxRecentRequisitions">
+          <div class="company-info-box mx-2 mb-3" style="border-color: #ffca28">
+            <div
+              class="section-header fw-normal p-1"
+              style="background: #ffca28 !important"
+            >
+              Past 48 hrs Requisition
+            </div>
+            <div class="card p-2">
+              <p-table
+                #dt
+                [value]="recentRequisitionsList"
+                [rows]="10"
+                [globalFilterFields]="searchFieldRecentRequisitions"
+                [rowHover]="true"
+                scrollHeight="550px"
+                [style]="{ width: '100%' }"
+                columnResizeMode="expand"
+                [resizableColumns]="true"
+              >
+                <!-- <ng-template pTemplate="colgroup">
+                            <colgroup>
+                                <col style="width: 10%" />
+                                <col style="width: 20%" />
+                            </colgroup>
+                        </ng-template> -->
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th colspan="10">
+                      <input
+                        type="text"
+                        pInputText
+                        size="50"
+                        placeholder="Global Search"
+                        (input)="
+                          dt.filterGlobal($any($event.target).value, 'contains')
+                        "
+                        style="width: 100%"
+                      />
+                    </th>
+                  </tr>
+                  <tr>
+                    <th pResizableColumn>Sr. No</th>
+                    <th pResizableColumn>Requisition</th>
+                    <th pResizableColumn>Requisition Type</th>
+                    <th pResizableColumn>ClientName</th>
+                    <th pResizableColumn>Manager</th>
+                    <th pResizableColumn>Buzzwords</th>
+                    <th pResizableColumn>Duration</th>
+                    <th pResizableColumn>BillRate</th>
+                    <th pResizableColumn>CreatedDatetime</th>
+                  </tr>
+                </ng-template>
+                <ng-template
+                  pTemplate="body"
+                  let-rowData
+                  let-rowIndex="rowIndex"
+                >
+                  <tr>
+                    <td>{{ rowIndex + 1 }}</td>
+                    <td>{{ rowData.requisition }}</td>
+                    <td>{{ rowData.type }}</td>
+                    <td>{{ rowData.clientName }}</td>
+                    <td>{{ rowData.managerName }}</td>
+                    <td>{{ rowData.buzzwords }}</td>
+                    <td>{{ rowData.duration }}</td>
+                    <td>{{ rowData.billRate }}</td>
+                    <td>
+                      {{
+                        rowData.createdDatetime | date : "MMM d, yyyy h:mm:ssa"
+                      }}
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12" *ngIf="boxes.boxLeads">
+          <div class="company-info-box mx-2 mb-3" style="border-color: #17a2b8">
+            <div
+              class="section-header fw-normal p-1"
+              style="background: #17a2b8 !important"
+            >
+              Lead Details
+            </div>
+            <div class="card p-2">
+              <p-table
+                #dt
+                [value]="leadsList"
+                [rows]="10"
+                [globalFilterFields]="searchFieldLeads"
+                [rowHover]="true"
+                scrollHeight="550px"
+                [style]="{ width: '100%' }"
+                columnResizeMode="expand"
+                [resizableColumns]="true"
+              >
+                <!-- <ng-template pTemplate="colgroup">
+                            <colgroup>
+                                <col style="width: 10%" />
+                                <col style="width: 20%" />
+                            </colgroup>
+                        </ng-template> -->
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th colspan="10">
+                      <input
+                        type="text"
+                        pInputText
+                        size="50"
+                        placeholder="Global Search"
+                        (input)="
+                          dt.filterGlobal($any($event.target).value, 'contains')
+                        "
+                        style="width: 100%"
+                      />
+                    </th>
+                  </tr>
+                  <tr>
+                    <th pResizableColumn>Client Name</th>
+                    <th pResizableColumn>Date</th>
+                    <th pResizableColumn>Manager Name</th>
+                    <th pResizableColumn>Manager Contact</th>
+                    <th pResizableColumn>Amount</th>
+                    <th pResizableColumn>Details</th>
+                    <!-- <th pResizableColumn>Called</th> -->
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData>
+                  <tr>
+                    <td>{{ rowData.clientName }}</td>
+                    <td>{{ rowData.date | date : "MMM d, yyyy h:mm:ssa" }}</td>
+                    <td>{{ rowData.managerName }}</td>
+                    <td>{{ rowData.managerContact }}</td>
+                    <td>{{ rowData.amount }}</td>
+                    <td>{{ rowData.details }}</td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6" *ngIf="boxes.boxReminderCalls">
+          <div class="company-info-box mx-2 mb-3" style="border-color: #dc3545">
+            <div
+              class="section-header fw-normal p-1"
+              style="background: #dc3545 !important"
+            >
+              Reminder Call Logs (Manager)
+            </div>
+            <div class="card p-2">
+              <p-table
+                #dt
+                [value]="reminderManagerCallsList"
+                [rows]="10"
+                [globalFilterFields]="searchFieldReminderManagerCalls"
+                [rowHover]="true"
+                scrollHeight="550px"
+                [style]="{ width: '100%' }"
+                columnResizeMode="expand"
+                [resizableColumns]="true"
+              >
+                <!-- <ng-template pTemplate="colgroup">
+                            <colgroup>
+                                <col style="width: 10%" />
+                                <col style="width: 20%" />
+                            </colgroup>
+                        </ng-template> -->
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th colspan="10">
+                      <input
+                        type="text"
+                        pInputText
+                        size="50"
+                        placeholder="Global Search"
+                        (input)="
+                          dt.filterGlobal($any($event.target).value, 'contains')
+                        "
+                        style="width: 100%"
+                      />
+                    </th>
+                  </tr>
+                  <tr>
+                    <th pResizableColumn>Sr. No</th>
+                    <th pResizableColumn>Date/Time</th>
+                    <th pResizableColumn>Manager</th>
+                    <th pResizableColumn>Spoke With</th>
+                    <th pResizableColumn>Call Record</th>
+                  </tr>
+                </ng-template>
+                <ng-template
+                  pTemplate="body"
+                  let-rowData
+                  let-rowIndex="rowIndex"
+                >
+                  <tr>
+                    <td>{{ rowIndex + 1 }}</td>
+                    <td>
+                      {{ rowData.datetime | date : "MMM d, yyyy h:mm:ssa" }}
+                    </td>
+                    <td>{{ rowData.managerName }}</td>
+                    <td>{{ rowData.spokeWith }}</td>
+                    <td [innerHTML]="rowData.callRecord"></td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6" *ngIf="boxes.boxReminderCalls">
+          <div class="company-info-box mx-2 mb-3" style="border-color: #60934b">
+            <div
+              class="section-header fw-normal p-1"
+              style="background: #60934b !important"
+            >
+              Reminder Call Logs (Consultant)
+            </div>
+            <div class="card p-2">
+              <p-table
+                #dt
+                [value]="reminderConsultantCallsList"
+                [rows]="10"
+                [globalFilterFields]="searchFieldReminderConsultantCalls"
+                [rowHover]="true"
+                scrollHeight="550px"
+                [style]="{ width: '100%' }"
+                columnResizeMode="expand"
+                [resizableColumns]="true"
+              >
+                <!-- <ng-template pTemplate="colgroup">
+                            <colgroup>
+                                <col style="width: 10%" />
+                                <col style="width: 20%" />
+                            </colgroup>
+                        </ng-template> -->
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th colspan="10">
+                      <input
+                        type="text"
+                        pInputText
+                        size="50"
+                        placeholder="Global Search"
+                        (input)="
+                          dt.filterGlobal($any($event.target).value, 'contains')
+                        "
+                        style="width: 100%"
+                      />
+                    </th>
+                  </tr>
+                  <tr>
+                    <th pResizableColumn>Sr. No</th>
+                    <th pResizableColumn>Date/Time</th>
+                    <th pResizableColumn>Consultant</th>
+                    <th pResizableColumn>Spoke With</th>
+                    <th pResizableColumn>Call Record</th>
+                  </tr>
+                </ng-template>
+                <ng-template
+                  pTemplate="body"
+                  let-rowData
+                  let-rowIndex="rowIndex"
+                >
+                  <tr>
+                    <td>{{ rowIndex + 1 }}</td>
+                    <td>
+                      {{ rowData.datetime | date : "MMM d, yyyy h:mm:ssa" }}
+                    </td>
+                    <td>{{ rowData.consultantName }}</td>
+                    <td>{{ rowData.spokeWith }}</td>
+                    <td [innerHTML]="rowData.callRecord"></td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12" *ngIf="boxes.boxTickets">
+          <div class="company-info-box mx-2 mb-3" style="border-color: #d4a017">
+            <div
+              class="section-header fw-normal p-1"
+              style="background: #d4a017 !important"
+            >
+              Tickets
+            </div>
+            <div class="card p-2">
+              <p-table
+                #dt
+                [value]="ticketsList"
+                [rows]="10"
+                [globalFilterFields]="searchFieldTickets"
+                [rowHover]="true"
+                scrollHeight="550px"
+                [style]="{ width: '100%' }"
+                columnResizeMode="expand"
+                [resizableColumns]="true"
+              >
+                <!-- <ng-template pTemplate="colgroup">
+                            <colgroup>
+                                <col style="width: 10%" />
+                                <col style="width: 20%" />
+                            </colgroup>
+                        </ng-template> -->
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th colspan="10">
+                      <input
+                        type="text"
+                        pInputText
+                        size="50"
+                        placeholder="Global Search"
+                        (input)="
+                          dt.filterGlobal($any($event.target).value, 'contains')
+                        "
+                        style="width: 100%"
+                      />
+                    </th>
+                  </tr>
+                  <tr>
+                    <th pResizableColumn>Sr. No</th>
+                    <th pResizableColumn>Ticket Id</th>
+                    <th pResizableColumn>Date/Time</th>
+                    <th pResizableColumn>Type</th>
+                    <th pResizableColumn>Status</th>
+                    <th pResizableColumn>Priority</th>
+                    <th pResizableColumn>Raised By</th>
+                    <th pResizableColumn>Subject</th>
+                    <th pResizableColumn>Description</th>
+                  </tr>
+                </ng-template>
+                <ng-template
+                  pTemplate="body"
+                  let-rowData
+                  let-rowIndex="rowIndex"
+                >
+                  <tr>
+                    <td>{{ rowIndex + 1 }}</td>
+                    <td>{{ rowData.id }}</td>
+                    <td>
+                      {{ rowData.datetime | date : "MMM d, yyyy h:mm:ssa" }}
+                    </td>
+                    <td>{{ rowData.type }}</td>
+                    <td>{{ rowData.status }}</td>
+                    <td>{{ rowData.priority }}</td>
+                    <td>{{ rowData.raisedBy }}</td>
+                    <td>{{ rowData.subject }}</td>
+                    <td [innerHTML]="rowData.description"></td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-8 col-md-8" *ngIf="defaultContent">
+          <div class="company-info-box mx-2 mb-3">
+            <div class="section-header fw-normal p-1">Interviews</div>
+
+            <div class="card p-2">
+              <p-table
+                #dt
+                [value]="interviewsList"
+                [rows]="10"
+                [globalFilterFields]="searchFieldInterview"
+                [rowHover]="true"
+                scrollHeight="550px"
+                [style]="{ width: '100%' }"
+                columnResizeMode="expand"
+                [resizableColumns]="true"
+              >
+                <!-- <ng-template pTemplate="colgroup">
+                            <colgroup>
+                                <col style="width: 10%" />
+                                <col style="width: 20%" />
+                                <col style="width: 10%" />
+                                <col style="width: 10%" />
+                                <col style="width: 10%" />
+                                <col style="width: 10%" />
+                                <col style="width: 10%" />
+                                <col style="width: 10%" />
+                                <col style="width: 10%" />
+                            </colgroup>
+                        </ng-template> -->
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th colspan="10">
+                      <input
+                        type="text"
+                        pInputText
+                        size="50"
+                        placeholder="Global Search"
+                        (input)="
+                          dt.filterGlobal($any($event.target).value, 'contains')
+                        "
+                        style="width: 100%"
+                      />
+                    </th>
+                  </tr>
+                  <tr>
+                    <th pResizableColumn>No</th>
+                    <th pResizableColumn>Name</th>
+                    <th pResizableColumn>Client</th>
+                    <th pResizableColumn>Req#</th>
+                    <th pResizableColumn>B.R</th>
+                    <th pResizableColumn>P.R</th>
+                    <th pResizableColumn>M/U</th>
+                    <th pResizableColumn>Date/Time of Interview</th>
+                    <th pResizableColumn>Date of Submission</th>
+                    <th pResizableColumn>Notes</th>
+                  </tr>
+                </ng-template>
+                <ng-template
+                  pTemplate="body"
+                  let-rowData
+                  let-rowIndex="rowIndex"
+                >
+                  <tr>
+                    <td>{{ rowIndex + 1 }}</td>
+                    <td>
+                      <a
+                        href="javascript:void(0)"
+                        class="clientNameLink"
+                        (click)="goToConsultantDashboard(rowData.consultantId)"
+                      >
+                        {{ rowData.consultantName }}
+                      </a>
+                    </td>
+                    <!-- <td>{{rowData.consultantName}}</td> -->
+                    <!-- <td>{{rowData.client}}</td> -->
+                    <td>
+                      <a
+                        href="javascript:void(0)"
+                        class="clientNameLink"
+                        (click)="goToclientDashboard(rowData.clientId)"
+                      >
+                        {{ rowData.client }}
+                      </a>
+                    </td>
+                    <td>
+                      <a
+                        href="javascript:void(0)"
+                        class="clientNameLink"
+                        (click)="requisitionDashboard(rowData.reqId)"
+                      >
+                        Requisition #{{ rowData.reqId }}
+                      </a>
+                    </td>
+                    <td>{{ rowData.billRate }}</td>
+                    <td>{{ rowData.payRate }}</td>
+
+                    <td>
+                      {{
+                        calculatePercentage(rowData.billRate, rowData.payRate)
+                      }}%
+                    </td>
+                    <td>
+                      {{
+                        rowData.interviewTime | date : "MMM d, yyyy h:mm:ssa"
+                      }}
+                    </td>
+                    <td>
+                      {{
+                        rowData.submissionDate | date : "MMM d, yyyy h:mm:ssa"
+                      }}
+                    </td>
+                    <td [innerHTML]="rowData.notes"></td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-4 col-md-4" *ngIf="defaultContent">
+          <div class="card border" style="border-color: #d4af37 !important">
+            <div
+              class="card-header d-flex justify-content-between align-items-center"
+              style="background: #d4af37 !important"
+            >
+              <h6 class="mb-0 text-white">
+                <i class="fas fa-cog"></i> Production
+              </h6>
+              <button
+                class="btn btn-sm btn-outline-secondary"
+                style="border-color: #fff"
+              >
+                <i class="fas fa-sync text-white"></i>
+              </button>
+            </div>
+            <div class="card-body">
+              <div>
+                <ul class="ps-0">
+                  <li class="d-flex justify-content-between align-items-center">
+                    <span class="text-warning ms-3"
+                      ><i class="fas fa-phone text-warning"></i> Total Call
+                      Records Today</span
+                    >
+                    <span class="badge text-dark">{{
+                      dashboardData.todayCallRecords
+                    }}</span>
+                  </li>
+                  <li class="d-flex justify-content-between align-items-center">
+                    <span class="text-warning ms-3"
+                      ><i class="fas fa-envelope text-warning"></i> Total Emails
+                      Today</span
+                    >
+                    <span class="badge text-dark">0</span>
+                  </li>
+                  <li class="d-flex justify-content-between align-items-center">
+                    <span class="text-warning ms-3"
+                      ><i class="fas fa-star text-warning"></i> Total
+                      Requisitions Today</span
+                    >
+                    <span class="badge text-dark">{{
+                      dashboardData.todayRequisitionsTotal
+                    }}</span>
+                  </li>
+                  <li class="d-flex justify-content-between align-items-center">
+                    <span class="text-warning ms-3"
+                      ><i class="fas fa-paper-plane text-warning"></i> Total
+                      Submittals Today</span
+                    >
+                    <span class="badge text-dark">{{
+                      dashboardData.todaySubmitalsTotal
+                    }}</span>
+                  </li>
+                  <li class="d-flex justify-content-between align-items-center">
+                    <span class="text-warning ms-3"
+                      ><i class="fas fa-chart-line text-warning"></i> Your Quota
+                      For This Year</span
+                    >
+                    <span class="badge text-dark">$0</span>
+                  </li>
+                  <li class="d-flex justify-content-between align-items-center">
+                    <span class="text-warning ms-3"
+                      ><i class="fas fa-trophy text-warning"></i> You have
+                      achieved so far</span
+                    >
+                    <span class="badge text-dark">0</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>

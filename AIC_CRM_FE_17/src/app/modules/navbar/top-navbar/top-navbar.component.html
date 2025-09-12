@@ -1,125 +1,227 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary p-0">
-    <div class="container-fluid px-4">
-        <a class="navbar-brand text-white fs-16px" routerLink="/home"><strong>{{TenantName}}</strong> </a>
-        <div class="navbar-brand text-white ms-2 fs-14px">{{userFullName}}</div>
+  <div class="container-fluid px-4">
+    <a class="navbar-brand text-white fs-16px" routerLink="/home"
+      ><strong>{{ TenantName }}</strong>
+    </a>
+    <div class="navbar-brand text-white ms-2 fs-14px">{{ userFullName }}</div>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-user-cog"></i> Admin <i class="fas fa-caret-down ms-1"></i>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" routerLink="/company-profile"><i class="fas fa-building"></i>
-                                Company
-                                Profile</a></li>
-                        <li><a class="dropdown-item" routerLink="/department"><i class="fas fa-sitemap"></i>
-                                Department</a>
-                        </li>
-                        <li><a class="dropdown-item" routerLink="/document-type"><i class="fas fa-file-alt"></i>
-                                Document
-                                Type</a></li>
-                        <li><a class="dropdown-item" routerLink="/call-type"><i class="fas fa-phone"></i> Call Type</a>
-                        </li>
-                        <li><a class="dropdown-item" routerLink="/contact-type"><i class="fas fa-address-book"></i>
-                                Contact
-                                Type</a></li>
-                        <li><a class="dropdown-item" routerLink="/skill-master"><i class="fas fa-star"></i> Skill
-                                Master</a>
-                        </li>
-                        <li><a class="dropdown-item" routerLink="/user-master"><i class="fas fa-user"></i> User
-                                Master</a>
-                        </li>
-                        <!-- <li><a class="dropdown-item" href="javascript:void(0)"><i class="fas fa-ban"></i> Consultant
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="fas fa-user-cog"></i> Admin
+            <i class="fas fa-caret-down ms-1"></i>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" routerLink="/company-profile"
+                ><i class="fas fa-building"></i> Company Profile</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/department"
+                ><i class="fas fa-sitemap"></i> Department</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/document-type"
+                ><i class="fas fa-file-alt"></i> Document Type</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/call-type"
+                ><i class="fas fa-phone"></i> Call Type</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/contact-type"
+                ><i class="fas fa-address-book"></i> Contact Type</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/skill-master"
+                ><i class="fas fa-star"></i> Skill Master</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/user-master"
+                ><i class="fas fa-user"></i> User Master</a
+              >
+            </li>
+            <!-- <li><a class="dropdown-item" href="javascript:void(0)"><i class="fas fa-ban"></i> Consultant
                                 Rejection Reasons</a>
                         </li>
                         <li><a class="dropdown-item" href="javascript:void(0)"><i class="fas fa-tasks"></i> Interview
                                 Process Steps</a></li> -->
-                        <li><a class="dropdown-item" routerLink="/role-based-permission"><i class="fas fa-lock"></i>
-                                Role
-                                Based Permission</a></li>
-                        <li><a class="dropdown-item" routerLink="/AllActivities"><i class="fas fa-clipboard-check"></i>
-                                Audits</a></li>
-                        <li><a class="dropdown-item" href="javascript:void(0)"><i class="fas fa-file-import"></i>
-                                Import</a>
-                        </li>
-                        <li *ngIf="tenantId === 1001"><a class="dropdown-item" routerLink="/tenant-master"><i
-                                    class="fas fa-handshake-angle"></i>
-                                Tenant Master</a></li>
-                    </ul>
-                </li>
+            <li>
+              <a class="dropdown-item" routerLink="/role-based-permission"
+                ><i class="fas fa-lock"></i> Role Based Permission</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/AllActivities"
+                ><i class="fas fa-clipboard-check"></i> Audits</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" href="javascript:void(0)"
+                ><i class="fas fa-file-import"></i> Import</a
+              >
+            </li>
+            <li *ngIf="tenantId === 1001">
+              <a class="dropdown-item" routerLink="/tenant-master"
+                ><i class="fas fa-handshake-angle"></i> Tenant Master</a
+              >
+            </li>
+          </ul>
+        </li>
 
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-users"></i> Clients <i class="fas fa-caret-down ms-1"></i>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" routerLink="/add-client"><i class="fas fa-plus"></i> Add New</a>
-                        </li>
-                        <li><a class="dropdown-item" routerLink="/client-directory"><i class="fas fa-users"></i> Client
-                                Directory</a></li>
-                        <li><a class="dropdown-item" routerLink="/search-client"><i class="fas fa-users"></i> Search
-                                Clients</a></li>
-                        <li><a class="dropdown-item" routerLink="/SearchManagers"><i class="fas fa-users"></i> Search
-                                Managers</a></li>
-                        <li><a class="dropdown-item" routerLink="/AllClientRequests"><i class="fas fa-users"></i> Client
-                                Requests
-                                Directory</a></li>
-                        <!-- <li><a class="dropdown-item" routerLink="/AllClientPipeline"><i class="fas fa-users"></i> Pipeline
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="fas fa-users"></i> Clients
+            <i class="fas fa-caret-down ms-1"></i>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" routerLink="/add-client"
+                ><i class="fas fa-plus"></i> Add New</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/client-directory"
+                ><i class="fas fa-users"></i> Client Directory</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/search-client"
+                ><i class="fas fa-users"></i> Search Clients</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/SearchManagers"
+                ><i class="fas fa-users"></i> Search Managers</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/AllClientRequests"
+                ><i class="fas fa-users"></i> Client Requests Directory</a
+              >
+            </li>
+            <!-- <li><a class="dropdown-item" routerLink="/AllClientPipeline"><i class="fas fa-users"></i> Pipeline
                             Directory</a></li> -->
-                    </ul>
-                </li>
+          </ul>
+        </li>
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-user-tie"></i> Consultants <i class="fas fa-caret-down ms-1"></i>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" routerLink="/add-consultant"><i class="fas fa-plus"></i> Add
-                                Consultant</a></li>
-                        <li><a class="dropdown-item" routerLink="/consultant-directory"><i class="fas fa-users"></i>
-                                Consultant Directory</a></li>
-                        <li><a class="dropdown-item" routerLink="/search-consultant"><i class="fas fa-users"></i> Search
-                                Consultant</a></li>
-                    </ul>
-                </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="fas fa-user-tie"></i> Consultants
+            <i class="fas fa-caret-down ms-1"></i>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" routerLink="/add-consultant"
+                ><i class="fas fa-plus"></i> Add Consultant</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/consultant-directory"
+                ><i class="fas fa-users"></i> Consultant Directory</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/search-consultant"
+                ><i class="fas fa-users"></i> Search Consultant</a
+              >
+            </li>
+          </ul>
+        </li>
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-chart-line"></i> Leads <i class="fas fa-caret-down ms-1"></i>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <!-- <li><a class="dropdown-item" routerLink="/add-leads"><i class="fas fa-plus"></i> Add New</a></li> -->
-                        <li><a class="dropdown-item" routerLink="/all-leads"><i class="fas fa-users"></i> All Lead </a>
-                        </li>
-                        <li><a class="dropdown-item" routerLink="/my-leads"><i class="fas fa-users"></i> My Lead </a>
-                        </li>
-                    </ul>
-                </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="fas fa-chart-line"></i> Leads
+            <i class="fas fa-caret-down ms-1"></i>
+          </a>
+          <ul class="dropdown-menu">
+            <!-- <li><a class="dropdown-item" routerLink="/add-leads"><i class="fas fa-plus"></i> Add New</a></li> -->
+            <li>
+              <a class="dropdown-item" routerLink="/all-leads"
+                ><i class="fas fa-users"></i> All Lead
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/my-leads"
+                ><i class="fas fa-users"></i> My Lead
+              </a>
+            </li>
+          </ul>
+        </li>
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-clipboard-list"></i> Requisitions <i class="fas fa-caret-down ms-1"></i>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" routerLink="/OpenReqs"><i class="fas fa-users"></i> Search Open
-                                Reqs</a></li>
-                        <li><a class="dropdown-item" routerLink="/AllRequisition"><i class="fas fa-users"></i> Search
-                                All
-                                Reqs</a></li>
-                        <li><a class="dropdown-item" href="javascript:void(0)"><i class="fas fa-users"></i>
-                                Interviews</a>
-                        </li>
-                    </ul>
-                </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="fas fa-clipboard-list"></i> Requisitions
+            <i class="fas fa-caret-down ms-1"></i>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" routerLink="/OpenReqs"
+                ><i class="fas fa-users"></i> Search Open Reqs</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/AllRequisition"
+                ><i class="fas fa-users"></i> Search All Reqs</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" href="javascript:void(0)"
+                ><i class="fas fa-users"></i> Interviews</a
+              >
+            </li>
+          </ul>
+        </li>
 
-                <!-- <li class="nav-item dropdown">
+        <!-- <li class="nav-item dropdown">
                     <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fas fa-file-contract"></i> RFI/RFP <i class="fas fa-caret-down ms-1"></i>
                     </a>
@@ -129,62 +231,91 @@
                     </ul>
                 </li> -->
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-chart-bar"></i> Reports <i class="fas fa-caret-down ms-1"></i>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" routerLink="/RPTIndividual"><i class="fas fa-file-alt"></i>
-                                Individual
-                                Report</a></li>
-                        <li><a class="dropdown-item" routerLink="/AllRecruiters"><i class="fas fa-file-alt"></i> All
-                                Recruiters Report</a></li>
-                        <li><a class="dropdown-item" routerLink="/RPTOfficeMaster"><i class="fas fa-file-alt"></i>
-                                Master
-                                Office
-                                Report</a></li>
-                    </ul>
-                </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="fas fa-chart-bar"></i> Reports
+            <i class="fas fa-caret-down ms-1"></i>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" routerLink="/RPTIndividual"
+                ><i class="fas fa-file-alt"></i> Individual Report</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/AllRecruiters"
+                ><i class="fas fa-file-alt"></i> All Recruiters Report</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/RPTOfficeMaster"
+                ><i class="fas fa-file-alt"></i> Master Office Report</a
+              >
+            </li>
+          </ul>
+        </li>
 
-                <li class="nav-item dropdown profile-dropdown">
-                    <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-                        (click)="getNotifications();">
-                        <i class="fas fa-bell"></i>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-item" style="width: 345px;" *ngFor="let item of notificationsList">
+        <li class="nav-item dropdown profile-dropdown">
+          <a
+            class="nav-link"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            (click)="getNotifications()"
+          >
+            <i class="fas fa-bell"></i>
+          </a>
+          <ul class="dropdown-menu">
+            <li
+              class="dropdown-item"
+              style="width: 345px"
+              *ngFor="let item of notificationsList"
+            >
+              <div class="bolder fs-16px">
+                <i class="fas fa-user"></i
+                ><span class="ms-1">{{ item.creatorName }}</span>
+              </div>
 
-                            <div class="bolder fs-16px">
-                                <i class="fas fa-user"></i><span class="ms-1">{{item.creatorName}}</span>
-                            </div>
+              <div>
+                {{ item.message }}
+              </div>
 
-                            <div>
-                                {{item.message}}
-                            </div>
+              <div class="text-end" style="font-size: 11px">
+                <span><i class="fa-regular fa-clock"></i></span>
+                {{ item.creationTime | timeAgoDetailed }}
+                <span><i class="fa-solid fa-calendar-days mx-1"></i></span>
+                {{ item.creationTime | date : "MM-dd-yyyy" }}
+              </div>
+            </li>
+          </ul>
+        </li>
 
-                            <div class="text-end" style="font-size: 11px;">
-                                <span><i class="fa-regular fa-clock"></i></span>
-                                {{ item.creationTime| timeAgoDetailed }}
-                                <span><i class="fa-solid fa-calendar-days mx-1"></i></span>
-                                {{ item.creationTime | date: 'MM-dd-yyyy' }}
-                            </div>
-
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="nav-item dropdown profile-dropdown">
-                    <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-user-circle fa-lg"></i>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown-item" (click)="logout();"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-
+        <li class="nav-item dropdown profile-dropdown">
+          <a
+            class="nav-link"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="fas fa-user-circle fa-lg"></i>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" (click)="logout()"
+                ><i class="fas fa-sign-out-alt"></i> Logout</a
+              >
+            </li>
+          </ul>
+        </li>
+      </ul>
     </div>
+  </div>
 </nav>

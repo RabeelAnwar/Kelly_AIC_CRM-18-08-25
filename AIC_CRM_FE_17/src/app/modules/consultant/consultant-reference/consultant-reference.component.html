@@ -1,192 +1,269 @@
 <style>
-    ::ng-deep p-calendar .p-inputtext {
-        padding: 0;
-        padding-left: 10px;
-        width: 610px;
-    }
+  ::ng-deep p-calendar .p-inputtext {
+    padding: 0;
+    padding-left: 10px;
+    width: 610px;
+  }
 </style>
 
 <div class="row">
-    <div class="col-md-2 mt-4">
-        <app-left-consultant-search-nav></app-left-consultant-search-nav>
+  <div class="col-md-2 mt-4">
+    <app-left-consultant-search-nav></app-left-consultant-search-nav>
+  </div>
+  <div class="col-md-10 ps-0">
+    <div class="header">
+      <h1>{{ consultantData.firstName }} {{ consultantData.lastName }}</h1>
+      <div>
+        <button
+          class="btn btn-success py-0 px-2 mx-1"
+          (click)="saveConsultantReference()"
+        >
+          {{ referenceInput.id ? "Update" : "Save" }}
+        </button>
+        <button class="btn btn-danger py-0 px-2" (click)="onCancel()">
+          Close
+        </button>
+      </div>
     </div>
-    <div class="col-md-10 ps-0">
 
-        <div class="header">
-            <h1>{{consultantData.firstName}} {{consultantData.lastName}}</h1>
-            <div>
-                <button class="btn btn-success py-0 px-2 mx-1" (click)="saveConsultantReference();">
-                    {{ referenceInput.id ? 'Update' : 'Save' }}
-                </button>
-                <button class="btn btn-danger py-0 px-2" (click)="onCancel();">Close</button>
+    <div class="company-info-box mx-2 mb-3">
+      <div class="section-header fw-normal p-1">Reference Input Form</div>
+
+      <div class="form-content py-0">
+        <div class="row mb-2">
+          <div class="col-md-3">
+            <label class="form-label">Reference Name</label>
+            <input
+              type="text"
+              [(ngModel)]="referenceInput.referenceName"
+              class="form-control"
+            />
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label">Company</label>
+            <input
+              type="text"
+              [(ngModel)]="referenceInput.company"
+              class="form-control"
+            />
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label">Manager Phone</label>
+            <input
+              type="text"
+              [(ngModel)]="referenceInput.managerPhone"
+              class="form-control"
+            />
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label">Manager Email</label>
+            <input
+              type="text"
+              [(ngModel)]="referenceInput.managerEmail"
+              class="form-control"
+            />
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label">Reference Date</label>
+            <div class="flex justify-content-center">
+              <p-calendar
+                [(ngModel)]="referenceInput.referenceDate"
+                [iconDisplay]="'input'"
+                [showIcon]="true"
+              />
             </div>
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label">Employement Dates</label>
+            <textarea
+              class="form-control"
+              [(ngModel)]="referenceInput.employementDates"
+              style="height: 70px"
+            ></textarea>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Hiring Manager Comments</label>
+
+            <ckeditor
+              [editor]="Editor"
+              [config]="config"
+              data="referenceInput.hiringManagerComments"
+              [(ngModel)]="referenceInput.hiringManagerComments"
+            ></ckeditor>
+          </div>
         </div>
-
-        <div class="company-info-box mx-2 mb-3">
-            <div class="section-header fw-normal p-1">
-                Reference Input Form
-            </div>
-
-            <div class="form-content py-0">
-
-                <div class="row mb-2">
-                    <div class="col-md-3">
-                        <label class="form-label">Reference Name</label>
-                        <input type="text" [(ngModel)]="referenceInput.referenceName" class="form-control">
-                    </div>
-
-                    <div class="col-md-3">
-                        <label class="form-label">Company</label>
-                        <input type="text" [(ngModel)]="referenceInput.company" class="form-control">
-                    </div>
-
-                    <div class="col-md-3">
-                        <label class="form-label">Manager Phone</label>
-                        <input type="text" [(ngModel)]="referenceInput.managerPhone" class="form-control">
-                    </div>
-
-                    <div class="col-md-3">
-                        <label class="form-label">Manager Email</label>
-                        <input type="text" [(ngModel)]="referenceInput.managerEmail" class="form-control">
-                    </div>
-
-                    <div class="col-md-3">
-
-                        <label class="form-label">Reference Date</label>
-                        <div class="flex justify-content-center">
-                            <p-calendar [(ngModel)]="referenceInput.referenceDate" [iconDisplay]="'input'"
-                                [showIcon]="true" />
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <label class="form-label">Employement Dates</label>
-                        <textarea class="form-control" [(ngModel)]="referenceInput.employementDates"
-                            style="height: 70px;"></textarea>
-                    </div>
-
-                    <div class="col-md-6">
-                        <label class="form-label">Hiring Manager Comments</label>
-                    
-                    <ckeditor [editor]="Editor" [config]="config" data="referenceInput.hiringManagerComments" 
-                    [(ngModel)]="referenceInput.hiringManagerComments"></ckeditor>
-
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-
-
-        <div class="company-info-box mx-2 mb-3">
-            <div class="section-header fw-normal p-1">
-                References List
-            </div>
-
-            <div class="form-content py-0">
-
-                <div class="row mb-2">
-                    <p-table #dt [value]="clientsList" [rows]="10" [globalFilterFields]="['clientName']"
-                        [rowHover]="true" scrollHeight="550px" [style]="{ width: '100%' }" columnResizeMode="expand"
-                        [resizableColumns]="true">
-                        <ng-template pTemplate="colgroup">
-                            <colgroup>
-
-                                <col style="width: 5%" />
-                                <col style="width: 10%" />
-                                <col style="width: 10%" />
-                                <col style="width: 10%" />
-                                <col style="width: 10%" />
-                                <col style="width: 10%" />
-                                <col style="width: 10%" />
-                                <col style="width: 25%" />
-                                <col style="width: 10%" />
-                            </colgroup>
-                        </ng-template>
-                        <ng-template pTemplate="header">
-
-                            <tr>
-                                <th pResizableColumn>Sr</th>
-                                <th pResizableColumn>Reference Name</th>
-                                <th pResizableColumn>Company</th>
-                                <th pResizableColumn>Manager Phone</th>
-                                <th pResizableColumn>Manager Email</th>
-                                <th pResizableColumn>Reference Date</th>
-                                <th pResizableColumn>Employment Date</th>
-                                <th pResizableColumn>Hiring Manager Comments</th>
-                                <th pResizableColumn>Action</th>
-                            </tr>
-
-                            <tr>
-                                <th></th>
-                                <th>
-                                    <input type="text" pInputText size="50" placeholder="Search User Name"
-                                        (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                                        style="width: 100%" />
-                                </th>
-
-                                <th>
-                                    <input type="text" pInputText size="50" placeholder="Search Contact Name"
-                                        (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                                        style="width: 100%" />
-                                </th>
-                                <th>
-                                    <input type="text" pInputText size="50" placeholder="Search City"
-                                        (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                                        style="width: 100%" />
-                                </th>
-                                <th>
-                                    <input type="text" pInputText size="50" placeholder="Search State"
-                                        (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                                        style="width: 100%" />
-                                </th>
-                                <th>
-                                    <input type="text" pInputText size="50" placeholder="Search Phone1"
-                                        (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                                        style="width: 100%" />
-                                </th>
-                                <th>
-                                    <input type="text" pInputText size="50" placeholder="Search WorkEmailId"
-                                        (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                                        style="width: 100%" />
-                                </th>
-                                <th>
-                                    <input type="text" pInputText size="50" placeholder="Search SkypeId"
-                                        (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                                        style="width: 100%" />
-                                </th>
-                                <th></th>
-
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
-                            <tr>
-                                <td>{{ rowIndex + 1 }}</td>
-                                <td>{{ rowData.name }}</td>
-                                <td>{{ rowData.status }}</td>
-                                <td>{{ rowData.status }}</td>
-                                <td>{{ rowData.status }}</td>
-                                <td>{{ rowData.status }}</td>
-                                <td>{{ rowData.status }}</td>
-                                <td>{{ rowData.status }}</td>
-
-                                <td>
-                                    <div class="d-flex justify-content-start pt-1">
-                                        <div class="p-0 pe-3">
-                                            <span class="cursor-pointer"><i class="far fa-edit"></i></span>
-                                        </div>
-
-                                        <div class="p-0 pe-3">
-                                            <span class="cursor-pointer"><i class="fas fa-trash"></i></span>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </ng-template>
-                    </p-table>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
+
+    <div class="company-info-box mx-2 mb-3">
+      <div class="section-header fw-normal p-1">References List</div>
+
+      <div class="form-content py-0">
+        <div class="row mb-2">
+          <p-table
+            #dt
+            [value]="clientsList"
+            [rows]="10"
+            [globalFilterFields]="['clientName']"
+            [rowHover]="true"
+            scrollHeight="550px"
+            [style]="{ width: '100%' }"
+            columnResizeMode="expand"
+            [resizableColumns]="true"
+          >
+            <ng-template pTemplate="colgroup">
+              <colgroup>
+                <col style="width: 5%" />
+                <col style="width: 10%" />
+                <col style="width: 10%" />
+                <col style="width: 10%" />
+                <col style="width: 10%" />
+                <col style="width: 10%" />
+                <col style="width: 10%" />
+                <col style="width: 25%" />
+                <col style="width: 10%" />
+              </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header">
+              <tr>
+                <th pResizableColumn>Sr</th>
+                <th pResizableColumn>Reference Name</th>
+                <th pResizableColumn>Company</th>
+                <th pResizableColumn>Manager Phone</th>
+                <th pResizableColumn>Manager Email</th>
+                <th pResizableColumn>Reference Date</th>
+                <th pResizableColumn>Employment Date</th>
+                <th pResizableColumn>Hiring Manager Comments</th>
+                <th pResizableColumn>Action</th>
+              </tr>
+
+              <tr>
+                <th></th>
+                <th>
+                  <input
+                    type="text"
+                    pInputText
+                    size="50"
+                    placeholder="Search User Name"
+                    (input)="
+                      dt.filterGlobal($any($event.target).value, 'contains')
+                    "
+                    style="width: 100%"
+                  />
+                </th>
+
+                <th>
+                  <input
+                    type="text"
+                    pInputText
+                    size="50"
+                    placeholder="Search Contact Name"
+                    (input)="
+                      dt.filterGlobal($any($event.target).value, 'contains')
+                    "
+                    style="width: 100%"
+                  />
+                </th>
+                <th>
+                  <input
+                    type="text"
+                    pInputText
+                    size="50"
+                    placeholder="Search City"
+                    (input)="
+                      dt.filterGlobal($any($event.target).value, 'contains')
+                    "
+                    style="width: 100%"
+                  />
+                </th>
+                <th>
+                  <input
+                    type="text"
+                    pInputText
+                    size="50"
+                    placeholder="Search State"
+                    (input)="
+                      dt.filterGlobal($any($event.target).value, 'contains')
+                    "
+                    style="width: 100%"
+                  />
+                </th>
+                <th>
+                  <input
+                    type="text"
+                    pInputText
+                    size="50"
+                    placeholder="Search Phone1"
+                    (input)="
+                      dt.filterGlobal($any($event.target).value, 'contains')
+                    "
+                    style="width: 100%"
+                  />
+                </th>
+                <th>
+                  <input
+                    type="text"
+                    pInputText
+                    size="50"
+                    placeholder="Search WorkEmailId"
+                    (input)="
+                      dt.filterGlobal($any($event.target).value, 'contains')
+                    "
+                    style="width: 100%"
+                  />
+                </th>
+                <th>
+                  <input
+                    type="text"
+                    pInputText
+                    size="50"
+                    placeholder="Search SkypeId"
+                    (input)="
+                      dt.filterGlobal($any($event.target).value, 'contains')
+                    "
+                    style="width: 100%"
+                  />
+                </th>
+                <th></th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+              <tr>
+                <td>{{ rowIndex + 1 }}</td>
+                <td>{{ rowData.name }}</td>
+                <td>{{ rowData.status }}</td>
+                <td>{{ rowData.status }}</td>
+                <td>{{ rowData.status }}</td>
+                <td>{{ rowData.status }}</td>
+                <td>{{ rowData.status }}</td>
+                <td>{{ rowData.status }}</td>
+
+                <td>
+                  <div class="d-flex justify-content-start pt-1">
+                    <div class="p-0 pe-3">
+                      <span class="cursor-pointer"
+                        ><i class="far fa-edit"></i
+                      ></span>
+                    </div>
+
+                    <div class="p-0 pe-3">
+                      <span class="cursor-pointer"
+                        ><i class="fas fa-trash"></i
+                      ></span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

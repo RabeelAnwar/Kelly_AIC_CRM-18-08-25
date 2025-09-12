@@ -1,21 +1,29 @@
-<div class="container p-1 bg-white rounded shadow-sm">
-<div class="row">
+<div class="w-full p-1 bg-white rounded shadow-sm">
+  <div class="row">
     <div class="col-md-2 mt-4">
-        <app-left-requisition-search-nav></app-left-requisition-search-nav>
+      <app-left-requisition-search-nav></app-left-requisition-search-nav>
     </div>
     <div class="col-md-10 ps-0">
+      <div>
+        <div class="header">
+          <h1>Requisitions List</h1>
+        </div>
 
-        <div>
-            <div class="header">
-                <h1>Requisitions List</h1>
-            </div>
-
-            <div class="card p-2">
-
-                <p-table #dt [value]="requisitionList" [paginator]="true" [rows]="10"
-                    [globalFilterFields]="searchFields" [rowHover]="true" [scrollable]="true" scrollHeight="550px"
-                    [style]="{ width: '100%' }" columnResizeMode="expand" [resizableColumns]="true">
-                    <!-- <ng-template pTemplate="colgroup">
+        <div class="card p-2">
+          <p-table
+            #dt
+            [value]="requisitionList"
+            [paginator]="true"
+            [rows]="10"
+            [globalFilterFields]="searchFields"
+            [rowHover]="true"
+            [scrollable]="true"
+            scrollHeight="550px"
+            [style]="{ width: '100%' }"
+            columnResizeMode="expand"
+            [resizableColumns]="true"
+          >
+            <!-- <ng-template pTemplate="colgroup">
                     <colgroup>
                         <col style="width: 30px" />
                         <col style="width: 130px" />
@@ -30,154 +38,274 @@
                         <col style="width: 80px" />
                     </colgroup>
                 </ng-template> -->
-                    <ng-template pTemplate="header">
+            <ng-template pTemplate="header">
+              <tr>
+                <th colspan="10">
+                  <input
+                    type="text"
+                    pInputText
+                    size="50"
+                    placeholder="Global Search..."
+                    (input)="
+                      dt.filterGlobal($any($event.target).value, 'contains')
+                    "
+                    style="width: 100%"
+                  />
+                </th>
+              </tr>
+              <tr>
+                <th>Requisition</th>
+                <th>Client Req#</th>
+                <th>Status</th>
+                <th>Requisition Title</th>
+                <th>Submittals</th>
+                <th>Client Name</th>
+                <th>Manager</th>
+                <th>Duration</th>
+                <th>Bill Rate</th>
+                <th>Date Created</th>
+                <th>Action</th>
+              </tr>
+              <tr>
+                <th>
+                  <input
+                    type="text"
+                    pInputText
+                    size="50"
+                    placeholder="Search..."
+                    (input)="
+                      dt.filter($any($event.target).value, 'id', 'contains')
+                    "
+                    style="width: 100%"
+                  />
+                </th>
+                <th>
+                  <input
+                    type="text"
+                    pInputText
+                    size="50"
+                    placeholder="Search..."
+                    (input)="
+                      dt.filter(
+                        $any($event.target).value,
+                        'clientReqNumber',
+                        'contains'
+                      )
+                    "
+                    style="width: 100%"
+                  />
+                </th>
 
-                        <tr>
-                            <th colspan="10">
-                                <input type="text" pInputText size="50" placeholder="Global Search..."
-                                    (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                                    style="width: 100%" />
-                            </th>
-                        </tr>
-                        <tr>
-                            <th>Requisition</th>
-                            <th>Client Req#</th>
-                            <th>Status</th>
-                            <th>Requisition Title</th>
-                            <th>Submittals</th>
-                            <th>Client Name</th>
-                            <th>Manager</th>
-                            <th>Duration</th>
-                            <th>Bill Rate</th>
-                            <th>Date Created</th>
-                            <th>Action</th>
-                        </tr>
-                        <tr>
-                            <th>
-                                <input type="text" pInputText size="50" placeholder="Search..."
-                                    (input)="dt.filter($any($event.target).value, 'id', 'contains')"
-                                    style="width: 100%" />
-                            </th>
-                            <th>
-                                <input type="text" pInputText size="50" placeholder="Search..."
-                                    (input)="dt.filter($any($event.target).value, 'clientReqNumber', 'contains')"
-                                    style="width: 100%" />
-                            </th>
-
-                            <th>
-                                <!-- <input type="text" pInputText size="50" placeholder="Search..."
+                <th>
+                  <!-- <input type="text" pInputText size="50" placeholder="Search..."
                                     (input)="dt.filter($any($event.target).value, 'firstName', 'contains')"
                                     style="width: 100%" /> -->
-                            </th>
+                </th>
 
-                            <th>
-                                <input type="text" pInputText size="50" placeholder="Search..."
-                                    (input)="dt.filter($any($event.target).value, 'jobTitle', 'contains')"
-                                    style="width: 100%" />
-                            </th>
+                <th>
+                  <input
+                    type="text"
+                    pInputText
+                    size="50"
+                    placeholder="Search..."
+                    (input)="
+                      dt.filter(
+                        $any($event.target).value,
+                        'jobTitle',
+                        'contains'
+                      )
+                    "
+                    style="width: 100%"
+                  />
+                </th>
 
-                            <th>
-                                <input type="text" pInputText size="50" placeholder="Search..."
-                                    (input)="dt.filter($any($event.target).value, 'firstName', 'contains')"
-                                    style="width: 100%" />
-                            </th>
+                <th>
+                  <input
+                    type="text"
+                    pInputText
+                    size="50"
+                    placeholder="Search..."
+                    (input)="
+                      dt.filter(
+                        $any($event.target).value,
+                        'firstName',
+                        'contains'
+                      )
+                    "
+                    style="width: 100%"
+                  />
+                </th>
 
-                            <th>
-                                <input type="text" pInputText size="50" placeholder="Search..."
-                                    (input)="dt.filter($any($event.target).value, 'clientName', 'contains')"
-                                    style="width: 100%" />
-                            </th>
+                <th>
+                  <input
+                    type="text"
+                    pInputText
+                    size="50"
+                    placeholder="Search..."
+                    (input)="
+                      dt.filter(
+                        $any($event.target).value,
+                        'clientName',
+                        'contains'
+                      )
+                    "
+                    style="width: 100%"
+                  />
+                </th>
 
-                            <th>
-                                <input type="text" pInputText size="50" placeholder="Search..."
-                                    (input)="dt.filter($any($event.target).value, 'managerName', 'contains')"
-                                    style="width: 100%" />
-                            </th>
+                <th>
+                  <input
+                    type="text"
+                    pInputText
+                    size="50"
+                    placeholder="Search..."
+                    (input)="
+                      dt.filter(
+                        $any($event.target).value,
+                        'managerName',
+                        'contains'
+                      )
+                    "
+                    style="width: 100%"
+                  />
+                </th>
 
-                            <th>
-                                <input type="text" pInputText size="50" placeholder="Search..."
-                                    (input)="dt.filter($any($event.target).value, 'duration', 'contains')"
-                                    style="width: 100%" />
-                            </th>
+                <th>
+                  <input
+                    type="text"
+                    pInputText
+                    size="50"
+                    placeholder="Search..."
+                    (input)="
+                      dt.filter(
+                        $any($event.target).value,
+                        'duration',
+                        'contains'
+                      )
+                    "
+                    style="width: 100%"
+                  />
+                </th>
 
-                            <th>
-                                <input type="text" pInputText size="50" placeholder="Search..."
-                                    (input)="dt.filter($any($event.target).value, 'billRate', 'contains')"
-                                    style="width: 100%" />
-                            </th>
+                <th>
+                  <input
+                    type="text"
+                    pInputText
+                    size="50"
+                    placeholder="Search..."
+                    (input)="
+                      dt.filter(
+                        $any($event.target).value,
+                        'billRate',
+                        'contains'
+                      )
+                    "
+                    style="width: 100%"
+                  />
+                </th>
 
-                            <th>
-                                <input type="text" pInputText size="50" placeholder="Search..."
-                                    (input)="dt.filter($any($event.target).value, 'startDate', 'contains')"
-                                    style="width: 100%" />
-                            </th>
+                <th>
+                  <input
+                    type="text"
+                    pInputText
+                    size="50"
+                    placeholder="Search..."
+                    (input)="
+                      dt.filter(
+                        $any($event.target).value,
+                        'startDate',
+                        'contains'
+                      )
+                    "
+                    style="width: 100%"
+                  />
+                </th>
 
-                            <th></th>
+                <th></th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+              <tr>
+                <td>
+                  <a
+                    href="javascript:void(0)"
+                    class="clientNameLink"
+                    (click)="requisitionDashboard(rowData)"
+                  >
+                    Requisition #{{ rowData.id }}
+                  </a>
+                </td>
+                <td>{{ rowData.clientReqNumber }}</td>
+                <td>
+                  <div class="form-check form-switch ms-3">
+                    <input
+                      class="form-check-input mt-2 fs-6"
+                      [checked]="rowData.status"
+                      (change)="onStatusChange($event, rowData)"
+                      type="checkbox"
+                    />
+                  </div>
+                </td>
+                <td class="wrap-text">{{ rowData.jobTitle }}</td>
+                <td>??</td>
+                <td>
+                  <a
+                    href="javascript:void(0)"
+                    class="clientNameLink"
+                    (click)="goToclientDashboard(rowData)"
+                  >
+                    {{ rowData.clientName }}
+                  </a>
+                </td>
+                <td>
+                  <a
+                    href="javascript:void(0)"
+                    class="clientNameLink"
+                    (click)="goToManagerDashboard(rowData)"
+                  >
+                    {{ rowData.managerName }}
+                  </a>
+                </td>
+                <td>{{ rowData.duration }}</td>
+                <td>{{ rowData.billRate }}</td>
+                <td>{{ rowData.createdDate | date : "MM-dd-yyyy" }}</td>
 
-                        </tr>
+                <td>
+                  <div class="d-flex justify-content-start pt-1">
+                    <div class="p-0 pe-3">
+                      <span
+                        class="cursor-pointer"
+                        (click)="addRequisition(rowData)"
+                      >
+                        <i
+                          class="fa-regular fa-square-plus fw-bolder fs-14px"
+                        ></i>
+                      </span>
+                    </div>
+                    <div class="p-0 pe-3">
+                      <span
+                        class="cursor-pointer"
+                        (click)="editRequisition(rowData)"
+                      >
+                        <i class="far fa-edit"></i>
+                      </span>
+                    </div>
 
-                    </ng-template>
-                    <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
-                        <tr>
-                            <td>
-                                <a href="javascript:void(0)" class="clientNameLink"
-                                    (click)="requisitionDashboard(rowData)">
-                                    Requisition #{{ rowData.id }}
-                                </a>
-                            </td>
-                            <td>{{ rowData.clientReqNumber }}</td>
-                            <td>
-                                <div class="form-check form-switch ms-3">
-                                                            <input class="form-check-input mt-2 fs-6" [checked]="rowData.status"
-                                                            (change)="onStatusChange($event, rowData);"
-                                                            type="checkbox">
-                                                        </div>
-                            </td>
-                            <td>{{ rowData.jobTitle }}</td>
-                            <td>??</td>
-                            <td>
-                                <a href="javascript:void(0)" class="clientNameLink"
-                                    (click)="goToclientDashboard(rowData)">
-                                    {{ rowData.clientName }}
-                                </a>
-                            </td>
-                            <td>
-                                <a href="javascript:void(0)" class="clientNameLink"
-                                    (click)="goToManagerDashboard(rowData)">
-                                    {{ rowData.managerName }}
-                                </a>
-                            </td>
-                            <td>{{ rowData.duration }}</td>
-                            <td>{{ rowData.billRate }}</td>
-                            <td>{{ rowData.createdDate | date:'MM-dd-yyyy' }}</td>
-
-                            <td>
-                                <div class="d-flex justify-content-start pt-1">
-
-                                    <div class="p-0 pe-3">
-                                        <span class="cursor-pointer" (click)="addRequisition(rowData);">
-                                            <i class="fa-regular fa-square-plus fw-bolder fs-14px"></i>
-                                        </span>
-                                    </div>
-                                    <div class="p-0 pe-3">
-                                        <span class="cursor-pointer" (click)="editRequisition(rowData);">
-                                            <i class="far fa-edit"></i>
-                                        </span>
-                                    </div>
-
-                                    <div class="p-0 pe-3">
-                                        <span class="cursor-pointer" (click)="deleteRequisition(rowData.id);">
-                                            <i class="fas fa-trash"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </td>
-
-                        </tr>
-                    </ng-template>
-                </p-table>
-            </div>
+                    <div class="p-0 pe-3">
+                      <span
+                        class="cursor-pointer"
+                        (click)="deleteRequisition(rowData.id)"
+                      >
+                        <i class="fas fa-trash"></i>
+                      </span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
         </div>
+      </div>
     </div>
-</div>
+  </div>
 </div>

@@ -54,7 +54,7 @@ export class AddLeadComponent {
 
   ngOnInit(): void {
 
-    debugger;
+    ;
 
     const state = this.location.getState() as { lead?: LeadModel };
     if (state.lead) {

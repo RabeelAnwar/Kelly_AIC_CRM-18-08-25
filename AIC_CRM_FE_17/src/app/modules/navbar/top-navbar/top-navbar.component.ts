@@ -7,12 +7,12 @@ import { AuditModel } from '../../../models/reports/audit-model';
 @Component({
   selector: 'app-top-navbar',
   templateUrl: './top-navbar.component.html',
-  styleUrl: './top-navbar.component.css',
+  styleUrl: './top-navbar.component.css'
 })
 export class TopNavbarComponent {
   tenantId: any;
   userFullName: string = '';
-  TenantName: string = '';  
+  TenantName: string = '';
 
   notificationsList: AuditModel[] = [];
   input: AuditModel = new AuditModel();
@@ -33,9 +33,7 @@ export class TopNavbarComponent {
   }
   getTenentName() {
     this.TenantName = this.auth.getTenantName();
-    debugger;
     console.log('Tenant Name:', this.TenantName);
-
   }
   getUserFullName() {
     this.userFullName = this.auth.getUserFullName();
